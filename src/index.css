@@ -1,0 +1,210 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "daisyui" {
+  themes:
+    light --default,
+    dark;
+}
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+
+/* Fonts */
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("./assets/fonts/CormorantGaramond-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 300 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Jost";
+  src: url("./assets/fonts/Jost-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Montaga";
+  src: url("./assets/fonts/Montaga-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("./assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("./assets/fonts/Oswald-VariableFont_wght.ttf") format("truetype");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* Poppins Family */
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+/* Poppins Family */
+@font-face {
+  font-family: "Roboto";
+  src: url("./assets/fonts/Roboto-VariableFont_wdth,wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Volkhov";
+  src: url("./assets/fonts/Volkhov-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Public Sans";
+  src: url("./assets/fonts/PublicSans-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+/* Fonts */
+@theme {
+  --font-cormorant: "Cormorant Garamond", serif;
+  --font-inter: "Inter", sans-serif;
+  --font-jost: "Jost", sans-serif;
+  --font-montaga: "Montaga", serif;
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-oswald: "Oswald", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-roboto: "Roboto", sans-serif;
+  --font-volkhov: "Volkhov", serif;
+  --font-public: "Public Sans", sans-serif;
+  --color-darky: #212a2f;
+  --color-lightGray: #eeeff0;
+  --color-textGray: #8a8a8a;
+  --color-errorRed: #ff4646;
+  --shadow-homeBrand: 0px 20px 52.29px 0px rgba(68, 68, 68, 0.04);
+  --shadow-btnActive: 0px 20px 35px 0px rgba(0, 0, 0, 0.15);
+}
+body {
+  font-family: "Montserrat", sans-serif;
+  color: var(--color-darky);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield;
+}
+
+/* 
+Explain SRC Files
+common -- button + InputField + SectionTitle + Modal /// الحاجات الي هستخدمها كتير زي button
+layout -- MainLayout +  Navbar + Footer + AccountLayout + AuthLayout /// اي layout هيشيل الباقي والي هنعملوا من خلال الRoutes في ال App
+Auth   -- Login,Signup .... etc
+Account(AccountLayout) --- OrdersList + OrderDetails + Wishlist + AddressBook + AccountDetails + ChangePassword(الي موجوده في ال Wishlis)
+
+*/
+
+/* 
+-------------globle 
+logo            / Volkhov --- 400
+main font      / Montserrat -- 400
+globle color  / #212A2F  (darky)
+--------Header
+Montserrat -- 400
+logo Volkhov --- 400
+button / Montserrat -- 400
+main color text & Bg --- #212A2F
+-------- Home 
+1-HeroSection
+Sale / Poppins -- 500
+NEW COLLECTION / Cormorant Garamond -- 400
+text color  --- #212A2F
+2-BrandsSection
+Montaga -- 400
+Montserrat -- 400
+text color  --- #212A2F
+bg color --- #EEEFF0
+shaodw --- box-shadow: 0px 20px 52.29px 0px #4444440A;
+3-ShopSection
+Cormorant Garamond -- 700
+button normal -- Montserrat/400 + textColor/#8A8A8A + bgColor/#EEEFF0
+button Active -- Montserrat/400 + textColor/white + bgColor/#212A2F + shadow/box-shadow: 0px 20px 35px 0px #00000026;
+cardName & Star Rate // Montserrat -- 500 + text color  --- #212A2F
+cardBrandName //  Montserrat -- 500 + text color  --- + #8A8A8A
+cardPrice // Black
+cardSoldOut //Montserrat -- 400 + text color  --- + #FF4646
+4-AboutSection 
+bg color --- #212A2F & text color --- white
+head -- Cormorant Garamond/600
+content --- Montserrat/400
+conect us --- Poppins/400
+5-Shipping
+bg color/#EEEFF0 + text color/#212A2F + shadow/box-shadow: 0px 20px 52.29px 0px #4444440A;
+ship head --- Montserrat/500
+ship detail --- Montserrat/400
+6-swipper 
+bg color white + text color #212A2F
+head Cormorant Garamond/600
+swiper info  --- Montserrat/400
+swipper name ---- Volkhov/400
+--------footer
+Montserrat -- 400
+logo Volkhov --- 400
+button / Montserrat -- 400
+Bg color --- #212A2F text color white
+--------- Signs Pages 
+or continue with /// Montserrat --- 300
+input lable & button // Montserrat --- 500
+Forget Password  /// Montserrat --- 300
+validate mail (We sent you a SMS code on) & Please Reset Password  /// text color #5F6368
+--------- Search
+1-TopSection
+Jost/300
+text color #272727 + #3A3A3A
+bg color #EDF1F3
+2-filterSection
+Filter & Heades / Oswald -- 400
+checkBoxs / Roboto -- 400
+button / Oswald -- 500
+3-Shopping
+Search & Pagination // Inter -- 500
+Search placeHolder // textColor -- #878A92
+cardName & Price //text color  --- + #8A8A8A
+cardBrand // text color  --- + #8A8A8A
+All Card Fonts // Montserrat --- 500
+------------- Product details 
+card name // Inter -- 700
+card price // Inter -- 600
+Card reset detail // Inter -- 500
+detail // Inter -- 400
+------- Order Details
+Public Sans --- 400 + 600 + 500 +
+*/
