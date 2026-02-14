@@ -14,6 +14,8 @@ export default function CstBtn({
       "bg-gray-200 text-darky hover:bg-darky hover:text-white border-none",
     outline:
       "bg-transparent border border-darky text-darky hover:bg-darky hover:text-white",
+    outlineWhite:
+      "border-2 border-white bg-transparent text-white hover:bg-white hover:text-darky",
   };
 
   const sizes = {
