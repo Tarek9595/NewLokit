@@ -1,0 +1,14 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "wishlist": "Wishlist",
+    "cart": "My Cart",
+    "signin": "Sign In"
+  },
+  "hero": {
+    "sale": "Sale Up To 50% Off",
+    "title": "NEW COLLECTION",
+    "btn": "Start Shopping"
+  }
+}

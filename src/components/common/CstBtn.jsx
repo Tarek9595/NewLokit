@@ -1,14 +1,13 @@
 export default function CstBtn({
   children,
   onClick,
-  variant = "darky", // darky, light, outline
-  size = "md", // sm, md, lg
-  icon: Icon, // بنباصي الـ Icon كـ Component
+  variant = "darky",
+  size = "md",
+  icon: Icon,
   className = "",
   type = "button",
   fullWidth = false,
 }) {
-  // تعريف الاستايلات بناءً على الـ Variants اللي في الصور
   const variants = {
     darky: "bg-darky text-white hover:bg-opacity-90 border-none",
     inline:
@@ -19,7 +18,7 @@ export default function CstBtn({
 
   const sizes = {
     sm: "px-4 py-2 text-sm",
-    md: "px-8 py-4 text-base", // الحجم اللي متكرر في الصور
+    md: "px-8 py-4 text-base",
     lg: "px-10 py-5 text-lg",
   };
 
@@ -28,7 +27,7 @@ export default function CstBtn({
       type={type}
       onClick={onClick}
       className={`
-        btn rounded-xl transition-all duration-300 flex items-center justify-center gap-2 font-main
+        btn rounded-[10px] transition-all duration-300 flex items-center justify-center gap-2 font-main
         ${variants[variant]} 
         ${sizes[size]} 
         ${fullWidth ? "w-full" : "w-fit"}

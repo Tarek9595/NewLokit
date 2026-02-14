@@ -106,6 +106,8 @@
   --color-lightGray: #eeeff0;
   --color-textGray: #8a8a8a;
   --color-errorRed: #ff4646;
+  --color-zinc: #4444440a;
+  --color-btnGray: #f0f1f2;
   --shadow-homeBrand: 0px 20px 52.29px 0px rgba(68, 68, 68, 0.04);
   --shadow-btnActive: 0px 20px 35px 0px rgba(0, 0, 0, 0.15);
 }
@@ -121,6 +123,16 @@ input::-webkit-inner-spin-button {
 
 input[type="number"] {
   appearance: textfield;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 /* 
