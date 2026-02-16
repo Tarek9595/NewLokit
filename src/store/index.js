@@ -1248,3 +1248,8 @@ export const useActiveInfo = create((set) => ({
 
   setActiveInfo: (newActivInfo) => set({ activeInfo: newActivInfo }),
 }));
+
+export const useCurrentProduct = create((set) => ({
+  currentProduct: {},
+  setProduct: (newProduct) => set({ currentProduct: newProduct }),
+}));

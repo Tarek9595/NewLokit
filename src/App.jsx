@@ -47,7 +47,7 @@ export default function App() {
           path="*"
           element={
             <div className="h-screen flex items-center justify-center font-main">
-              404 - Page Not Found
+              404 || Page Not Found
             </div>
           }
         />
