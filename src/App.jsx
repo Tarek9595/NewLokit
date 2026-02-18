@@ -14,7 +14,7 @@ import Signup from "./pages/Auth/Signup";
 import Successfully from "./pages/Auth/Successfully";
 import CartPage from "./pages/Cart/CartPage";
 import Home from "./pages/Home/Home";
-import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import ProductDetails from "./components/common/ProductDetails";
 import Search from "./pages/Shop/Search";
 
 export default function App() {
