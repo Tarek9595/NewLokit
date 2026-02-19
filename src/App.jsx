@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router";
 import MainLayout from "./components/layout/MainLayout";
 import Wishlist from "./pages/Account/Wishlist";
 import AccountInfo from "./pages/Account/WishlistComponents/AccountInfo";
@@ -14,7 +14,9 @@ import Signup from "./pages/Auth/Signup";
 import Successfully from "./pages/Auth/Successfully";
 import CartPage from "./pages/Cart/CartPage";
 import Home from "./pages/Home/Home";
-import ProductDetails from "./components/common/ProductDetails";
+import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import ProductDetail from "./pages/ProductDetails/ProductDetail";
+import ProductReview from "./pages/ProductDetails/ProductReview";
 import Search from "./pages/Shop/Search";
 
 export default function App() {
@@ -24,7 +26,11 @@ export default function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="search" element={<Search />} />
-          <Route path="product/:id" element={<ProductDetails />} />
+          <Route path="product/:id" element={<ProductDetails />}>
+            <Route index element={<Navigate to="detail" replace />} />
+            <Route path="detail" element={<ProductDetail />} />
+            <Route path="review" element={<ProductReview />} />
+          </Route>
           <Route path="mycart" element={<CartPage />} />
 
           <Route path="/account" element={<Wishlist />}>

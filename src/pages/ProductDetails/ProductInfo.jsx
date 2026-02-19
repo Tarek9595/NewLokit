@@ -1,6 +1,6 @@
 import { useCurrentProduct, useWishlist } from "../../store";
 import { useState } from "react";
-import { HiOutlineShare, HiOutlineHeart } from "react-icons/hi2";
+import { HiOutlineShare } from "react-icons/hi2";
 import { IoIosHeartEmpty, IoMdHeart } from "react-icons/io";
 import { MdOutlineStar } from "react-icons/md";
 import CustomButton from "../../components/common/CstBtn";
@@ -16,20 +16,17 @@ export default function ProductInfo() {
 
   const { wishlist, setWishListProduct, removeWishlistProduct } = useWishlist();
 
-  // بنشيك إذا كان المنتج الحالي موجود في الـ wishlist ولا لا
-  // ملاحظة: اتأكد إن الـ ID مكتوب صح (id أو Id) حسب ما بتخزنه
-  const isLiked = wishlist.some((item) => item.id === useCurrentProduct.id);
+  const isLiked = wishlist.some((item) => item.id === currentProduct.id);
 
   const toggleLike = () => {
     if (isLiked) {
-      removeWishlistProduct(useCurrentProduct.id);
+      removeWishlistProduct(currentProduct.id);
     } else {
-      setWishListProduct(useCurrentProduct);
+      setWishListProduct(currentProduct);
+      console.log(wishlist);
+      console.log(currentProduct);
     }
   };
-
-  console.log(currentProduct);
-  console.log(currentProduct.size);
 
   if (!currentProduct)
     return <div className="py-20 text-center">Loading Product...</div>;
