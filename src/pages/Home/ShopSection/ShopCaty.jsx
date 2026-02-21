@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { products, useWishlist } from "../../../store";
-import ProductCard from "../../../components/common/ProductCard";
+import ProductCard from "../../ProductDetails/ProductCard";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 

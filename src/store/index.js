@@ -1218,7 +1218,7 @@ export const useFilterStore = create((set) => ({
     categories: [],
     sizes: [],
     color: "",
-    priceRange: 2500,
+    priceRange: 0,
   },
   setFilters: (newFilters) => set({ appliedFilters: newFilters }),
   resetFilters: () => set({ appliedFilters: {} }),

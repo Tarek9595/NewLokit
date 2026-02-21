@@ -31,7 +31,7 @@ export default function ProductInfo() {
   if (!currentProduct)
     return <div className="py-20 text-center">Loading Product...</div>;
   return (
-    <section className="min-h-screen bg-white px-20 py-10 font-inter">
+    <section className=" bg-white  pt-10 font-inter">
       <div className="container">
         <nav className="flex text-sm text-gray-500 mb-8">
           <Link to="/">

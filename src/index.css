@@ -134,6 +134,62 @@ input[type="number"] {
     scrollbar-width: none;
   }
 }
+.price-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: #cfcfcf;
+  outline: none;
+  border-radius: 0;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+  position: relative;
+}
+.price-slider::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: -9px;
+  width: 6px;
+  height: 20px;
+  background-color: #000;
+}
+
+.price-slider::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 0;
+}
+
+.price-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 6px;
+  height: 20px;
+  background: #000;
+  cursor: pointer;
+  margin-top: -9px;
+  border-radius: 0;
+  transition:
+    transform 0.25s cubic-bezier(0.25, 0.1, 0.25, 1),
+    background-color 0.3s ease;
+}
+
+.price-slider::-moz-range-track {
+  height: 2px;
+  background: transparent;
+}
+
+.price-slider::-moz-range-thumb {
+  width: 6px;
+  height: 20px;
+  background: #000;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
 /* 
 Explain SRC Files
