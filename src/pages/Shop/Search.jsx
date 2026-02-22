@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import SearchShoping from "./SearchShoping";
 import Filtered from "./Filtered";
-import TopSection from "./TopSection";
+import TopSection from "../../components/common/TopSection";
 
 export default function Search() {
   return (

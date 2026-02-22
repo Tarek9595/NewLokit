@@ -1,3 +1,5 @@
+import EmptyOrders from "../EmptyOrders";
+
 export default function OrdersInfo() {
-  return <div>OrdersInfo</div>;
+  return <EmptyOrders />;
 }

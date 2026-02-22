@@ -12,8 +12,7 @@ export default function CstBtn({
     darky: "bg-darky text-white hover:bg-opacity-90 border-none",
     inline:
       "bg-gray-200 text-darky hover:bg-darky hover:text-white border-none",
-    outline:
-      "bg-transparent border border-darky text-darky hover:bg-darky hover:text-white",
+    outline: "bg-transparent border border-darky text-darky",
     outlineWhite:
       "border-2 border-white bg-transparent text-white hover:bg-white hover:text-darky",
   };
@@ -29,7 +28,7 @@ export default function CstBtn({
       type={type}
       onClick={onClick}
       className={`
-        btn rounded-[10px] transition-all duration-300 flex items-center justify-center gap-2 font-main
+        btn rounded-[10px] transition-all duration-300 flex items-center justify-center gap-2
         ${variants[variant]} 
         ${sizes[size]} 
         ${fullWidth ? "w-full" : "w-fit"}

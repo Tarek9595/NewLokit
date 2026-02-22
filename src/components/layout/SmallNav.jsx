@@ -9,7 +9,7 @@ export default function SmallNav() {
 
   const links = [
     { name: "Home", path: "/" },
-    { name: "Shop", path: "/search" },
+    { name: "Search", path: "/search" },
     { name: "Wishlist", path: "/account" },
     { name: "My Cart", path: "/mycart" },
   ];

@@ -1159,7 +1159,6 @@ export const products = rawProducts.map((product) => ({
 }));
 // Data
 
-import { create } from "zustand";
 import i18n from "../i18n";
 
 export const useLangStore = create((set) => ({
@@ -1175,6 +1174,8 @@ export const useLangStore = create((set) => ({
       return { lang: newLang };
     }),
 }));
+
+import { create } from "zustand";
 
 export const useLinks = create(() => ({
   Links: [
@@ -1201,7 +1202,7 @@ export const useLinks = create(() => ({
     {
       id: 5,
       name: "Account Detail",
-      path: "account",
+      path: "details",
     },
     {
       id: 6,
@@ -1209,6 +1210,16 @@ export const useLinks = create(() => ({
       path: "/",
     },
   ],
+}));
+
+export const useActiveInfo = create((set) => ({
+  activeInfo: {
+    id: 2,
+    name: "Wishlist",
+    path: "",
+  },
+
+  setActiveInfo: (newActivInfo) => set({ activeInfo: newActivInfo }),
 }));
 
 export const useFilterStore = create((set) => ({
@@ -1237,16 +1248,6 @@ export const useWishlist = create((set) => ({
     set((state) => ({
       wishlist: state.wishlist.filter((el) => el.id != productID),
     })),
-}));
-
-export const useActiveInfo = create((set) => ({
-  activeInfo: {
-    id: 2,
-    name: "Wishlist",
-    path: "",
-  },
-
-  setActiveInfo: (newActivInfo) => set({ activeInfo: newActivInfo }),
 }));
 
 export const useCurrentProduct = create((set) => ({
