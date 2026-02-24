@@ -18,10 +18,13 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import ProductDetail from "./pages/ProductDetails/ProductDetail";
 import ProductReview from "./pages/ProductDetails/ProductReview";
 import Search from "./pages/Shop/Search";
+import AuthLayout from "./components/layout/AuthLayout";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
     <BrowserRouter>
+      <Toaster />
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
@@ -42,12 +45,14 @@ export default function App() {
           </Route>
         </Route>
 
-        <Route path="/signin" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/validate" element={<PhoneValidation />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/success" element={<Successfully />} />
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/validate" element={<PhoneValidation />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/success" element={<Successfully />} />
+        </Route>
 
         <Route
           path="*"

@@ -43,7 +43,7 @@ export default function LargeNav() {
         </div>
       </nav>
 
-      <CstBtn variant="darky" size="md" onClick={() => navigate("/signin")}>
+      <CstBtn variant="darky" size="md" onClick={() => navigate("/login")}>
         Sign In
       </CstBtn>
     </div>

@@ -7,7 +7,7 @@ export default function Footer() {
     { name: "Search", path: "/search" },
     { name: "Wishlist", path: "/account" },
     { name: "My cart", path: "/mycart" },
-    { name: "Sign In", path: "/signin" },
+    { name: "Sign In", path: "/login" },
     { name: "Sign Up", path: "/signup" },
   ];
 

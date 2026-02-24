@@ -178,6 +178,14 @@ export default function ProductInfo() {
             : "bg-transparent text-darky border-gray-100 hover:bg-red-50 hover:text-red-500 hover:border-red-100"
         }
       `}
+                  onToggle={() => {
+                    const isExist = wishlist.some(
+                      (item) => item.id === currentProduct.id,
+                    );
+                    isExist
+                      ? removeWishlistProduct(currentProduct.id)
+                      : setWishListProduct(currentProduct);
+                  }}
                 >
                   {isLiked ? <IoMdHeart /> : <IoIosHeartEmpty />}
                 </button>

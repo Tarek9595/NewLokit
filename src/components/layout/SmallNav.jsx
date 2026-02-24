@@ -22,7 +22,7 @@ export default function SmallNav() {
       />
 
       <div
-        className={`fixed inset-0 z-[6000] transition-all duration-500 ${isOpen ? "visible" : "invisible"}`}
+        className={`fixed inset-0 z-6000 transition-all duration-500 ${isOpen ? "visible" : "invisible"}`}
       >
         <div
           className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${isOpen ? "opacity-100" : "opacity-0"}`}
@@ -30,7 +30,7 @@ export default function SmallNav() {
         ></div>
 
         <div
-          className={`absolute right-0 top-0 h-full w-[280px] bg-white shadow-2xl p-8 flex flex-col transition-transform duration-500 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`absolute right-0 top-0 h-full w-70 bg-white shadow-2xl p-8 flex flex-col transition-transform duration-500 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
         >
           <div className="flex justify-end mb-8">
             <AiOutlineClose
@@ -59,7 +59,7 @@ export default function SmallNav() {
               fullWidth
               variant="darky"
               onClick={() => {
-                navigate("/signin");
+                navigate("/login");
                 setIsOpen(false);
               }}
             >
