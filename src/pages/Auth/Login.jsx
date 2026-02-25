@@ -44,39 +44,35 @@ export default function Login() {
       validationSchema={loginSchema}
       onSubmit={handleSubmit}
     >
-      {() => (
-        <>
-          <MyInput name="email" type="email" label="Email">
-            <IoMdMail />
-          </MyInput>
+      <MyInput name="email" type="email" label="Email">
+        <IoMdMail />
+      </MyInput>
 
-          <MyInput name="password" type="password" label="Password">
-            <MdLock />
-          </MyInput>
+      <MyInput name="password" type="password" label="Password">
+        <MdLock />
+      </MyInput>
 
-          <div className="w-full flex justify-end -mt-3">
-            <Link
-              to="/forget"
-              className="text-sm font-medium hover:underline text-gray-600"
-            >
-              Forget Password?
-            </Link>
-          </div>
+      <div className="w-full flex justify-end -mt-3">
+        <Link
+          to="/forget"
+          className="text-sm font-medium hover:underline text-gray-600"
+        >
+          Forget Password?
+        </Link>
+      </div>
 
-          <div className="w-full flex flex-col sm:flex-row justify-between gap-4 mt-2">
-            <div className="w-full sm:w-[48%]">
-              <CstBtn type="submit" variant="darky" size="md" fullWidth={true}>
-                Sign In
-              </CstBtn>
-            </div>
-            <Link to="/signup" className="w-full sm:w-[48%]">
-              <CstBtn variant="outline" size="md" fullWidth={true}>
-                Sign Up
-              </CstBtn>
-            </Link>
-          </div>
-        </>
-      )}
+      <div className="w-full flex flex-col sm:flex-row justify-between gap-4 mt-2">
+        <div className="w-full sm:w-[48%]">
+          <CstBtn type="submit" variant="darky" size="md" fullWidth={true}>
+            Sign In
+          </CstBtn>
+        </div>
+        <Link to="/signup" className="w-full sm:w-[48%]">
+          <CstBtn variant="outline" size="md" fullWidth={true}>
+            Sign Up
+          </CstBtn>
+        </Link>
+      </div>
     </MyForm>
   );
 }
