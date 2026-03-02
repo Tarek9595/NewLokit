@@ -48,11 +48,11 @@ export default function App() {
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/forget" element={<ForgetPassword />} />
           <Route path="/validate" element={<PhoneValidation />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/success" element={<Successfully />} />
+          <Route path="/reset" element={<ResetPassword />} />
         </Route>
+        <Route path="/success" element={<Successfully />} />
 
         <Route
           path="*"

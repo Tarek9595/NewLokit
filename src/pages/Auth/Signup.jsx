@@ -3,15 +3,12 @@ import MyInput from "../../components/common/MyInput";
 import CstBtn from "../../components/common/CstBtn";
 import { useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
-import { useState } from "react";
 import { IoMdMail } from "react-icons/io";
 import { MdLock } from "react-icons/md";
 import { FaUser, FaPhone } from "react-icons/fa6";
-import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
 
   const initialValues = {
     email: "",
@@ -39,6 +36,7 @@ export default function Signup() {
   });
 
   const handleSubmit = (values) => {
+    console.log("signup Success:", values);
     setTimeout(() => {
       navigate("/success");
     }, 1000);
@@ -49,77 +47,43 @@ export default function Signup() {
       validationSchema={signupSchema}
       onSubmit={handleSubmit}
     >
-      <MyInput
-        name="email"
-        type="email"
-        width="w-full"
-        placeholder="Email Address"
-      >
+      <MyInput name="email" type="email" width="w-full">
         <IoMdMail />
       </MyInput>
 
-      <div className="flex lg:flex-row flex-col justify-between">
-        <MyInput
-          name="firstName"
-          label="First Name"
-          type="text"
-          width="w-full"
-          paWidth="lg:w-[48%]"
-        >
+      <div className="flex lg:flex-row flex-col gap-5 justify-between">
+        <MyInput name="firstName" type="text" width="w-full">
           <FaUser />
         </MyInput>
 
-        <MyInput
-          name="lastName"
-          label="Last Name"
-          type="text"
-          width="w-full"
-          paWidth="lg:w-[48%]"
-        >
+        <MyInput name="lastName" type="text" width="w-full">
           <FaUser />
         </MyInput>
       </div>
 
-      <MyInput name="phone" label="Phone Number" type="text" width="w-full">
+      <MyInput name="phone" type="text" width="w-full">
         <FaPhone />
       </MyInput>
 
-      <MyInput
-        name="password"
-        type={show ? "text" : "password"}
-        width="w-full"
-        placeholder="Password"
-      >
+      <MyInput name="password" type="password" width="w-full">
         <MdLock />
-        <div className="cursor-pointer" onClick={() => setShow(!show)}>
-          {show ? <IoIosEyeOff /> : <IoIosEye />}
-        </div>
       </MyInput>
 
-      <MyInput
-        name="confirmPassword"
-        label="Confirm Password"
-        type={show ? "text" : "password"}
-        width="w-full"
-        placeholder="Confirm Password"
-      >
+      <MyInput name="confirmPassword" type="password" width="w-full">
         <MdLock />
-        <div className="cursor-pointer" onClick={() => setShow(!show)}>
-          {show ? <IoIosEyeOff /> : <IoIosEye />}
-        </div>
       </MyInput>
 
-      <div className="w-full flex lg:flex-row flex-col justify-between lg:gap-0 gap-2.5">
-        <div className=" w-full">
-          <CstBtn type="submit" variant="darky" size="md">
-            Sign Up
-          </CstBtn>
-        </div>
-        <Link to="/signin" className=" w-full">
-          <CstBtn variant="outline" size="md">
+      <div className="w-full flex flex-col sm:flex-row justify-between gap-4 mt-2">
+        <Link to="/login" className="w-full sm:w-[48%]">
+          <CstBtn variant="outline" size="md" fullWidth={true}>
             Sign In
           </CstBtn>
         </Link>
+        <div className="w-full sm:w-[48%]">
+          <CstBtn type="submit" variant="darky" size="md" fullWidth={true}>
+            Sign Up
+          </CstBtn>
+        </div>
       </div>
     </MyForm>
   );

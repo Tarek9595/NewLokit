@@ -44,20 +44,20 @@ export default function Login() {
       validationSchema={loginSchema}
       onSubmit={handleSubmit}
     >
-      <MyInput name="email" type="email" label="Email">
+      <MyInput name="email" type="email">
         <IoMdMail />
       </MyInput>
 
-      <MyInput name="password" type="password" label="Password">
+      <MyInput name="password" type="password">
         <MdLock />
       </MyInput>
 
-      <div className="w-full flex justify-end -mt-3">
+      <div className="w-full flex justify-end">
         <Link
           to="/forget"
           className="text-sm font-medium hover:underline text-gray-600"
         >
-          Forget Password?
+          Forget Password ?
         </Link>
       </div>
 

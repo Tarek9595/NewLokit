@@ -1,17 +1,27 @@
 import React from "react";
 import { useField } from "formik";
+import { useState } from "react";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
-export default function MyInput({ children, label, paWidth, width, ...props }) {
+export default function MyInput({ children, width, ...props }) {
   const [field, meta] = useField(props);
   const childrenArray = React.Children.toArray(children);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const isPasswordType = props.type === "password";
+  const inputType = isPasswordType
+    ? showPassword
+      ? "text"
+      : "password"
+    : props.type;
 
   const hasLeftIcon = childrenArray.length > 0;
   const hasRightIcon = childrenArray.length > 1;
 
   return (
-    <div className={`flex flex-col gap-1.5 ${paWidth || "w-full"}`}>
+    <div className={`flex flex-col gap-1.5`}>
       <label className="label-text capitalize font-medium text-darky text-[16px] md:text-[18px]">
-        {label || props.name}
+        {props.accName ? props.accName : props.name}
       </label>
 
       <div className="relative w-full flex items-center">
@@ -24,7 +34,8 @@ export default function MyInput({ children, label, paWidth, width, ...props }) {
         <input
           {...field}
           {...props}
-          className={`input bg-transparent border transition-all duration-300 text-[16px] h-[55px] focus:outline-none
+          type={inputType}
+          className={`input bg-transparent border transition-all duration-300 text-[16px] h-13.75 focus:outline-none
             ${width || "w-full"} 
             ${hasLeftIcon ? "pl-12" : "pl-4"} 
             ${hasRightIcon ? "pr-12" : "pr-4"}
@@ -35,9 +46,12 @@ export default function MyInput({ children, label, paWidth, width, ...props }) {
             }`}
         />
 
-        {hasRightIcon && (
-          <div className="absolute right-4 flex items-center justify-center text-gray-500 text-[20px] cursor-pointer hover:text-darky transition-colors">
-            {childrenArray[1]}
+        {isPasswordType && (
+          <div
+            className="absolute right-4 cursor-pointer text-gray-500 text-[20px]"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <IoIosEyeOff /> : <IoIosEye />}
           </div>
         )}
       </div>

@@ -4,7 +4,7 @@ import signupImg from "../../assets/img/login-pics/sign-up.png";
 import forgetImg from "../../assets/img/login-pics/forget-password.png";
 import boyImg from "../../assets/img/login-pics/boy-pic.png";
 
-export default function MyCarousel({ high }) {
+export default function MyCarousel() {
   const images = [signinImg, signupImg, forgetImg, boyImg];
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -21,7 +21,7 @@ export default function MyCarousel({ high }) {
   return (
     <div
       dir="ltr"
-      className="w-full relative overflow-hidden h-full ltr:rounded-l-[30px] rtl:rounded-r-[30px]"
+      className="w-full relative overflow-hidden h-full ltr:rounded-l-xl rtl:rounded-r-xl"
     >
       <div
         className="flex transition-transform duration-700 ease-in-out h-full"
@@ -32,7 +32,7 @@ export default function MyCarousel({ high }) {
             key={index}
             src={img}
             alt={`Slide ${index + 1}`}
-            className={`w-full h-${high ? high : "full"} object-cover shrink-0`}
+            className={`w-full h-full object-cover shrink-0`}
           />
         ))}
       </div>

@@ -15,6 +15,8 @@ export default function CstBtn({
     outline: "bg-transparent border border-darky text-darky",
     outlineWhite:
       "border-2 border-white bg-transparent text-white hover:bg-white hover:text-darky",
+    outlineDarky:
+      "bg-transparent border border-darky text-darky hover:bg-darky hover:text-white hover:border-transparent",
   };
 
   const sizes = {
@@ -28,7 +30,7 @@ export default function CstBtn({
       type={type}
       onClick={onClick}
       className={`
-        btn rounded-[10px] transition-all duration-300 flex items-center justify-center gap-2
+        btn transition-all duration-300 flex items-center justify-center gap-2 rounded-lg
         ${variants[variant]} 
         ${sizes[size]} 
         ${fullWidth ? "w-full" : "w-fit"}

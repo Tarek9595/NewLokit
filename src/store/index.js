@@ -1187,7 +1187,7 @@ export const useLinks = create(() => ({
     {
       id: 2,
       name: "Wishlist",
-      path: "",
+      path: "/account",
     },
     {
       id: 3,

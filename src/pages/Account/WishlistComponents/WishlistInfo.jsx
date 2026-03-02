@@ -52,7 +52,7 @@ export default function WishlistInfo() {
               <div className="font-semibold md:font-medium">$ {el.price}</div>
 
               <CstBtn
-                variant="outline"
+                variant="outlineDarky"
                 size="sm"
                 className="md:py-2.5 md:px-6 active:scale-95 cursor-pointer whitespace-nowrap"
               >
