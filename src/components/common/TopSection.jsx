@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { LiaAngleRightSolid } from "react-icons/lia";
 
-export default function TopSection({ name }) {
+export default function TopSection({ name, crrName, path }) {
   return (
     <section className="w-full bg-[#EDF1F3] py-12 md:py-20 lg:py-28 flex justify-center">
       <div className="container flex flex-col items-center justify-center gap-3 px-5 md:px-0">
@@ -15,9 +15,9 @@ export default function TopSection({ name }) {
             </span>
           </Link>
           <LiaAngleRightSolid className="text-[12px]" />
-          <Link to="/search">
+          <Link to={`/${path ? path : name}`}>
             <span className="hover:underline font-semibold hover:underline-offset-2">
-              {name}
+              {crrName ? crrName : name}
             </span>
           </Link>
         </div>

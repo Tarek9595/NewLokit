@@ -9,8 +9,8 @@ export default function Wishlist() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <TopSection name={sectionName} />
       <main className="grow flex flex-col items-center">
-        <TopSection name={sectionName} />
         <div className="container mx-auto px-4 py-10 lg:p-20 flex flex-col lg:flex-row gap-10 lg:gap-20 justify-center font-inter w-full">
           <SideLinks />
           <SideInfo />
