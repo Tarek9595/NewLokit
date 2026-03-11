@@ -61,7 +61,7 @@ export default function Signup() {
         </MyInput>
       </div>
 
-      <MyInput name="phone" type="text" width="w-full">
+      <MyInput name="phone" type="number" width="w-full">
         <FaPhone />
       </MyInput>
 

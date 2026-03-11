@@ -46,12 +46,12 @@ export default function PasswordInfo() {
       validationSchema={loginSchema}
       onSubmit={handleSubmit}
     >
-      <div className="flex flex-col gap-5 justify-between w-[40%]">
+      <div className="flex flex-col gap-5 justify-between md:w-[60%] lg:w-[45%]">
         <MyInput
           name="newPassword"
           accName="New Password"
           type="password"
-          className="w-[50%]"
+          className=""
         >
           <MdLock />
         </MyInput>
@@ -60,7 +60,7 @@ export default function PasswordInfo() {
           name="confirmNewPassword"
           accName="Confirm New Password"
           type="password"
-          className="w-[50%]"
+          className=""
         >
           <MdLock />
         </MyInput>

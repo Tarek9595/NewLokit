@@ -15,13 +15,23 @@ export default function ProductCard({ product, isLiked, onToggle }) {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         />
 
-        <div className="absolute inset-0 bg-black/5 flex items-end justify-center p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+        {/* <div className="absolute inset-0 bg-black/5 flex items-end justify-center p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
           <Link
             to={`/product/${product.id}`}
             className="w-full bg-white text-darky py-2.5 rounded-lg font-main text-sm font-semibold text-center shadow-2xl hover:bg-darky hover:text-white transition-colors uppercase tracking-widest"
             onClick={() => {
               setProduct(product);
             }}
+          >
+            Show Details
+          </Link>
+        </div> */}
+
+        <div className="absolute inset-0 bg-black/5 flex items-end justify-center p-4 translate-y-0 opacity-100 lg:translate-y-full lg:group-hover:translate-y-0 lg:transition-transform lg:duration-500">
+          <Link
+            to={`/product/${product.id}`}
+            className="w-full bg-white/90 backdrop-blur text-darky py-2.5 rounded-lg  text-sm font-semibold text-center shadow-lg active:scale-95 transition-all uppercase tracking-widest hover:bg-darky hover:text-white"
+            onClick={() => setProduct(product)}
           >
             Show Details
           </Link>
@@ -40,14 +50,14 @@ export default function ProductCard({ product, isLiked, onToggle }) {
       </div>
 
       <div className="mt-4 px-1 space-y-2">
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between">
           <div>
             <h3 className="font-main font-semibold text-darky text-base lg:text-lg truncate max-w-37.5 uppercase tracking-tight">
               {product.name}
             </h3>
             <p className="text-textGray text-xs font-medium">{product.brand}</p>
           </div>
-          <div className="flex text-darky text-sm">
+          <div className="flex text-darky text-sm mt-1.5">
             <MdOutlineStar />
             <MdOutlineStar />
             <MdOutlineStar />
