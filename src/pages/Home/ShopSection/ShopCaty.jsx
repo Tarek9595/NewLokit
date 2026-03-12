@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { products, useWishlist } from "../../../store";
+import { products, useCart, useWishlist } from "../../../store";
 import ProductCard from "../../ProductDetails/ProductCard";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,6 +8,7 @@ export default function ShopCaty() {
   const { wishlist, setWishListProduct, removeWishlistProduct } = useWishlist();
   const [activeCategory, setActiveCategory] = useState("All");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const { cart, setCartProduct, removeCartProduct } = useCart();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -101,11 +102,17 @@ export default function ShopCaty() {
             key={product.id}
             product={product}
             isLiked={wishlist.some((item) => item.id === product.id)}
-            onToggle={() => {
+            heartToggle={() => {
               const isExist = wishlist.some((item) => item.id === product.id);
               isExist
                 ? removeWishlistProduct(product.id)
                 : setWishListProduct(product);
+            }}
+            cartAdd={cart.some((item) => item.id === product.id)}
+            cartToggle={() => {
+              const isExist = cart.some((item) => item.id === product.id);
+              isExist ? removeCartProduct(product.id) : setCartProduct(product);
+              console.log(cart);
             }}
           />
         ))}

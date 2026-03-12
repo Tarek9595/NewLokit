@@ -2,8 +2,15 @@ import { IoIosHeartEmpty, IoMdHeart } from "react-icons/io";
 import { MdOutlineStar, MdOutlineStarBorder } from "react-icons/md";
 import { Link } from "react-router";
 import { useCurrentProduct } from "../../store";
+import { BsCart, BsCartCheckFill } from "react-icons/bs";
 
-export default function ProductCard({ product, isLiked, onToggle }) {
+export default function ProductCard({
+  product,
+  isLiked,
+  heartToggle,
+  cartAdd,
+  cartToggle,
+}) {
   const { setProduct } = useCurrentProduct();
 
   return (
@@ -14,18 +21,6 @@ export default function ProductCard({ product, isLiked, onToggle }) {
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         />
-
-        {/* <div className="absolute inset-0 bg-black/5 flex items-end justify-center p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-          <Link
-            to={`/product/${product.id}`}
-            className="w-full bg-white text-darky py-2.5 rounded-lg font-main text-sm font-semibold text-center shadow-2xl hover:bg-darky hover:text-white transition-colors uppercase tracking-widest"
-            onClick={() => {
-              setProduct(product);
-            }}
-          >
-            Show Details
-          </Link>
-        </div> */}
 
         <div className="absolute inset-0 bg-black/5 flex items-end justify-center p-4 translate-y-0 opacity-100 lg:translate-y-full lg:group-hover:translate-y-0 lg:transition-transform lg:duration-500">
           <Link
@@ -38,13 +33,24 @@ export default function ProductCard({ product, isLiked, onToggle }) {
         </div>
 
         <button
-          onClick={onToggle}
+          onClick={heartToggle}
           className="cursor-pointer absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur shadow-sm flex items-center justify-center hover:bg-white transition-colors"
         >
           {isLiked ? (
             <IoMdHeart className="text-darky text-lg" />
           ) : (
             <IoIosHeartEmpty className="text-darky text-lg" />
+          )}
+        </button>
+
+        <button
+          onClick={cartToggle}
+          className="cursor-pointer absolute top-3 right-14 w-9 h-9 rounded-full bg-white/90 backdrop-blur shadow-sm flex items-center justify-center hover:bg-white transition-colors"
+        >
+          {cartAdd ? (
+            <BsCartCheckFill className="text-darky text-lg" />
+          ) : (
+            <BsCart className="text-darky text-lg" />
           )}
         </button>
       </div>

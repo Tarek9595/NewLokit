@@ -1319,3 +1319,45 @@ export const useReviews = create((set) => ({
   setReview: (newReview) =>
     set((state) => ({ reviews: [...state.reviews, newReview] })),
 }));
+
+export const useCart = create((set) => ({
+  cart: [],
+
+  setCartProduct: (product) =>
+    set((state) => {
+      const isExist = state.cart.find((item) => item.id === product.id);
+
+      if (isExist) {
+        return {
+          cart: state.cart.map((item) =>
+            item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
+          ),
+        };
+      }
+
+      return {
+        cart: [...state.cart, { ...product, qty: 1 }],
+      };
+    }),
+
+  removeCartProduct: (productID) =>
+    set((state) => ({
+      cart: state.cart.filter((el) => el.id !== productID),
+    })),
+
+  increaseQty: (productID) =>
+    set((state) => ({
+      cart: state.cart.map((item) =>
+        item.id === productID ? { ...item, qty: item.qty + 1 } : item,
+      ),
+    })),
+
+  decreaseQty: (productID) =>
+    set((state) => ({
+      cart: state.cart
+        .map((item) =>
+          item.id === productID ? { ...item, qty: item.qty - 1 } : item,
+        )
+        .filter((item) => item.qty > 0),
+    })),
+}));
