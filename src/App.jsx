@@ -20,49 +20,54 @@ import ProductReview from "./pages/ProductDetails/ProductReview";
 import Search from "./pages/Shop/Search";
 import AuthLayout from "./components/layout/AuthLayout";
 import { Toaster } from "react-hot-toast";
+import Checkout from "./pages/Cart/Checkout";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Toaster />
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="search" element={<Search />} />
-          <Route path="product/:id" element={<ProductDetails />}>
-            <Route index element={<Navigate to="detail" replace />} />
-            <Route path="detail" element={<ProductDetail />} />
-            <Route path="review" element={<ProductReview />} />
+    <div className="select-none">
+      <BrowserRouter>
+        <Toaster />
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+            <Route path="search" element={<Search />} />
+            <Route path="product/:id" element={<ProductDetails />}>
+              <Route index element={<Navigate to="detail" replace />} />
+              <Route path="detail" element={<ProductDetail />} />
+              <Route path="review" element={<ProductReview />} />
+            </Route>
+            <Route path="mycart" element={<CartPage />} />
+
+            <Route path="checkout" element={<Checkout />} />
+
+            <Route path="/account" element={<Wishlist />}>
+              <Route index element={<WishlistInfo />} />
+              <Route path="orders" element={<OrdersInfo />} />
+              <Route path="address" element={<AdressInfo />} />
+              <Route path="password" element={<PasswordInfo />} />
+              <Route path="details" element={<AccountInfo />} />
+            </Route>
           </Route>
-          <Route path="mycart" element={<CartPage />} />
 
-          <Route path="/account" element={<Wishlist />}>
-            <Route index element={<WishlistInfo />} />
-            <Route path="orders" element={<OrdersInfo />} />
-            <Route path="address" element={<AdressInfo />} />
-            <Route path="password" element={<PasswordInfo />} />
-            <Route path="details" element={<AccountInfo />} />
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/forget" element={<ForgetPassword />} />
+            <Route path="/validate" element={<PhoneValidation />} />
+            <Route path="/reset" element={<ResetPassword />} />
           </Route>
-        </Route>
+          <Route path="/success" element={<Successfully />} />
 
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/forget" element={<ForgetPassword />} />
-          <Route path="/validate" element={<PhoneValidation />} />
-          <Route path="/reset" element={<ResetPassword />} />
-        </Route>
-        <Route path="/success" element={<Successfully />} />
-
-        <Route
-          path="*"
-          element={
-            <div className="h-screen flex items-center justify-center font-main">
-              404 || Page Not Found
-            </div>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+          <Route
+            path="*"
+            element={
+              <div className="h-screen flex items-center justify-center font-main">
+                404 || Page Not Found
+              </div>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }

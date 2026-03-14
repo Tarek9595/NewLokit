@@ -16,7 +16,7 @@ export default function TopSection({ name, crrName, path }) {
           </Link>
           <LiaAngleRightSolid className="text-[12px]" />
           <Link to={`/${path ? path : name}`}>
-            <span className="hover:underline font-semibold hover:underline-offset-2">
+            <span className="hover:underline font-semibold hover:underline-offset-2 capitalize">
               {crrName ? crrName : name}
             </span>
           </Link>
