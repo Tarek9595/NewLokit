@@ -6,21 +6,15 @@ import { MdLock } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
+import { useAuthStore } from "../../store";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuthStore();
 
   const initialValues = {
     email: "",
     password: "",
-  };
-
-  const handleSubmit = (values) => {
-    console.log("Login Success:", values);
-    if (values.email && values.password) {
-      navigate("/");
-      toast.success("Login Success");
-    }
   };
 
   const loginSchema = Yup.object().shape({
@@ -38,11 +32,16 @@ export default function Login() {
       ),
   });
 
+  const handleLoginSuccess = (data) => {
+    login(data); // بيانات اليوزر اتحفظت في الـ Store وفي الـ LocalStorage
+    toast.success(`Welcome back`);
+    navigate("/");
+  };
   return (
     <MyForm
       initialValues={initialValues}
       validationSchema={loginSchema}
-      onSubmit={handleSubmit}
+      onSubmit={() => handleLoginSuccess(initialValues)}
     >
       <MyInput name="email" type="email">
         <IoMdMail />

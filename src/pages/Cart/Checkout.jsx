@@ -7,13 +7,12 @@ import TopSection from "../../components/common/TopSection";
 import { useCart } from "../../store";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
-import womenImgOne from "../../assets/img/shop/women/shop-1.png";
 
 export default function Checkout() {
   const { getCartTotal } = useCart();
   const { subtotal, tax, total } = getCartTotal();
   const navigate = useNavigate();
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart();
 
   const initialValues = {
     streetAddress: "",
@@ -88,8 +87,8 @@ export default function Checkout() {
 
     toast.success(`Thank you ${values.firstName}! Your order has been placed.`);
 
-    // clearCart();
-    // navigate("/order-success");
+    clearCart();
+    navigate("/order-success");
   };
   return (
     <div className="flex flex-col min-h-screen gap-15 items-center">
@@ -190,26 +189,6 @@ export default function Checkout() {
             <h1 className="w-full text-darky font-bold capitalize text-[16px] py-4.5">
               Your Order
             </h1>
-
-            {/* <div className="flex justify-between items-center w-87.5">
-              <div className="flex gap-2">
-                <div className="w-10 h-10 flex justify-center items-center rounded-full ">
-                  <img
-                    src={womenImgOne}
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                </div>
-                <div className="w-10 h-10 flex justify-center items-center rounded-full ">
-                  1
-                </div>
-                <div className="w-10 h-10 flex justify-center items-center rounded-full ">
-                  1
-                </div>
-              </div>
-              <CstBtn variant="outline" className="text-sm">
-                Edit Cart
-              </CstBtn>
-            </div> */}
 
             <div className="flex justify-between items-center w-full lg:w-87.5">
               <div className="flex -space-x-4 overflow-hidden">

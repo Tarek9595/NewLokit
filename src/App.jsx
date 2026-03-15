@@ -21,31 +21,43 @@ import Search from "./pages/Shop/Search";
 import AuthLayout from "./components/layout/AuthLayout";
 import { Toaster } from "react-hot-toast";
 import Checkout from "./pages/Cart/Checkout";
+import OrderSuccess from "./pages/Cart/OrderSuccess";
+import OrderFailed from "./pages/Cart/OrderFailed";
+import ScrollToTop from "./components/common/ScrollToTop";
+import ProtectedRoute from "./components/common/ProtectedRoute";
 
 export default function App() {
   return (
     <div className="select-none">
       <BrowserRouter>
+        <ScrollToTop />
         <Toaster />
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
-            <Route path="search" element={<Search />} />
-            <Route path="product/:id" element={<ProductDetails />}>
-              <Route index element={<Navigate to="detail" replace />} />
-              <Route path="detail" element={<ProductDetail />} />
-              <Route path="review" element={<ProductReview />} />
-            </Route>
-            <Route path="mycart" element={<CartPage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="search" element={<Search />} />
+              <Route path="product/:id" element={<ProductDetails />}>
+                <Route index element={<Navigate to="detail" replace />} />
+                <Route path="detail" element={<ProductDetail />} />
+                <Route path="review" element={<ProductReview />} />
+              </Route>
 
-            <Route path="checkout" element={<Checkout />} />
+              <Route path="mycart" element={<CartPage />} />
 
-            <Route path="/account" element={<Wishlist />}>
-              <Route index element={<WishlistInfo />} />
-              <Route path="orders" element={<OrdersInfo />} />
-              <Route path="address" element={<AdressInfo />} />
-              <Route path="password" element={<PasswordInfo />} />
-              <Route path="details" element={<AccountInfo />} />
+              <Route path="checkout" element={<Checkout />} />
+
+              <Route path="ordersuccess" element={<OrderSuccess />} />
+
+              <Route path="failedorder" element={<OrderFailed />} />
+
+              <Route path="/account" element={<Wishlist />}>
+                <Route index element={<WishlistInfo />} />
+                <Route path="orders" element={<OrdersInfo />} />
+                <Route path="address" element={<AdressInfo />} />
+                <Route path="password" element={<PasswordInfo />} />
+                <Route path="details" element={<AccountInfo />} />
+              </Route>
             </Route>
           </Route>
 

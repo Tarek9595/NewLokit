@@ -6,6 +6,12 @@ import Lang from "../common/Lang";
 
 export default function LargeNav() {
   const navigate = useNavigate();
+  const user = localStorage.getItem("user");
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
   const links = [
     { name: "Home", path: "/" },
@@ -43,9 +49,18 @@ export default function LargeNav() {
         </div>
       </nav>
 
-      <CstBtn variant="darky" size="md" onClick={() => navigate("/login")}>
-        Sign In
-      </CstBtn>
+      {user ? (
+        <button
+          onClick={handleLogout}
+          className="text-darky hover:text-red-500 font-semibold hover:underline cursor-pointer"
+        >
+          Logout
+        </button>
+      ) : (
+        <CstBtn variant="darky" size="md" onClick={() => navigate("/login")}>
+          Sign In
+        </CstBtn>
+      )}
     </div>
   );
 }

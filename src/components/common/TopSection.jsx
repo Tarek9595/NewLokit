@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { LiaAngleRightSolid } from "react-icons/lia";
 
-export default function TopSection({ name, crrName, path }) {
+export default function TopSection({ name, crrName, path, bGround }) {
   return (
-    <section className="w-full bg-[#EDF1F3] py-12 md:py-20 lg:py-28 flex justify-center">
+    <section
+      className={`w-full ${bGround ? bGround : "bg-[#EDF1F3]"} py-12 md:py-20 lg:py-28 flex justify-center`}
+    >
       <div className="container flex flex-col items-center justify-center gap-3 px-5 md:px-0">
         <h1 className="uppercase font-jost text-[40px] md:text-[60px] text-darky tracking-wider leading-none">
           {name}

@@ -1361,6 +1361,8 @@ export const useCart = create((set, get) => ({
         .filter((item) => item.qty > 0),
     })),
 
+  clearCart: () => set({ cart: [] }),
+
   getCartTotal: () => {
     const { cart } = get();
 
@@ -1375,4 +1377,26 @@ export const useCart = create((set, get) => ({
       total: total.toFixed(2),
     };
   },
+}));
+
+export const useAuthStore = create((set) => ({
+  user: JSON.parse(localStorage.getItem("user")) || null,
+  isLoggedIn: !!localStorage.getItem("user"),
+
+  login: (userData) => {
+    localStorage.setItem("user", JSON.stringify(userData));
+    set({ user: userData, isLoggedIn: true });
+  },
+
+  logout: () => {
+    localStorage.removeItem("user");
+    set({ user: null, isLoggedIn: false });
+  },
+
+  updateUser: (newDetails) =>
+    set((state) => {
+      const updatedUser = { ...state.user, ...newDetails };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return { user: updatedUser };
+    }),
 }));

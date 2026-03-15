@@ -6,6 +6,12 @@ import CstBtn from "../common/CstBtn";
 export default function SmallNav() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const user = localStorage.getItem("user");
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
 
   const links = [
     { name: "Home", path: "/" },
@@ -54,18 +60,29 @@ export default function SmallNav() {
             ))}
           </nav>
 
-          <div className="mt-auto">
-            <CstBtn
-              fullWidth
-              variant="darky"
-              onClick={() => {
-                navigate("/login");
-                setIsOpen(false);
-              }}
-            >
-              Sign In
-            </CstBtn>
-          </div>
+          {user ? (
+            <div className="mt-auto text-center">
+              <button
+                onClick={handleLogout}
+                className="text-darky hover:text-red-500 font-semibold hover:underline cursor-pointer"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="mt-auto">
+              <CstBtn
+                fullWidth
+                variant="darky"
+                onClick={() => {
+                  navigate("/login");
+                  setIsOpen(false);
+                }}
+              >
+                Sign In
+              </CstBtn>
+            </div>
+          )}
         </div>
       </div>
     </div>
