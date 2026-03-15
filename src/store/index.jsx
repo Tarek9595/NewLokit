@@ -1320,7 +1320,7 @@ export const useReviews = create((set) => ({
     set((state) => ({ reviews: [...state.reviews, newReview] })),
 }));
 
-export const useCart = create((set) => ({
+export const useCart = create((set, get) => ({
   cart: [],
 
   setCartProduct: (product) =>
@@ -1360,4 +1360,19 @@ export const useCart = create((set) => ({
         )
         .filter((item) => item.qty > 0),
     })),
+
+  getCartTotal: () => {
+    const { cart } = get();
+
+    const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+
+    const tax = subtotal * 0.14;
+    const total = subtotal + tax;
+
+    return {
+      subtotal: subtotal.toFixed(2),
+      tax: tax.toFixed(2),
+      total: total.toFixed(2),
+    };
+  },
 }));

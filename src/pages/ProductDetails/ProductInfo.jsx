@@ -1,4 +1,4 @@
-import { useCurrentProduct, useWishlist } from "../../store";
+import { useCart, useCurrentProduct, useWishlist } from "../../store";
 import { useState } from "react";
 import { HiOutlineShare } from "react-icons/hi2";
 import { IoIosHeartEmpty, IoMdHeart } from "react-icons/io";
@@ -7,6 +7,7 @@ import CustomButton from "../../components/common/CstBtn";
 import { Link } from "react-router";
 import upload from "../../assets/upload.svg";
 import aiMan from "../../assets/AiMan.svg";
+import toast from "react-hot-toast";
 
 export default function ProductInfo() {
   const [selectedColor, setSelectedColor] = useState(0);
@@ -17,6 +18,7 @@ export default function ProductInfo() {
   const { wishlist, setWishListProduct, removeWishlistProduct } = useWishlist();
 
   const isLiked = wishlist.some((item) => item.id === currentProduct.id);
+  const { cart, setCartProduct } = useCart();
 
   const toggleLike = () => {
     if (isLiked) {
@@ -25,6 +27,25 @@ export default function ProductInfo() {
       setWishListProduct(currentProduct);
       console.log(wishlist);
       console.log(currentProduct);
+    }
+  };
+
+  const addToCart = (product) => {
+    const isAlreadyInCart = cart.find((item) => item.id === product.id);
+
+    setCartProduct(product);
+
+    if (isAlreadyInCart) {
+      toast.success("Quantity Increased", {
+        style: {
+          border: "1px solid #212a2f",
+          padding: "16px",
+          color: "#212a2f",
+        },
+        iconTheme: { primary: "#212a2f", secondary: "#FFFAEE" },
+      });
+    } else {
+      toast.success("Product Added Successfully To Cart");
     }
   };
 
@@ -165,6 +186,7 @@ export default function ProductInfo() {
                   variant="darky"
                   size="lg"
                   className="flex-1 py-5 rounded-sm shadow-xl w-20"
+                  onClick={() => addToCart(currentProduct)}
                 >
                   Add to cart
                 </CustomButton>

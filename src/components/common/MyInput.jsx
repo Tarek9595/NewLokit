@@ -19,8 +19,10 @@ export default function MyInput({ children, width, ...props }) {
   const hasRightIcon = childrenArray.length > 1;
 
   return (
-    <div className={`flex flex-col gap-1.5`}>
-      <label className="label-text capitalize font-medium text-darky text-[16px] md:text-[18px]">
+    <div className={`flex flex-col gap-1.5 ${width || "w-full"} `}>
+      <label
+        className={`label-text capitalize font-medium text-[16px] md:text-[18px] ${props.shap ? "text-darky/70" : "text-darky"}`}
+      >
         {props.accName ? props.accName : props.name}
       </label>
 
@@ -35,8 +37,7 @@ export default function MyInput({ children, width, ...props }) {
           {...field}
           {...props}
           type={inputType}
-          className={`input bg-transparent border transition-all duration-300 text-[16px] h-13.75 focus:outline-none
-            ${width || "w-full"} 
+          className={`input bg-transparent border transition-all duration-300 text-[16px] h-13.75 focus:outline-none w-full
             ${hasLeftIcon ? "pl-12" : "pl-4"} 
             ${hasRightIcon ? "pr-12" : "pr-4"}
             ${
@@ -56,11 +57,9 @@ export default function MyInput({ children, width, ...props }) {
         )}
       </div>
 
-      <div className="min-h-5">
-        {meta.touched && meta.error && (
-          <span className="text-red-500 text-sm block">{meta.error}</span>
-        )}
-      </div>
+      {meta.touched && meta.error && (
+        <span className="text-red-500 text-sm block">{meta.error}</span>
+      )}
     </div>
   );
 }

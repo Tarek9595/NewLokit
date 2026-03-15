@@ -1,6 +1,6 @@
-import { Outlet, NavLink } from "react-router"; // غيرنا Link بـ NavLink عشان حالة الـ Active
+import { Outlet, NavLink } from "react-router";
 import ProductInfo from "./ProductInfo";
-import { HiOutlineDotsHorizontal, HiOutlineStar } from "react-icons/hi"; // الأيقونات
+import { HiOutlineDotsHorizontal, HiOutlineStar } from "react-icons/hi";
 import Familiar from "./Familiar";
 
 export default function ProductDetails() {

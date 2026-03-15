@@ -3,7 +3,7 @@ import { IoSearchOutline } from "react-icons/io5";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import Pagination from "../../components/common/Pagination";
-import { products, useWishlist } from "../../store";
+import { products, useCart, useWishlist } from "../../store";
 import { useState } from "react";
 import ProductCard from "../ProductDetails/ProductCard";
 
@@ -21,6 +21,7 @@ export default function SearchShoping() {
     indexOfFirstProduct,
     indexOfLastProduct,
   );
+  const { cart, setCartProduct, removeCartProduct } = useCart();
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -58,13 +59,21 @@ export default function SearchShoping() {
                 key={product.id}
                 product={product}
                 isLiked={wishlist.some((item) => item.id === product.id)}
-                onToggle={() => {
+                heartToggle={() => {
                   const isExist = wishlist.some(
                     (item) => item.id === product.id,
                   );
                   isExist
                     ? removeWishlistProduct(product.id)
                     : setWishListProduct(product);
+                }}
+                cartAdd={cart.some((item) => item.id === product.id)}
+                cartToggle={() => {
+                  const isExist = cart.some((item) => item.id === product.id);
+                  isExist
+                    ? removeCartProduct(product.id)
+                    : setCartProduct(product);
+                  console.log(cart);
                 }}
               />
             </motion.div>

@@ -4,11 +4,14 @@ import { HiMiniXMark } from "react-icons/hi2";
 import CstBtn from "../../components/common/CstBtn";
 import { useCart } from "../../store";
 import Swal from "sweetalert2";
-import { useMemo } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 export default function CartPage() {
-  const { cart, removeCartProduct, increaseQty, decreaseQty } = useCart();
+  const navigate = useNavigate();
+
+  const { cart, removeCartProduct, increaseQty, decreaseQty, getCartTotal } =
+    useCart();
 
   const confirmRemove = (product) => {
     Swal.fire({
@@ -35,20 +38,13 @@ export default function CartPage() {
     });
   };
 
-  const { subtotal, tax, total } = useMemo(() => {
-    const currentSubtotal = cart.reduce(
-      (acc, item) => acc + item.price * item.qty,
-      0,
-    );
-    const currentTax = currentSubtotal * 0.14;
-    const currentTotal = currentSubtotal + currentTax;
+  const { subtotal, tax, total } = getCartTotal();
 
-    return {
-      subtotal: currentSubtotal.toFixed(2),
-      tax: currentTax.toFixed(2),
-      total: currentTotal.toFixed(2),
-    };
-  }, [cart]);
+  const handleCheckout = () => {
+    cart.length > 0
+      ? navigate("/checkout")
+      : toast.error("Please Fill Cart First");
+  };
   return (
     <div className="flex flex-col min-h-screen gap-15 items-center">
       <TopSection name="My Cart" crrName="Cart" path="mycart" />
@@ -61,6 +57,7 @@ export default function CartPage() {
             {cart.length > 0 ? (
               cart.map((product) => (
                 <div
+                  key={product.id}
                   className={`flex flex-col md:flex-row gap-7 justify-between md:items-center p-1 pt-6 md:pt-7 text-darky font-medium`}
                 >
                   <div className="flex flex-col gap-1.5 items-start  md:w-55">
@@ -140,11 +137,15 @@ export default function CartPage() {
             <span>Total </span>
             <span>$ {total}</span>
           </div>
-          <Link to="/checkout">
-            <CstBtn className="font-medium" fullWidth="true">
-              Checkout
-            </CstBtn>
-          </Link>
+
+          <CstBtn
+            className="font-medium"
+            fullWidth="true"
+            onClick={handleCheckout}
+          >
+            Checkout
+          </CstBtn>
+
           <Link
             to="/"
             className="text-[14px] capitalize underline underline-offset-2  font-semibold text-center"
