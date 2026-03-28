@@ -4,7 +4,7 @@ export default function MyRadio({ label, ...props }) {
   const [field] = useField({ ...props, type: "radio" });
 
   return (
-    <label className="flex items-center gap-3 p-4  rounded-xl cursor-pointer hover:border-darky transition-all duration-300 w-[47%]">
+    <label className="flex items-center gap-3 p-4 rounded-xl cursor-pointer hover:border-darky transition-all duration-300">
       <input
         {...field}
         {...props}

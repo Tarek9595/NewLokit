@@ -46,7 +46,9 @@ export default function Checkout() {
     cardNumber: Yup.string().when("paymentMethod", {
       is: "credit",
       then: (schema) =>
-        schema.required("Card number is required").min(16, "Must be 16 digits"),
+        schema
+          .required("Card number is required")
+          .min(14, "Card number must be at least 14 digits"),
       otherwise: (schema) => schema.notRequired(),
     }),
     expDate: Yup.string().when("paymentMethod", {
@@ -54,7 +56,7 @@ export default function Checkout() {
       then: (schema) =>
         schema
           .required("Required")
-          .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "MM/YY"),
+          .matches(/^(0[1-9]|1[0-2])\/([0-9]{2})$/, "Format must be MM/YY"),
       otherwise: (schema) => schema.notRequired(),
     }),
     CVV: Yup.string().when("paymentMethod", {
@@ -111,8 +113,18 @@ export default function Checkout() {
                 type="text"
                 shap={true}
               />
-              <MyInput name="city" width="w-[47%]" type="text" shap={true} />
-              <MyInput name="state" width="w-[47%]" type="text" shap={true} />
+              <MyInput
+                name="city"
+                width="w-full md:w-[47%]"
+                type="text"
+                shap={true}
+              />
+              <MyInput
+                name="state"
+                width="w-full md:w-[47%]"
+                type="text"
+                shap={true}
+              />
             </div>
 
             <div className="flex flex-wrap justify-between gap-7">
@@ -123,28 +135,33 @@ export default function Checkout() {
               <MyInput
                 name="firstName"
                 accName="first Name"
-                width="w-[47%]"
+                width="w-full md:w-[47%]"
                 type="text"
                 shap={true}
               />
               <MyInput
                 name="lastName"
                 accName="last Name"
-                width="w-[47%]"
-                type="email"
+                width="w-full md:w-[47%]"
+                type="text"
                 shap={true}
               />
-              <MyInput name="email" width="w-[47%]" type="text" shap={true} />
+              <MyInput
+                name="email"
+                width="w-full md:w-[47%]"
+                type="text"
+                shap={true}
+              />
               <MyInput
                 name="phone"
                 accName="Phone Number"
-                width="w-[47%]"
+                width="w-full md:w-[47%]"
                 type="number"
                 shap={true}
               />
             </div>
 
-            <div className="flex flex-wrap justify-between gap-7">
+            <div className="flex flex-wrap md:flex-row flex-col w-full md:w-100 justify-between gap-7">
               <h1 className="w-full text-darky font-bold capitalize text-[18px]">
                 Payment Method
               </h1>
@@ -170,27 +187,32 @@ export default function Checkout() {
               <MyInput
                 name="cardNumber"
                 accName="Card Number"
-                width="w-[47%]"
+                width="w-full md:w-[47%]"
                 type="number"
                 shap={true}
               />
               <MyInput
                 name="expDate"
                 accName="Exp Date"
-                width="w-[47%]"
+                width="w-full md:w-[47%]"
                 type="number"
                 shap={true}
               />
-              <MyInput name="CVV" width="w-[47%]" type="number" shap={true} />
+              <MyInput
+                name="CVV"
+                width="w-full md:w-[47%]"
+                type="number"
+                shap={true}
+              />
             </div>
           </div>
 
-          <div className="rounded-sm border-2 border-[#F6F6F6] pb-8 px-6 flex flex-col gap-14 h-fit">
+          <div className="rounded-sm border-2 border-[#F6F6F6] pb-8 px-6 flex flex-col gap-14 h-fit w-full xl:w-150">
             <h1 className="w-full text-darky font-bold capitalize text-[16px] py-4.5">
               Your Order
             </h1>
 
-            <div className="flex justify-between items-center w-full lg:w-87.5">
+            <div className="flex justify-between items-center">
               <div className="flex -space-x-4 overflow-hidden">
                 {cart.slice(0, 3).map((item, index) => (
                   <div
@@ -213,7 +235,10 @@ export default function Checkout() {
               </div>
 
               <Link to="/mycart">
-                <CstBtn variant="outline" className="text-xs py-2 px-4 h-fit">
+                <CstBtn
+                  variant="outlineDarky"
+                  className="text-xs py-2 px-4 h-fit"
+                >
                   Edit Cart
                 </CstBtn>
               </Link>
@@ -221,20 +246,20 @@ export default function Checkout() {
 
             <div className="flex flex-col gap-9">
               <div className="flex flex-col gap-3 pb-6 border-b-2 border-darky/20">
-                <div className="lg:w-3xs flex justify-between items-center text-[14px] font-medium capitalize">
+                <div className=" flex justify-between items-center text-[14px] font-medium capitalize">
                   <span className="text-[#5C5F6A]">Subtotal</span>
                   <span>$ {subtotal}</span>
                 </div>
-                <div className="lg:w-3xs flex justify-between items-center text-[14px] font-medium capitalize">
+                <div className=" flex justify-between items-center text-[14px] font-medium capitalize">
                   <span className="text-[#5C5F6A]">Shipping: </span>
                   <span>Free</span>
                 </div>
-                <div className="lg:w-3xs flex justify-between items-center text-[14px] font-medium capitalize">
+                <div className=" flex justify-between items-center text-[14px] font-medium capitalize">
                   <span className="text-[#5C5F6A]">Tax: </span>
                   <span>$ {tax}</span>
                 </div>
               </div>
-              <div className="lg:w-3xs flex justify-between items-center text-[14px] font-medium capitalize">
+              <div className=" flex justify-between items-center text-[14px] font-medium capitalize">
                 <span>Total </span>
                 <span>$ {total}</span>
               </div>
