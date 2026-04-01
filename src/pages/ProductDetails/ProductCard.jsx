@@ -14,7 +14,7 @@ export default function ProductCard({
   const { setProduct } = useCurrentProduct();
 
   return (
-    <div className="group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent hover:border-darky/5">
+    <div className="group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent hover:border-darky/5 ">
       <div className="relative aspect-3/4 rounded-xl overflow-hidden bg-gray-100">
         <img
           src={product.img}
@@ -56,7 +56,7 @@ export default function ProductCard({
       </div>
 
       <div className="mt-4 px-1 space-y-2">
-        <div className="flex justify-between">
+        <div className="flex flex-col xl:flex-row justify-between">
           <div>
             <h3 className="font-main font-semibold text-darky text-base lg:text-lg truncate max-w-37.5 uppercase tracking-tight">
               {product.name}

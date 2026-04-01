@@ -134,6 +134,15 @@ input[type="number"] {
     scrollbar-width: none;
   }
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 .price-slider {
   -webkit-appearance: none;
   appearance: none;
