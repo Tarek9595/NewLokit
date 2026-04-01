@@ -2,18 +2,23 @@ import { NavLink } from "react-router-dom";
 import Logo from "../common/Logo";
 
 export default function Footer() {
+  const user = localStorage.getItem("user");
   const footerLinks = [
     { name: "Home", path: "/" },
     { name: "Search", path: "/search" },
     { name: "Wishlist", path: "/account" },
     { name: "My cart", path: "/mycart" },
-    { name: "Sign In", path: "/login" },
-    { name: "Sign Up", path: "/signup" },
+    ...(!user
+      ? [
+          { name: "Sign In", path: "/login" },
+          { name: "Sign Up", path: "/signup" },
+        ]
+      : []),
   ];
 
   return (
     <footer className="bg-darky text-white font-main">
-      <div className="container mx-auto px-6 py-12 lg:px-12 lg:py-16">
+      <div className="container mx-auto px-6 py-12">
         <div className="flex flex-col lg:flex-row justify-between items-center border-b border-white/10 pb-10 gap-8">
           <Logo textColor="text-white" size="text-[32px]" />
 

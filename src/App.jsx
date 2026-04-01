@@ -20,7 +20,6 @@ import ProductReview from "./pages/ProductDetails/ProductReview";
 import Search from "./pages/Shop/Search";
 import AuthLayout from "./components/layout/AuthLayout";
 import { Toaster } from "react-hot-toast";
-import Checkout from "./pages/Cart/Checkout";
 import OrderSuccess from "./pages/Cart/OrderSuccess";
 import OrderFailed from "./pages/Cart/OrderFailed";
 import ScrollToTop from "./components/common/ScrollToTop";
@@ -44,8 +43,6 @@ export default function App() {
               </Route>
 
               <Route path="mycart" element={<CartPage />} />
-
-              <Route path="checkout" element={<Checkout />} />
 
               <Route path="ordersuccess" element={<OrderSuccess />} />
 

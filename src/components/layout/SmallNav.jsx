@@ -38,7 +38,7 @@ export default function SmallNav() {
         <div
           className={`absolute right-0 top-0 h-full w-70 bg-white shadow-2xl p-8 flex flex-col transition-transform duration-500 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
         >
-          <div className="flex justify-end mb-8">
+          <div className="flex justify-end mb-8 ">
             <AiOutlineClose
               className="text-3xl cursor-pointer"
               onClick={() => setIsOpen(false)}

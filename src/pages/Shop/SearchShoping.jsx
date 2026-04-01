@@ -42,7 +42,7 @@ export default function SearchShoping() {
 
       <motion.div
         layout
-        className="p-4 bg-[#4444440A] h-[202dvh] overflow-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+        className="p-4 bg-[#4444440A] h-[202dvh] overflow-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         <AnimatePresence>
           {currentProducts.map((product) => (

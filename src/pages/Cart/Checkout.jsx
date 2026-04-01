@@ -7,6 +7,7 @@ import TopSection from "../../components/common/TopSection";
 import { useCart } from "../../store";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
+import CreditCardFields from "./CreditCardFields";
 
 export default function Checkout() {
   const { getCartTotal } = useCart();
@@ -37,20 +38,23 @@ export default function Checkout() {
     email: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
+
     phone: Yup.string()
       .matches(/^[0-9]+$/, "Must be only digits")
       .min(10, "Phone number is too short")
       .required("Phone number is required"),
+
     paymentMethod: Yup.string().required(),
 
     cardNumber: Yup.string().when("paymentMethod", {
       is: "credit",
       then: (schema) =>
         schema
-          .required("Card number is required")
-          .min(14, "Card number must be at least 14 digits"),
+          .required("Required")
+          .matches(/^[0-9]{14}$/, "Must be exactly 14 digits"),
       otherwise: (schema) => schema.notRequired(),
     }),
+
     expDate: Yup.string().when("paymentMethod", {
       is: "credit",
       then: (schema) =>
@@ -59,9 +63,13 @@ export default function Checkout() {
           .matches(/^(0[1-9]|1[0-2])\/([0-9]{2})$/, "Format must be MM/YY"),
       otherwise: (schema) => schema.notRequired(),
     }),
+
     CVV: Yup.string().when("paymentMethod", {
       is: "credit",
-      then: (schema) => schema.required("Required").min(3, "3 digits"),
+      then: (schema) =>
+        schema
+          .required("Required")
+          .matches(/^[0-9]{3}$/, "Must be exactly 3 digits"),
       otherwise: (schema) => schema.notRequired(),
     }),
   });
@@ -74,23 +82,10 @@ export default function Checkout() {
       return;
     }
 
-    if (!values.streetAddress || !values.firstName || !values.email) {
-      toast.error("Please fill in all required shipping information.");
-      return;
-    }
-
-    if (values.paymentMethod === "credit" && !values.cardNumber) {
-      toast.error("Please provide your card details for credit payment.");
-      return;
-    }
-
-    console.log("Processing Order for:", values.firstName, values.lastName);
-    console.log("Full Order Data:", values);
-
     toast.success(`Thank you ${values.firstName}! Your order has been placed.`);
 
     clearCart();
-    navigate("/order-success");
+    navigate("/ordersuccess");
   };
   return (
     <div className="flex flex-col min-h-screen gap-15 items-center">
@@ -178,33 +173,7 @@ export default function Checkout() {
                 label="Credit Card"
               />
             </div>
-
-            <div className="flex flex-wrap justify-between gap-7">
-              <h1 className="w-full text-darky font-bold capitalize text-[18px]">
-                Card Details
-              </h1>
-
-              <MyInput
-                name="cardNumber"
-                accName="Card Number"
-                width="w-full md:w-[47%]"
-                type="number"
-                shap={true}
-              />
-              <MyInput
-                name="expDate"
-                accName="Exp Date"
-                width="w-full md:w-[47%]"
-                type="number"
-                shap={true}
-              />
-              <MyInput
-                name="CVV"
-                width="w-full md:w-[47%]"
-                type="number"
-                shap={true}
-              />
-            </div>
+            <CreditCardFields />
           </div>
 
           <div className="rounded-sm border-2 border-[#F6F6F6] pb-8 px-6 flex flex-col gap-14 h-fit w-full xl:w-150">
@@ -264,7 +233,7 @@ export default function Checkout() {
                 <span>$ {total}</span>
               </div>
 
-              <CstBtn fullWidth="true" type="submit" onClick={handleSubmit}>
+              <CstBtn fullWidth="true" type="submit">
                 Checkout
               </CstBtn>
             </div>

@@ -44,7 +44,9 @@ export default function MyInput({ children, width, ...props }) {
               meta.touched && meta.error
                 ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
                 : "border-[#212A2F29] focus:border-darky focus:ring-1 focus:ring-darky"
-            }`}
+            }
+            ${props.disabled ? "cursor-not-allowed bg-gray-100" : "bg-transparent"}
+            `}
         />
 
         {isPasswordType && (
