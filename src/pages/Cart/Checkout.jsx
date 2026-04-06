@@ -27,6 +27,7 @@ export default function Checkout() {
     cardNumber: "",
     expDate: "",
     CVV: "",
+    orderNotes: "",
   };
 
   const checkoutSchema = Yup.object().shape({
@@ -35,6 +36,8 @@ export default function Checkout() {
     state: Yup.string().required("State is required"),
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
+    orderNotes: Yup.string().required("Notes  required"),
+
     email: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
@@ -152,6 +155,19 @@ export default function Checkout() {
                 accName="Phone Number"
                 width="w-full md:w-[47%]"
                 type="number"
+                shap={true}
+              />
+            </div>
+
+            <div className="flex flex-wrap justify-between gap-7">
+              <h1 className="w-full text-darky font-bold capitalize text-[18px]">
+                Write Your Order Notes
+              </h1>
+
+              <MyInput
+                name="orderNotes"
+                accName="Order Notes"
+                as="textarea"
                 shap={true}
               />
             </div>

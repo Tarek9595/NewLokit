@@ -24,6 +24,7 @@ import OrderSuccess from "./pages/Cart/OrderSuccess";
 import OrderFailed from "./pages/Cart/OrderFailed";
 import ScrollToTop from "./components/common/ScrollToTop";
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import Checkout from "./pages/Cart/Checkout";
 
 export default function App() {
   return (
@@ -43,6 +44,8 @@ export default function App() {
               </Route>
 
               <Route path="mycart" element={<CartPage />} />
+
+              <Route path="checkout" element={<Checkout />} />
 
               <Route path="ordersuccess" element={<OrderSuccess />} />
 

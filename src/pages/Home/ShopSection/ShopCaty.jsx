@@ -3,8 +3,10 @@ import { products, useCart, useWishlist } from "../../../store";
 import ProductCard from "../../ProductDetails/ProductCard";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
+import toast from "react-hot-toast";
 
 export default function ShopCaty() {
+  const user = localStorage.getItem("user");
   const { wishlist, setWishListProduct, removeWishlistProduct } = useWishlist();
   const [activeCategory, setActiveCategory] = useState("All");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
@@ -110,9 +112,22 @@ export default function ShopCaty() {
             }}
             cartAdd={cart.some((item) => item.id === product.id)}
             cartToggle={() => {
-              const isExist = cart.some((item) => item.id === product.id);
-              isExist ? removeCartProduct(product.id) : setCartProduct(product);
-              console.log(cart);
+              if (user) {
+                const isExist = cart.some((item) => item.id === product.id);
+                isExist
+                  ? removeCartProduct(product.id)
+                  : setCartProduct(product);
+                console.log(cart);
+              } else {
+                toast.error("Please login first", {
+                  id: "auth-error",
+                  style: {
+                    borderRadius: "10px",
+                    background: "#212a2f",
+                    color: "#fff",
+                  },
+                });
+              }
             }}
           />
         ))}

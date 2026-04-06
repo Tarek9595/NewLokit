@@ -6,6 +6,7 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 export default function MyInput({ children, width, ...props }) {
   const [field, meta] = useField(props);
   const childrenArray = React.Children.toArray(children);
+  const Tag = props.as || "input";
 
   const [showPassword, setShowPassword] = useState(false);
   const isPasswordType = props.type === "password";
@@ -26,20 +27,29 @@ export default function MyInput({ children, width, ...props }) {
         {props.accName ? props.accName : props.name}
       </label>
 
-      <div className="relative w-full flex items-center">
+      <div
+        className={`relative w-full flex ${Tag === "textarea" ? "items-start" : "items-center"}`}
+      >
         {hasLeftIcon && (
           <div className="absolute left-4 flex items-center justify-center text-gray-500 text-[20px] pointer-events-none">
             {childrenArray[0]}
           </div>
         )}
 
-        <input
+        <Tag
           {...field}
           {...props}
           type={inputType}
-          className={`input bg-transparent border transition-all duration-300 text-[16px] h-13.75 focus:outline-none w-full
+          className={`input bg-transparent border transition-all duration-300 text-[16px] ${props.hieght ? props.hieght : "h-13.75"} focus:outline-none w-full
             ${hasLeftIcon ? "pl-12" : "pl-4"} 
             ${hasRightIcon ? "pr-12" : "pr-4"}
+            ${
+              Tag === "textarea"
+                ? "h-auto! min-h-37.5 py-4 block! whitespace-pre-wrap wrap-break-word"
+                : props.hieght
+                  ? props.hieght
+                  : "h-13.75"
+            }
             ${
               meta.touched && meta.error
                 ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
