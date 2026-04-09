@@ -3,11 +3,11 @@ import { useCart } from "../../../store";
 import EmptyOrders from "../EmptyOrders";
 
 export default function OrdersInfo() {
-  const { cart } = useCart();
+  const { cartOfOrdered } = useCart();
 
-  return cart.length > 0 ? (
+  return cartOfOrdered.length > 0 ? (
     <div className="flex flex-col">
-      {cart.map((product) => (
+      {cartOfOrdered.map((product) => (
         <div
           key={product.id}
           className="flex flex-col md:flex-row w-225 justify-between items-start md:items-center py-8 border-b border-gray-100 last:border-0"

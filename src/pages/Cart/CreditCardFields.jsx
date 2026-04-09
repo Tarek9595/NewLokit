@@ -31,7 +31,7 @@ export default function CreditCardFields() {
         width="w-full md:w-[47%]"
         type="text"
         shap={true}
-        disabled={isCash} // لو كاش هيبقى disabled
+        disabled={isCash}
         onChange={(e) => {
           const val = e.target.value.replace(/\D/g, "").slice(0, 14);
           setFieldValue("cardNumber", val);
@@ -45,7 +45,7 @@ export default function CreditCardFields() {
         type="text"
         placeholder="MM/YY"
         shap={true}
-        disabled={isCash} // لو كاش هيبقى disabled
+        disabled={isCash}
         onChange={(e) => {
           let value = e.target.value.replace(/\D/g, "");
           if (value.length > 2) {
@@ -62,7 +62,7 @@ export default function CreditCardFields() {
         type="text"
         placeholder="678"
         shap={true}
-        disabled={isCash} // لو كاش هيبقى disabled
+        disabled={isCash}
         onChange={(e) => {
           const val = e.target.value.replace(/\D/g, "").slice(0, 3);
           setFieldValue("CVV", val);

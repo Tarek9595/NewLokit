@@ -46,8 +46,6 @@ export default function Filtered() {
     (appliedFilters?.priceRange !== undefined &&
       appliedFilters?.priceRange !== 0);
 
-  console.log(hasActiveFilters);
-
   return (
     <form
       onSubmit={formik.handleSubmit}

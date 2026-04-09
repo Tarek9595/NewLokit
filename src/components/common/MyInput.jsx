@@ -3,7 +3,7 @@ import { useField } from "formik";
 import { useState } from "react";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
-export default function MyInput({ children, width, ...props }) {
+export default function MyInput({ children, width, accName, ...props }) {
   const [field, meta] = useField(props);
   const childrenArray = React.Children.toArray(children);
   const Tag = props.as || "input";
@@ -24,7 +24,7 @@ export default function MyInput({ children, width, ...props }) {
       <label
         className={`label-text capitalize font-medium text-[16px] md:text-[18px] ${props.shap ? "text-darky/70" : "text-darky"}`}
       >
-        {props.accName ? props.accName : props.name}
+        {accName ? accName : props.name}
       </label>
 
       <div

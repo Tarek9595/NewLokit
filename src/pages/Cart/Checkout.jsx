@@ -13,12 +13,12 @@ export default function Checkout() {
   const { getCartTotal } = useCart();
   const { subtotal, tax, total } = getCartTotal();
   const navigate = useNavigate();
-  const { cart, clearCart } = useCart();
+  const { cart, clearCart, confirmOrder } = useCart();
 
   const initialValues = {
     streetAddress: "",
     city: "",
-    state: "",
+    governorate: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -33,7 +33,7 @@ export default function Checkout() {
   const checkoutSchema = Yup.object().shape({
     streetAddress: Yup.string().required("Street address is required"),
     city: Yup.string().required("City is required"),
-    state: Yup.string().required("State is required"),
+    governorate: Yup.string().required("Governorate is required"),
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
     orderNotes: Yup.string().required("Notes  required"),
@@ -87,6 +87,7 @@ export default function Checkout() {
 
     toast.success(`Thank you ${values.firstName}! Your order has been placed.`);
 
+    confirmOrder();
     clearCart();
     navigate("/ordersuccess");
   };
@@ -118,7 +119,7 @@ export default function Checkout() {
                 shap={true}
               />
               <MyInput
-                name="state"
+                name="governorate"
                 width="w-full md:w-[47%]"
                 type="text"
                 shap={true}
@@ -250,7 +251,7 @@ export default function Checkout() {
               </div>
 
               <CstBtn fullWidth="true" type="submit">
-                Checkout
+                Place Order
               </CstBtn>
             </div>
           </div>

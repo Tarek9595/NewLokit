@@ -1,25 +1,8 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { useActiveInfo, useLinks } from "../../store";
-import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import { useActiveInfo } from "../../store";
 
 export default function SideInfo() {
   const { activeInfo } = useActiveInfo();
-
-  const location = useLocation();
-  const { Links } = useLinks();
-
-  useEffect(() => {
-    const currentTitle =
-      Links.find(
-        (l) =>
-          (l.path === "/account" ? l.path : "/account/" + l.path) ===
-          location.pathname,
-      )?.name || "Wishlist";
-
-    console.log(currentTitle);
-
-    console.log(location.pathname);
-  }, [location]);
 
   return (
     <div className="grow p-2 sm:p-3 flex flex-col gap-6 sm:gap-14 w-full">

@@ -1377,6 +1377,14 @@ export const useCart = create((set, get) => ({
       total: total.toFixed(2),
     };
   },
+
+  cartOfOrdered: [],
+  confirmOrder: () => {
+    const { cart } = get();
+    set({
+      cartOfOrdered: cart,
+    });
+  },
 }));
 
 export const useAuthStore = create((set) => ({
