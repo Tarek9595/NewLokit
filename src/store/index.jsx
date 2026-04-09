@@ -1408,3 +1408,11 @@ export const useAuthStore = create((set) => ({
       return { user: updatedUser };
     }),
 }));
+
+export const useOrderProgress = create((set) => ({
+  orderProgress: false,
+
+  setOrderProgress: (newValue) => set({ orderProgress: newValue }),
+
+  resetOrderProgress: () => set({ orderProgress: false }),
+}));

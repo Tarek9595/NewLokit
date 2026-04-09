@@ -1,9 +1,10 @@
 import CstBtn from "../../../components/common/CstBtn";
-import { useCart } from "../../../store";
+import { useCart, useOrderProgress } from "../../../store";
 import EmptyOrders from "../EmptyOrders";
 
 export default function OrdersInfo() {
   const { cartOfOrdered } = useCart();
+  const { setOrderProgress } = useOrderProgress();
 
   return cartOfOrdered.length > 0 ? (
     <div className="flex flex-col">
@@ -31,7 +32,10 @@ export default function OrdersInfo() {
           </div>
 
           <div className="flex items-center gap-8 mt-6 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-            <span className="text-[14px] md:text-[15px] text-[#E26F1D] border-b border-[#E26F1D]  cursor-default font-medium cursor-pointer">
+            <span
+              onClick={() => setOrderProgress(true)}
+              className="text-[14px] md:text-[15px] text-[#E26F1D] border-b border-[#E26F1D] cursor-pointer"
+            >
               Processing
             </span>
 
