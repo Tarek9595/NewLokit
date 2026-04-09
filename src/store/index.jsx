@@ -1378,12 +1378,27 @@ export const useCart = create((set, get) => ({
     };
   },
 
-  cartOfOrdered: [],
-  confirmOrder: () => {
-    const { cart } = get();
-    set({
-      cartOfOrdered: cart,
-    });
+  ordersHistory: [],
+  confirmOrder: (customerValues) => {
+    const { cart, getCartTotal } = get();
+    const { total } = getCartTotal();
+
+    const newOrder = {
+      orderId: `#ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+      date: new Date().toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+      status: "Processing",
+      items: [...cart],
+      totalPrice: total,
+      customerDetails: customerValues,
+    };
+
+    set((state) => ({
+      ordersHistory: [newOrder, ...state.ordersHistory],
+    }));
   },
 }));
 
@@ -1415,4 +1430,12 @@ export const useOrderProgress = create((set) => ({
   setOrderProgress: (newValue) => set({ orderProgress: newValue }),
 
   resetOrderProgress: () => set({ orderProgress: false }),
+}));
+
+export const useCurrentOrder = create((set) => ({
+  selectedOrder: null,
+
+  setSelectedOrder: (order) => set({ selectedOrder: order }),
+
+  clearSelectedOrder: () => set({ selectedOrder: null }),
 }));

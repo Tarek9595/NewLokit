@@ -31,7 +31,7 @@ export default function SideLinks() {
   };
 
   return (
-    <div className="flex flex-row w-full lg:w-50 lg:flex-col gap-4 lg:mt-27.5 justify-between lg:justify-start">
+    <div className="flex flex-row flex-wrap w-full lg:w-50 lg:flex-col gap-4 lg:mt-27.5">
       {Links.map((link, index) => (
         <NavLink
           key={link.id}

@@ -87,7 +87,7 @@ export default function Checkout() {
 
     toast.success(`Thank you ${values.firstName}! Your order has been placed.`);
 
-    confirmOrder();
+    confirmOrder(values);
     clearCart();
     navigate("/ordersuccess");
   };
