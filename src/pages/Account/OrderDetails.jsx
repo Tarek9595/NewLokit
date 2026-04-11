@@ -1,23 +1,26 @@
 import { useCurrentOrder } from "../../store";
+import { BsClipboardCheck } from "react-icons/bs";
+import { BsBoxSeam } from "react-icons/bs";
+import { BsTruck } from "react-icons/bs";
+import { BsHandThumbsUp } from "react-icons/bs";
+import Test from "./Test";
 
 export default function OrderDetails() {
   const { selectedOrder } = useCurrentOrder();
 
-  // لو مفيش طلب مختار (حماية للكود)
   if (!selectedOrder)
     return <div className="p-10 text-center">No Order Selected</div>;
 
-  const steps = [
-    { label: "Order Placed", icon: "📋", completed: true },
-    { label: "Packaging", icon: "📦", completed: true },
-    { label: "On The Road", icon: "🚚", completed: false },
-    { label: "Delivered", icon: "✅", completed: false },
-  ];
-
+  // const steps = [
+  //   { label: "Order Placed", icon: <BsClipboardCheck />, status: "completed" },
+  //   { label: "Packaging", icon: <BsBoxSeam />, status: "active" },
+  //   { label: "On The Road", icon: <BsTruck />, status: "pending" },
+  //   { label: "Delivered", icon: <BsHandThumbsUp />, status: "pending" },
+  // ];
+  console.log(selectedOrder);
   return (
-    <div className="flex flex-col gap-8 w-full animate-fadeIn">
-      {/* Header Info */}
-      <div className="bg-[#F9FAFB] p-6 rounded-sm border border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div className="flex flex-col gap-8">
+      <div className=" md:w-[85%] bg-[#F9FAFB] p-6 rounded-sm border border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-bold text-darky uppercase">
             {selectedOrder.orderId}
@@ -36,69 +39,52 @@ export default function OrderDetails() {
       </div>
 
       {/* Order Progress Bar */}
-      <div className="py-6 flex flex-col gap-8">
+      <div className="py-6 flex flex-col gap-8 ">
         <p className="text-sm font-medium">
           Order expected arrival <span className="font-bold">23 Jan, 2021</span>
         </p>
-
-        <div className="relative flex justify-between items-center w-full">
-          {/* Progress Line Background */}
-          <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-200 -translate-y-1/2 z-0"></div>
-          {/* Active Progress Line (50% based on example) */}
-          <div className="absolute top-1/2 left-0 w-1/3 h-1 bg-darky -translate-y-1/2 z-0"></div>
-
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className="relative z-10 flex flex-col items-center gap-3 bg-white px-2"
-            >
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all 
-                ${step.completed ? "bg-darky border-darky text-white" : "bg-white border-gray-200 text-gray-400"}`}
-              >
-                <span className="text-lg">{step.icon}</span>
-              </div>
-              <span
-                className={`text-[12px] font-semibold whitespace-nowrap ${step.completed ? "text-darky" : "text-gray-400"}`}
-              >
-                {step.label}
-              </span>
-            </div>
-          ))}
-        </div>
+        <Test />
       </div>
 
       {/* Products Table */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-full">
         <h3 className="font-bold text-darky">
           Product ({selectedOrder.items.length})
         </h3>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm border-collapse">
-            <thead className="bg-[#F3F4F6] text-gray-600 uppercase text-[12px]">
+          <table className="text-left text-sm border-collapse w-full">
+            <thead className="bg-[#F3F4F6] text-gray-600  text-[12px] px-2">
               <tr>
-                <th className="p-4">Products</th>
-                <th className="p-4 text-center">Price</th>
-                <th className="p-4 text-center">Quantity</th>
-                <th className="p-4 text-right">Sub-Total</th>
+                <th className="py-4 px-1">Products</th>
+                <th className="py-4 px-1 text-center">Price</th>
+                <th className="py-4 px-1 text-center">Quantity</th>
+                <th className="py-4 px-1 text-center">Sub-Total</th>
               </tr>
             </thead>
             <tbody>
               {selectedOrder.items.map((item) => (
-                <tr key={item.id} className="border-b border-gray-100">
-                  <td className="p-4 flex gap-4 items-center min-w-[250px]">
+                <tr
+                  key={item.id}
+                  className="border-b border-gray-100 text-[12px] md:text-sm"
+                >
+                  <td className="py-4 flex flex-col md:flex-row gap-2">
                     <img
                       src={item.img}
-                      className="w-16 h-16 object-cover rounded"
+                      className="w-14 h-14 object-cover rounded"
                       alt={item.name}
                     />
-                    <span className="font-medium text-darky">{item.name}</span>
+                    <div className="flex flex-col gap-3">
+                      <span className=" text-darky">{item.brand}</span>
+                      <span className=" text-darky">{item.name}</span>
+                    </div>
                   </td>
-                  <td className="p-4 text-center font-medium">${item.price}</td>
-                  <td className="p-4 text-center text-gray-500">
+                  <td className="py-4 text-center font-medium">
+                    ${item.price}
+                  </td>
+                  <td className="py-4 text-center text-gray-500">
                     x{item.qty || 1}
                   </td>
-                  <td className="p-4 text-right font-bold text-darky">
+                  <td className="py-4 text-center font-bold text-darky">
                     ${(item.price * (item.qty || 1)).toFixed(2)}
                   </td>
                 </tr>
@@ -109,11 +95,9 @@ export default function OrderDetails() {
       </div>
 
       {/* Address and Notes Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-gray-100 pt-8">
+      <div className="flex flex-col md:flex-row  gap-8 w-fit border-2 border-gray-100 p-8">
         <div className="flex flex-col gap-4">
-          <h3 className="font-bold text-darky border-b pb-2">
-            Shipping Address
-          </h3>
+          <h3 className="font-bold text-darky pb-2">Shipping Address</h3>
           <div className="text-[14px] text-gray-600 leading-relaxed">
             <p className="font-bold text-darky">
               {selectedOrder.customerDetails?.firstName}{" "}
@@ -138,9 +122,9 @@ export default function OrderDetails() {
             </p>
           </div>
         </div>
-
+        <div className="md:w-0.5 md:h-full w-full h-0.5 bg-gray-100"></div>
         <div className="flex flex-col gap-4">
-          <h3 className="font-bold text-darky border-b pb-2">Order Notes</h3>
+          <h3 className="font-bold text-darky pb-2">Order Notes</h3>
           <p className="text-[14px] text-gray-600 italic">
             "
             {selectedOrder.customerDetails?.orderNotes ||
@@ -158,10 +142,42 @@ export default function OrderDetails() {
         <p className="text-xs text-gray-500">
           You can cancel your order anytime before it is shipped.
         </p>
-        <button className="w-fit px-8 py-3 bg-darky text-white text-sm font-bold rounded-sm hover:opacity-90 transition-all uppercase">
+        <button className="w-[70%] px-8 py-3 md:w-75 md:p-3 bg-darky text-white text-sm font-bold rounded-xl uppercase">
           Cancel Order
         </button>
       </div>
     </div>
   );
+}
+
+{
+  /* <div className="relative flex justify-between items-center">
+  <div className="absolute top-5 left-0 w-full h-1 bg-gray-200 z-0"></div>
+
+  <div className="absolute top-5 left-0 w-1/3 h-1 bg-darky z-0 transition-all duration-500"></div>
+
+  {steps.map((step, index) => (
+    <div
+      key={index}
+      className="relative z-10 flex flex-col items-center gap-4 bg-white px-2"
+    >
+      <div
+        className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all 
+              ${
+                step.status === "completed" || step.status === "active"
+                  ? "bg-darky border-darky text-white"
+                  : "bg-white border-gray-200 text-gray-400"
+              }`}
+      >
+        <span className="text-xl">{step.icon}</span>
+      </div>
+
+      <span
+        className={`text-sm font-semibold ${step.status === "pending" ? "text-gray-400" : "text-darky"}`}
+      >
+        {step.label}
+      </span>
+    </div>
+  ))}
+</div> */
 }

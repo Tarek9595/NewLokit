@@ -53,7 +53,7 @@ export default function ShopCaty() {
           }
         });
       },
-      { threshold: 0 },
+      { threshold: 0.1 },
     );
     if (startRef.current) observer.observe(startRef.current);
     if (endRef.current) observer.observe(endRef.current);
@@ -63,14 +63,18 @@ export default function ShopCaty() {
   return (
     <div className="flex flex-col gap-12.5">
       <div ref={startRef} className="h-1 w-full" />
-
       <AnimatePresence>
         {showCapsule && (
           <motion.div
             initial={{ y: 100, x: isMobile ? "-50%" : "0%", opacity: 0 }}
             animate={{ y: 0, x: isMobile ? "-50%" : "0%", opacity: 1 }}
             exit={{ y: 100, x: isMobile ? "-50%" : "0%", opacity: 0 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 30,
+              opacity: { duration: 0.2 },
+            }}
             className="fixed bottom-8 left-1/2 z-50 lg:relative lg:left-0 lg:bottom-0 lg:w-full lg:flex lg:justify-center lg:pointer-events-auto"
           >
             <div className="bg-darky/90 backdrop-blur-lg p-2 rounded-full shadow-2xl flex gap-2 overflow-x-auto no-scrollbar max-w-[95vw] lg:bg-transparent lg:shadow-none lg:p-0 lg:justify-center lg:max-w-full">
@@ -105,10 +109,21 @@ export default function ShopCaty() {
             product={product}
             isLiked={wishlist.some((item) => item.id === product.id)}
             heartToggle={() => {
-              const isExist = wishlist.some((item) => item.id === product.id);
-              isExist
-                ? removeWishlistProduct(product.id)
-                : setWishListProduct(product);
+              if (user) {
+                const isExist = wishlist.some((item) => item.id === product.id);
+                isExist
+                  ? removeWishlistProduct(product.id)
+                  : setWishListProduct(product);
+              } else {
+                toast.error("Please login first", {
+                  id: "auth-error",
+                  style: {
+                    borderRadius: "10px",
+                    background: "#212a2f",
+                    color: "#fff",
+                  },
+                });
+              }
             }}
             cartAdd={cart.some((item) => item.id === product.id)}
             cartToggle={() => {
@@ -132,7 +147,6 @@ export default function ShopCaty() {
           />
         ))}
       </div>
-
       <div ref={endRef} className="h-20 w-full" />
     </div>
   );
