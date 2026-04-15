@@ -11,12 +11,6 @@ export default function OrderDetails() {
   if (!selectedOrder)
     return <div className="p-10 text-center">No Order Selected</div>;
 
-  // const steps = [
-  //   { label: "Order Placed", icon: <BsClipboardCheck />, status: "completed" },
-  //   { label: "Packaging", icon: <BsBoxSeam />, status: "active" },
-  //   { label: "On The Road", icon: <BsTruck />, status: "pending" },
-  //   { label: "Delivered", icon: <BsHandThumbsUp />, status: "pending" },
-  // ];
   console.log(selectedOrder);
   return (
     <div className="flex flex-col gap-8">
@@ -40,7 +34,7 @@ export default function OrderDetails() {
 
       {/* Order Progress Bar */}
       <div className="py-6 flex flex-col gap-8 ">
-        <p className="text-sm font-medium">
+        <p className="text-sm">
           Order expected arrival <span className="font-bold">23 Jan, 2021</span>
         </p>
         <Test />
@@ -148,36 +142,4 @@ export default function OrderDetails() {
       </div>
     </div>
   );
-}
-
-{
-  /* <div className="relative flex justify-between items-center">
-  <div className="absolute top-5 left-0 w-full h-1 bg-gray-200 z-0"></div>
-
-  <div className="absolute top-5 left-0 w-1/3 h-1 bg-darky z-0 transition-all duration-500"></div>
-
-  {steps.map((step, index) => (
-    <div
-      key={index}
-      className="relative z-10 flex flex-col items-center gap-4 bg-white px-2"
-    >
-      <div
-        className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all 
-              ${
-                step.status === "completed" || step.status === "active"
-                  ? "bg-darky border-darky text-white"
-                  : "bg-white border-gray-200 text-gray-400"
-              }`}
-      >
-        <span className="text-xl">{step.icon}</span>
-      </div>
-
-      <span
-        className={`text-sm font-semibold ${step.status === "pending" ? "text-gray-400" : "text-darky"}`}
-      >
-        {step.label}
-      </span>
-    </div>
-  ))}
-</div> */
 }
