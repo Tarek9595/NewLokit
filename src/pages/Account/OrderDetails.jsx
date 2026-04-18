@@ -14,7 +14,7 @@ export default function OrderDetails() {
   console.log(selectedOrder);
   return (
     <div className="flex flex-col gap-8">
-      <div className=" md:w-[85%] bg-[#F9FAFB] p-6 rounded-sm border border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className=" md:w-[85%] bg-white shadow-lg p-6 rounded-sm border border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-bold text-darky uppercase">
             {selectedOrder.orderId}
