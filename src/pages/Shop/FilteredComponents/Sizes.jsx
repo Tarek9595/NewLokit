@@ -11,7 +11,7 @@ export default function Sizes({ selectedSizes, onChange }) {
     const nextValue = selectedSizes.includes(size)
       ? selectedSizes.filter((s) => s !== size)
       : [...selectedSizes, size];
-    onChange(nextValue); // بنبعت المصفوفة الجديدة لـ Formik
+    onChange(nextValue);
   };
 
   return (

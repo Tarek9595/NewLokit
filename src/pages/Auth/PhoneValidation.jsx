@@ -1,5 +1,5 @@
 import CstBtn from "../../components/common/CstBtn";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Otp from "./Otp";
 import { useState } from "react";
 import toast from "react-hot-toast";

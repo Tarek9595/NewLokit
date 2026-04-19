@@ -2,7 +2,6 @@ import MyForm from "../../../components/common/MyForm";
 import CstBtn from "../../../components/common/CstBtn";
 import MyInput from "../../../components/common/MyInput";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
 import toast from "react-hot-toast";
 
 export default function AccountInfo() {

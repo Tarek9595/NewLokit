@@ -74,7 +74,7 @@ export default function Customers() {
               nextEl: ".next-btn",
               prevEl: ".prev-btn",
             }}
-            className="mySwiper !py-14"
+            className="mySwiper py-14!"
           >
             {reviews.map((rev) => (
               <SwiperSlide key={rev.id} className="w-[80vw]! lg:w-[50vw]!">

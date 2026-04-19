@@ -65,8 +65,6 @@ const COMMON_SIZES = [
 const COMMON_COLORS = ["#292A2D", "#F3ECE2", "#24426A", "#18574A", "#CBA13E"];
 
 const rawProducts = [
-  // Women
-  // ['tops', 'bottoms', 'dresses', 'active wear', 'sets']
   {
     name: "Nike Women’s Tracksuit",
     brand: "Nike",

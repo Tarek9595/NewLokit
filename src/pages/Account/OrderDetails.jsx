@@ -1,9 +1,5 @@
 import { useCurrentOrder } from "../../store";
-import { BsClipboardCheck } from "react-icons/bs";
-import { BsBoxSeam } from "react-icons/bs";
-import { BsTruck } from "react-icons/bs";
-import { BsHandThumbsUp } from "react-icons/bs";
-import Test from "./Test";
+import ViewOrdered from "./ViewOrdered";
 
 export default function OrderDetails() {
   const { selectedOrder } = useCurrentOrder();
@@ -32,15 +28,13 @@ export default function OrderDetails() {
         </div>
       </div>
 
-      {/* Order Progress Bar */}
       <div className="py-6 flex flex-col gap-8 ">
         <p className="text-sm">
           Order expected arrival <span className="font-bold">23 Jan, 2021</span>
         </p>
-        <Test />
+        <ViewOrdered />
       </div>
 
-      {/* Products Table */}
       <div className="flex flex-col gap-4 w-full">
         <h3 className="font-bold text-darky">
           Product ({selectedOrder.items.length})
@@ -88,7 +82,6 @@ export default function OrderDetails() {
         </div>
       </div>
 
-      {/* Address and Notes Section */}
       <div className="flex flex-col md:flex-row  gap-8 w-fit border-2 border-gray-100 p-8">
         <div className="flex flex-col gap-4">
           <h3 className="font-bold text-darky pb-2">Shipping Address</h3>
@@ -128,7 +121,6 @@ export default function OrderDetails() {
         </div>
       </div>
 
-      {/* Cancel Action */}
       <div className="border-t border-gray-100 pt-8 flex flex-col gap-4">
         <p className="text-sm font-bold text-darky uppercase">
           Want to Cancel Your Order?

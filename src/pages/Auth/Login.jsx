@@ -33,7 +33,7 @@ export default function Login() {
   });
 
   const handleLoginSuccess = (data) => {
-    login(data); // بيانات اليوزر اتحفظت في الـ Store وفي الـ LocalStorage
+    login(data);
     toast.success(`Welcome back`);
     navigate("/");
   };

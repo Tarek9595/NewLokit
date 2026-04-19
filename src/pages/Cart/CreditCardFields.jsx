@@ -5,10 +5,8 @@ import MyInput from "../../components/common/MyInput";
 export default function CreditCardFields() {
   const { values, setFieldValue } = useFormikContext();
 
-  // هل الدفع حالياً كاش؟ (عشان نستخدمها في الـ disable)
   const isCash = values.paymentMethod === "cash";
 
-  // مسح القيم لو قلب كاش
   useEffect(() => {
     if (isCash) {
       setFieldValue("cardNumber", "");
