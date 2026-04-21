@@ -1314,6 +1314,10 @@ export const useReviews = create((set) => ({
     },
   ],
 
+  openReview: false,
+
+  setOpenReview: (value) => set({ openReview: value }),
+
   setReview: (newReview) =>
     set((state) => ({ reviews: [...state.reviews, newReview] })),
 }));

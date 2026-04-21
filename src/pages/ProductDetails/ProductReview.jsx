@@ -9,6 +9,12 @@ export default function ProductReview() {
   const { reviews } = useReviews();
   const initialReviews = reviews.slice(0, 3);
   const hiddenReviews = reviews.slice(3);
+  const { setOpenReview, openReview } = useReviews();
+
+  const handleReview = () => {
+    setOpenReview(true);
+    console.log(openReview);
+  };
 
   return (
     <div className="flex flex-col gap-10 text-darky">
@@ -20,7 +26,10 @@ export default function ProductReview() {
             — {reviews.length} Reviews
           </span>
         </div>
-        <button className="w-fit border border-gray-200 px-6 py-2.5 rounded-lg font-semibold text-sm hover:border-darky transition-colors cursor-pointer">
+        <button
+          className="w-fit border border-gray-200 px-6 py-2.5 rounded-lg font-semibold text-sm hover:border-darky transition-colors cursor-pointer"
+          onClick={handleReview}
+        >
           Write a review
         </button>
       </div>

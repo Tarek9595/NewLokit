@@ -14,7 +14,7 @@ export default function ProductCard({
   const { setProduct } = useCurrentProduct();
 
   return (
-    <div className="group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent hover:border-darky/5 ">
+    <div className="group bg-white rounded-2xl p-3 shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent hover:border-darky/5 relative">
       <div className="relative aspect-3/4 rounded-xl overflow-hidden bg-gray-100">
         <img
           src={product.img}
