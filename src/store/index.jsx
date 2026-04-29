@@ -1174,6 +1174,7 @@ export const useLangStore = create((set) => ({
 }));
 
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export const useLinks = create(() => ({
   Links: [
@@ -1248,11 +1249,18 @@ export const useWishlist = create((set) => ({
     })),
 }));
 
-export const useCurrentProduct = create((set) => ({
-  currentProduct: {},
-  setProduct: (newProduct) => set({ currentProduct: newProduct }),
-}));
-
+export const useCurrentProduct = create(
+  persist(
+    (set) => ({
+      currentProduct: {},
+      setProduct: (newProduct) => set({ currentProduct: newProduct }),
+    }),
+    {
+      name: "currentProduct",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);
 export const useReviews = create((set) => ({
   reviews: [
     {
@@ -1270,48 +1278,6 @@ export const useReviews = create((set) => ({
       comment: "I can't believe how affordable and high-quality this item is!",
       rating: 4,
     },
-    {
-      id: 3,
-      name: "Benjamin Clark",
-      date: "23 APRIL",
-      comment: "These guys know their stuff, and it shows in their products.",
-      rating: 4,
-    },
-    {
-      id: 4,
-      name: "Sarah Parker",
-      date: "10 MAY",
-      comment: "Absolutely love the fit and the material is so soft.",
-      rating: 5,
-    },
-    {
-      id: 5,
-      name: "John Doe",
-      date: "12 JUNE",
-      comment: "Great quality for the price. Will buy again.",
-      rating: 4,
-    },
-    {
-      id: 6,
-      name: "Anna Lee",
-      date: "5 JULY",
-      comment: "Customer service was very helpful when I needed to exchange.",
-      rating: 5,
-    },
-    {
-      id: 7,
-      name: "Michael Brown",
-      date: "18 AUGUST",
-      comment: "Good, but shipping took a bit longer than expected.",
-      rating: 3,
-    },
-    {
-      id: 8,
-      name: "Emma Wilson",
-      date: "2 SEPTEMBER",
-      comment: "The design is flawless! Highly recommend.",
-      rating: 5,
-    },
   ],
 
   openReview: false,
@@ -1320,6 +1286,16 @@ export const useReviews = create((set) => ({
 
   setReview: (newReview) =>
     set((state) => ({ reviews: [...state.reviews, newReview] })),
+}));
+
+export const useShare = create((set) => ({
+  openShare: false,
+  setOpenShare: (value) => set({ openShare: value }),
+}));
+
+export const useUpload = create((set) => ({
+  openUpload: false,
+  setOpenUpload: (value) => set({ openUpload: value }),
 }));
 
 export const useCart = create((set, get) => ({

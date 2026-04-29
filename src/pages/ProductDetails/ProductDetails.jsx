@@ -2,7 +2,6 @@ import { Outlet, NavLink } from "react-router";
 import ProductInfo from "./ProductInfo";
 import { HiOutlineDotsHorizontal, HiOutlineStar } from "react-icons/hi";
 import Familiar from "./Familiar";
-import AddReview from "./AddReview";
 export default function ProductDetails() {
   return (
     <div className="pb-15 px-10 lg:px-20 flex flex-col gap-16 lg:gap-20  relative">

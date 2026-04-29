@@ -1,4 +1,4 @@
-import { useCart, useCurrentProduct, useWishlist } from "../../store";
+import { useCart, useCurrentProduct, useShare, useWishlist } from "../../store";
 import { useState } from "react";
 import { HiOutlineShare } from "react-icons/hi2";
 import { IoIosHeartEmpty, IoMdHeart } from "react-icons/io";
@@ -10,6 +10,7 @@ import aiMan from "../../assets/AiMan.svg";
 import toast from "react-hot-toast";
 
 export default function ProductInfo() {
+  const { openShare, setOpenShare } = useShare();
   const [selectedColor, setSelectedColor] = useState(0);
   const { currentProduct } = useCurrentProduct();
   const [quantity, setQuantity] = useState(1);
@@ -92,7 +93,10 @@ export default function ProductInfo() {
                 <h1 className="text-[24px] font-bold text-darky uppercase tracking-tight">
                   {currentProduct.name}
                 </h1>
-                <button className="text-lg text-darky hover:scale-110 transition-transform cursor-pointer">
+                <button
+                  className="text-lg text-darky hover:scale-110 transition-transform cursor-pointer"
+                  onClick={() => setOpenShare(!openShare)}
+                >
                   <HiOutlineShare />
                 </button>
               </div>
