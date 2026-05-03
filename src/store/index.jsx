@@ -1293,6 +1293,11 @@ export const useShare = create((set) => ({
   setOpenShare: (value) => set({ openShare: value }),
 }));
 
+export const useAiModel = create((set) => ({
+  openAiModel: false,
+  setOpenAiModel: (value) => set({ openAiModel: value }),
+}));
+
 export const useUpload = create((set) => ({
   openUpload: false,
   setOpenUpload: (value) => set({ openUpload: value }),

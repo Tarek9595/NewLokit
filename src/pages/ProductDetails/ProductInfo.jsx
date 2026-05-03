@@ -1,4 +1,11 @@
-import { useCart, useCurrentProduct, useShare, useWishlist } from "../../store";
+import {
+  useCart,
+  useCurrentProduct,
+  useShare,
+  useWishlist,
+  useAiModel,
+  useUpload,
+} from "../../store";
 import { useState } from "react";
 import { HiOutlineShare } from "react-icons/hi2";
 import { IoIosHeartEmpty, IoMdHeart } from "react-icons/io";
@@ -11,6 +18,8 @@ import toast from "react-hot-toast";
 
 export default function ProductInfo() {
   const { openShare, setOpenShare } = useShare();
+  const { openAiModel, setOpenAiModel } = useAiModel();
+  const { openUpload, setOpenUpload } = useUpload();
   const [selectedColor, setSelectedColor] = useState(0);
   const { currentProduct } = useCurrentProduct();
   const [quantity, setQuantity] = useState(1);
@@ -75,10 +84,16 @@ export default function ProductInfo() {
           </div>
 
           <div className="flex flex-row lg:flex-col gap-5">
-            <div className="h-13 w-13 flex justify-center items-center bg-btnGray rounded-lg cursor-pointer">
+            <div
+              className="h-13 w-13 flex justify-center items-center bg-btnGray rounded-lg cursor-pointer"
+              onClick={() => setOpenUpload(!openUpload)}
+            >
               <img src={upload} alt="upload" />
             </div>
-            <div className="p-2 h-13 w-13 flex justify-center items-center  rounded-lg bg-btnGray cursor-pointer">
+            <div
+              className="p-2 h-13 w-13 flex justify-center items-center  rounded-lg bg-btnGray cursor-pointer"
+              onClick={() => setOpenAiModel(!openAiModel)}
+            >
               <img
                 src={aiMan}
                 alt="aiMan"
