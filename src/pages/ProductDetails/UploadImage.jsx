@@ -81,23 +81,27 @@ export default function UploadImage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 w-full h-dvh bg-darky/20 z-9999 flex justify-center items-center p-4"
+          // استخدام inset-0 و h-full لضمان السنترة
+          className="fixed inset-0 w-full h-full bg-darky/40 z-[9999] flex justify-center items-center p-6"
           onClick={() => setOpenUpload(false)}
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-100 h-[90%] lg:h-auto bg-white rounded-3xl shadow-2xl flex flex-col p-5 md:p-8 gap-5 md:gap-8"
+            // الحل هنا: h-auto يخلي المودال يلم نفسه على قد المحتوى
+            // max-h-[85vh] عشان لو الموبايل صغير ميخرجش بره الشاشة
+            className="w-full max-w-[400px] h-auto max-h-[85vh] bg-white rounded-[32px] shadow-2xl flex flex-col p-6 md:p-8 gap-6 md:gap-8 overflow-hidden"
           >
-            <div className="flex flex-col items-center gap-5">
-              <h1 className="text-[16px] md:text-[18px] text-darky font-bold">
+            <div className="flex flex-col items-center gap-6">
+              <h1 className="text-[16px] md:text-[18px] text-darky font-bold uppercase tracking-tight">
                 AI Try - On Preview
               </h1>
 
-              <div className="w-full h-70 flex flex-col justify-center items-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-100 gap-4">
-                <div className="w-12 h-12 opacity-30">
+              {/* بوكس الصورة: خليناه h-60 عشان يكون ملموم في الموبايل */}
+              <div className="w-full h-60 md:h-72 flex flex-col justify-center items-center bg-gray-50 rounded-[24px] border-2 border-dashed border-gray-100 gap-4">
+                <div className="w-14 h-14 opacity-20">
                   <img
                     src={NoImage}
                     className="w-full h-full object-contain"
@@ -109,8 +113,9 @@ export default function UploadImage() {
                 </h1>
               </div>
 
-              <div className="flex flex-col gap-3 md:gap-4 w-full">
-                <button className="w-full bg-darky hover:bg-black p-3.5 text-white text-[16px] font-bold flex gap-2 justify-center items-center rounded-xl cursor-pointer transition-colors">
+              <div className="flex flex-col gap-4 w-full">
+                {/* زرار الـ Try On الرئيسي */}
+                <button className="w-full bg-darky hover:bg-black p-4 text-white text-[16px] font-bold flex gap-2 justify-center items-center rounded-2xl cursor-pointer transition-all active:scale-95">
                   <img
                     src={starsWhite}
                     className="w-4 h-4 object-contain"
@@ -119,19 +124,20 @@ export default function UploadImage() {
                   <span>Try On Product</span>
                 </button>
 
+                {/* أزرار الكاميرا والجاليري */}
                 <div className="w-full flex justify-center items-center gap-3">
-                  <button className="flex-1 border border-gray-200 hover:bg-gray-50 rounded-xl flex justify-center items-center gap-2 py-3 text-darky text-[14px] font-semibold cursor-pointer">
+                  <button className="flex-1 border border-gray-200 hover:bg-gray-50 rounded-2xl flex justify-center items-center gap-2 py-3.5 text-darky text-[14px] font-bold cursor-pointer transition-all active:scale-95">
                     <img
                       src={Camera}
-                      className="w-4 h-4 object-contain"
+                      className="w-5 h-5 object-contain"
                       alt="camera"
                     />
                     <span>Camera</span>
                   </button>
-                  <button className="flex-1 border border-gray-200 hover:bg-gray-50 rounded-xl flex justify-center items-center gap-2 py-3 text-darky text-[14px] font-semibold cursor-pointer">
+                  <button className="flex-1 border border-gray-200 hover:bg-gray-50 rounded-2xl flex justify-center items-center gap-2 py-3.5 text-darky text-[14px] font-bold cursor-pointer transition-all active:scale-95">
                     <img
                       src={Gallery}
-                      className="w-4 h-4 object-contain"
+                      className="w-5 h-5 object-contain"
                       alt="gallery"
                     />
                     <span>Gallery</span>
