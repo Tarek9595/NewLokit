@@ -131,7 +131,7 @@ export default function AddReview() {
                     </div>
 
                     <div className="mt-4">
-                      <CstBtn fullWidth="true" type="submit">
+                      <CstBtn fullWidth="true" type="submit" size="sm">
                         Submit Your Review
                       </CstBtn>
                     </div>
