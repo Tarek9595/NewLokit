@@ -27,7 +27,7 @@ export default function SideLinks() {
   const { setActiveInfo } = useActiveInfo();
 
   const getActiveInfo = (link) => {
-    if (link.path !== "/") setActiveInfo(link);
+    link.path !== "/" ? setActiveInfo(link) : localStorage.removeItem("user");
   };
 
   return (

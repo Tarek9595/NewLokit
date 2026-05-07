@@ -1401,7 +1401,6 @@ export const useCart = create(
             month: "short",
             year: "numeric",
           }),
-          status: "Processing",
           items: [...cart],
           totalPrice: total,
           customerDetails: customerValues,
