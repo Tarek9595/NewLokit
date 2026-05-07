@@ -1,13 +1,56 @@
-import { useCurrentOrder } from "../../store";
+import Swal from "sweetalert2";
+import { useCurrentOrder, useStage, useCart } from "../../store";
 import ViewOrdered from "./ViewOrdered";
+import { useNavigate } from "react-router";
 
 export default function OrderDetails() {
   const { selectedOrder } = useCurrentOrder();
 
+  const { clearOrderHistory } = useCart();
+
+  const { stage, setStage } = useStage();
+
+  const navigate = useNavigate();
+
+  const changeStage = () => {
+    setStage(stage + 1);
+    console.log(stage);
+  };
+
+  const confirmRemove = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to Cancel this order?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#0F172B",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!",
+      cancelButtonText: "No, keep it",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        clearOrderHistory();
+        window.scrollTo(0, 0);
+        Swal.fire({
+          title: "Removed!",
+          text: "Order has been removed.",
+          icon: "success",
+          timer: 500,
+          showConfirmButton: false,
+        });
+        navigate("/");
+      }
+    });
+  };
+
+  const handleCancelClick = () => {
+    if (stage < 2) {
+      confirmRemove();
+    }
+  };
   if (!selectedOrder)
     return <div className="p-10 text-center">No Order Selected</div>;
 
-  console.log(selectedOrder);
   return (
     <div className="flex flex-col gap-8">
       <div className=" md:w-[85%] bg-white shadow-lg p-6 rounded-sm border border-gray-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -16,7 +59,7 @@ export default function OrderDetails() {
             {selectedOrder.orderId}
           </h2>
           <p className="text-sm text-gray-500">
-            {selectedOrder.items.length} Products • Ordered on{" "}
+            {selectedOrder.items.length} Products • Ordered on
             {selectedOrder.date}
           </p>
           <span className="text-[#E26F1D] font-medium text-sm">
@@ -29,9 +72,19 @@ export default function OrderDetails() {
       </div>
 
       <div className="py-6 flex flex-col gap-8 ">
-        <p className="text-sm">
-          Order expected arrival <span className="font-bold">23 Jan, 2021</span>
-        </p>
+        <div className="w-full flex flex-col lg:flex-row justify-between pr-10">
+          <p className="text-sm">
+            Order expected arrival
+            <span className="font-bold">23 Jan, 2021</span>
+          </p>
+
+          <button
+            className="px-5 bg-darky text-white text-sm font-bold rounded-xl uppercase cursor-pointer"
+            onClick={changeStage}
+          >
+            go go
+          </button>
+        </div>
         <ViewOrdered />
       </div>
 
@@ -128,7 +181,10 @@ export default function OrderDetails() {
         <p className="text-xs text-gray-500">
           You can cancel your order anytime before it is shipped.
         </p>
-        <button className="w-[70%] px-8 py-3 md:w-75 md:p-3 bg-darky text-white text-sm font-bold rounded-xl uppercase">
+        <button
+          className={`w-[70%] px-8 py-3 md:w-75 md:p-3  text-sm font-bold rounded-xl uppercase cursor-pointer ${stage >= 2 ? "bg-darky/15 text-darky/15" : "bg-darky text-white"}`}
+          onClick={handleCancelClick}
+        >
           Cancel Order
         </button>
       </div>

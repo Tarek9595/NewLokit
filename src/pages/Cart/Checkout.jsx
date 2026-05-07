@@ -10,24 +10,23 @@ import toast from "react-hot-toast";
 import CreditCardFields from "./CreditCardFields";
 
 export default function Checkout() {
-  const { getCartTotal } = useCart();
+  const { cart, clearCart, confirmOrder, getCartTotal } = useCart();
   const { subtotal, tax, total } = getCartTotal();
   const navigate = useNavigate();
-  const { cart, clearCart, confirmOrder } = useCart();
 
   const initialValues = {
-    streetAddress: "",
-    city: "",
-    governorate: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
+    streetAddress: "59 Housing Bank Bldg., El-Dawahi",
+    city: "Port Said",
+    governorate: "Port Said",
+    firstName: "Tarek",
+    lastName: "Sayed",
+    email: "tareksayed2099@gmail.com",
+    phone: "01000344811",
     paymentMethod: "cash",
     cardNumber: "",
     expDate: "",
     CVV: "",
-    orderNotes: "",
+    orderNotes: "go go go go go go go go go",
   };
 
   const checkoutSchema = Yup.object().shape({

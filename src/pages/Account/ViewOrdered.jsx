@@ -3,11 +3,9 @@ import Notebook from "../../assets/img/icons/Notebook.svg";
 import Package from "../../assets/img/icons/Package.svg";
 import Truck from "../../assets/img/icons/Truck.svg";
 import Handshake from "../../assets/img/icons/Handshake.svg";
-import { useState } from "react";
+import { useStage } from "../../store";
 
 export default function ViewOrdered() {
-  const [stage, setStage] = useState(0);
-
   const steps = [
     {
       label: "Order Placed",
@@ -21,7 +19,12 @@ export default function ViewOrdered() {
     },
   ];
 
-  const progressPercent = (stage / (steps.length - 1)) * 100;
+  const { stage } = useStage();
+
+  const safeStage = Math.min(stage, steps.length - 1);
+  const progressPercent = Math.round((safeStage / (steps.length - 1)) * 100);
+
+  console.log(progressPercent);
 
   return (
     <div className="w-full sm:h-30 h-100 flex sm:flex-row flex-col sm:justify-center relative ">
@@ -51,11 +54,13 @@ export default function ViewOrdered() {
               className="flex gap-3 sm:flex-col items-center sm:h-full"
             >
               <div
-                className={
-                  isActive
-                    ? "bg-darky  w-6 h-6 rounded-full border-3 border-white"
-                    : "bg-darky/40  w-6 h-6 rounded-full border-3 border-white"
-                }
+                className={`transition-all duration-700 ease-in-out
+                  ${
+                    isActive
+                      ? "bg-darky  w-6 h-6 rounded-full border-3 border-white"
+                      : "bg-white w-6 h-6 rounded-full border-3 border-darky/15"
+                  }
+                `}
               ></div>
               <div className={"w-8 h-8 shrink-0"}>
                 <img

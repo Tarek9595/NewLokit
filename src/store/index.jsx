@@ -1249,18 +1249,6 @@ export const useWishlist = create((set) => ({
     })),
 }));
 
-export const useCurrentProduct = create(
-  persist(
-    (set) => ({
-      currentProduct: {},
-      setProduct: (newProduct) => set({ currentProduct: newProduct }),
-    }),
-    {
-      name: "currentProduct",
-      storage: createJSONStorage(() => localStorage),
-    },
-  ),
-);
 export const useReviews = create((set) => ({
   reviews: [
     {
@@ -1303,87 +1291,18 @@ export const useUpload = create((set) => ({
   setOpenUpload: (value) => set({ openUpload: value }),
 }));
 
-export const useCart = create((set, get) => ({
-  cart: [],
-
-  setCartProduct: (product) =>
-    set((state) => {
-      const isExist = state.cart.find((item) => item.id === product.id);
-
-      if (isExist) {
-        return {
-          cart: state.cart.map((item) =>
-            item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
-          ),
-        };
-      }
-
-      return {
-        cart: [...state.cart, { ...product, qty: 1 }],
-      };
+export const useCurrentProduct = create(
+  persist(
+    (set) => ({
+      currentProduct: {},
+      setProduct: (newProduct) => set({ currentProduct: newProduct }),
     }),
-
-  removeCartProduct: (productID) =>
-    set((state) => ({
-      cart: state.cart.filter((el) => el.id !== productID),
-    })),
-
-  increaseQty: (productID) =>
-    set((state) => ({
-      cart: state.cart.map((item) =>
-        item.id === productID ? { ...item, qty: item.qty + 1 } : item,
-      ),
-    })),
-
-  decreaseQty: (productID) =>
-    set((state) => ({
-      cart: state.cart
-        .map((item) =>
-          item.id === productID ? { ...item, qty: item.qty - 1 } : item,
-        )
-        .filter((item) => item.qty > 0),
-    })),
-
-  clearCart: () => set({ cart: [] }),
-
-  getCartTotal: () => {
-    const { cart } = get();
-
-    const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-
-    const tax = subtotal * 0.14;
-    const total = subtotal + tax;
-
-    return {
-      subtotal: subtotal.toFixed(2),
-      tax: tax.toFixed(2),
-      total: total.toFixed(2),
-    };
-  },
-
-  ordersHistory: [],
-  confirmOrder: (customerValues) => {
-    const { cart, getCartTotal } = get();
-    const { total } = getCartTotal();
-
-    const newOrder = {
-      orderId: `#ORD-${Math.floor(1000 + Math.random() * 9000)}`,
-      date: new Date().toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      }),
-      status: "Processing",
-      items: [...cart],
-      totalPrice: total,
-      customerDetails: customerValues,
-    };
-
-    set((state) => ({
-      ordersHistory: [newOrder, ...state.ordersHistory],
-    }));
-  },
-}));
+    {
+      name: "currentProduct",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);
 
 export const useAuthStore = create((set) => ({
   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -1407,6 +1326,108 @@ export const useAuthStore = create((set) => ({
     }),
 }));
 
+export const useCart = create(
+  persist(
+    (set, get) => ({
+      cart: [],
+      ordersHistory: [],
+
+      setCartProduct: (product) =>
+        set((state) => {
+          const isExist = state.cart.find((item) => item.id === product.id);
+
+          if (isExist) {
+            return {
+              cart: state.cart.map((item) =>
+                item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
+              ),
+            };
+          }
+
+          return {
+            cart: [...state.cart, { ...product, qty: 1 }],
+          };
+        }),
+
+      removeCartProduct: (productID) =>
+        set((state) => ({
+          cart: state.cart.filter((el) => el.id !== productID),
+        })),
+
+      increaseQty: (productID) =>
+        set((state) => ({
+          cart: state.cart.map((item) =>
+            item.id === productID ? { ...item, qty: item.qty + 1 } : item,
+          ),
+        })),
+
+      decreaseQty: (productID) =>
+        set((state) => ({
+          cart: state.cart
+            .map((item) =>
+              item.id === productID ? { ...item, qty: item.qty - 1 } : item,
+            )
+            .filter((item) => item.qty > 0),
+        })),
+
+      clearCart: () => set({ cart: [] }),
+
+      getCartTotal: () => {
+        const { cart } = get();
+
+        const subtotal = cart.reduce(
+          (acc, item) => acc + item.price * item.qty,
+          0,
+        );
+
+        const tax = subtotal * 0.14;
+        const total = subtotal + tax;
+
+        return {
+          subtotal: subtotal.toFixed(2),
+          tax: tax.toFixed(2),
+          total: total.toFixed(2),
+        };
+      },
+
+      confirmOrder: (customerValues) => {
+        const { cart, getCartTotal } = get();
+        const { total } = getCartTotal();
+
+        const newOrder = {
+          orderId: `#ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+          date: new Date().toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          }),
+          status: "Processing",
+          items: [...cart],
+          totalPrice: total,
+          customerDetails: customerValues,
+        };
+
+        set((state) => ({
+          ordersHistory: [newOrder, ...state.ordersHistory],
+        }));
+      },
+
+      clearOrderHistory: () => set({ ordersHistory: [] }),
+    }),
+    {
+      name: "cart-storage",
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => {
+        const hasUser = !!localStorage.getItem("user");
+        if (hasUser) {
+          return { cart: state.cart, ordersHistory: state.ordersHistory };
+        }
+        return { cart: [] };
+      },
+    },
+  ),
+);
+
 export const useOrderProgress = create((set) => ({
   orderProgress: false,
 
@@ -1421,4 +1442,9 @@ export const useCurrentOrder = create((set) => ({
   setSelectedOrder: (order) => set({ selectedOrder: order }),
 
   clearSelectedOrder: () => set({ selectedOrder: null }),
+}));
+
+export const useStage = create((set) => ({
+  stage: 0,
+  setStage: (value) => set({ stage: value }),
 }));
