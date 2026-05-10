@@ -11,7 +11,7 @@ export default function Home() {
     const newUser = {
       firstName: "Usernameee",
       lastName: "Developer",
-      email: `userr963741@test.com`,
+      email: `userr20262027@test.com`,
       password: "password123",
       phone: "01012345678",
     };
