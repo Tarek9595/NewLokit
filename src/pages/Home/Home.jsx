@@ -8,33 +8,14 @@ import axios from "axios";
 
 export default function Home() {
   useEffect(() => {
-    const newUser = {
-      firstName: "Usernameee",
-      lastName: "Developer",
-      email: `userr20262027@test.com`,
-      password: "password123",
-      phone: "01012345678",
-    };
-
-    console.log(`userr${Math.floor(Math.random() * 1000)}@test.com`);
+    let domain = "http://lokit-production.up.railway.app";
+    let endPoint = "/product";
+    let url = domain + endPoint;
 
     axios
-      .post("https://lokit-production.up.railway.app/auth/register", newUser)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("Error", err.response?.data || err.message);
-      });
-
-    axios
-      .get("https://lokit-production.up.railway.app/product")
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      .get(url)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
