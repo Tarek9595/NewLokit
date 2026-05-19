@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef } from "react";
+import Webcam from "react-webcam";
 import { useUpload } from "../../store";
 import starsWhite from "../../assets/img/icons/starsWhite.svg";
 import Camera from "../../assets/img/icons/Camera.svg";
@@ -13,18 +14,40 @@ export default function UploadImage() {
   // State لحفظ الصورة المحددة (الملف والرابط المعاين)
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const [isCameraActive, setIsCameraActive] = useState(false);
+
   // Refs للتحكم في الـ Inputs المخفية عن طريق الأزرار
   const galleryInputRef = useRef(null);
-  const cameraInputRef = useRef(null);
+  const webcamRef = useRef(null);
 
   // دالة التعامل مع اختيار الصورة
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setIsCameraActive(false);
       setSelectedImage({
         file: file, // الملف الفعلي لو هتبعتة للـ API بعدين
         preview: URL.createObjectURL(file), // رابط المعاينة المؤقت
       });
+    }
+  };
+
+  const capturePhoto = () => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    if (imageSrc) {
+      // تحويل الـ Base64 لملف File فعلي عشان تقدر تبعته للـ Backend بعدين
+      fetch(imageSrc)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = new File([blob], "captured-image.jpg", {
+            type: "image/jpeg",
+          });
+          setSelectedImage({
+            file: file,
+            preview: imageSrc, // رابط الـ Base64 يصلح للمعاينة مباشرة
+          });
+          setIsCameraActive(false); // نقفل وضع الكاميرا اللايف ونعرض الصورة الملقوطة
+        });
     }
   };
 
@@ -60,14 +83,14 @@ export default function UploadImage() {
                 onChange={handleImageChange}
               />
               {/* input الكاميرا المباشرة للموبايل */}
-              <input
+              {/* <input
                 type="file"
                 accept="image/*"
                 capture="environment"
-                ref={cameraInputRef}
+                ref={webcamRef}
                 className="hidden"
                 onChange={handleImageChange}
-              />
+              /> */}
 
               <div className="w-full h-60 md:h-72 flex flex-col justify-center items-center bg-gray-50 rounded-3xl border-2 border-dashed border-gray-100 gap-4">
                 {/* <div className="w-14 h-14 opacity-20">
@@ -80,7 +103,7 @@ export default function UploadImage() {
                 <h1 className="text-[14px] text-darky/40 font-medium">
                   No image selected
                 </h1> */}
-
+                {/* 
                 {selectedImage ? (
                   // إذا تم اختيار صورة، يتم عرضها هنا بالكامل داخل الكادر
                   <img
@@ -90,6 +113,47 @@ export default function UploadImage() {
                   />
                 ) : (
                   // إذا لم يتم اختيار صورة، يظهر الشكل الافتراضي القديم
+                  <>
+                    <div className="w-14 h-14 opacity-20">
+                      <img
+                        src={NoImage}
+                        className="w-full h-full object-contain"
+                        alt="no-image"
+                      />
+                    </div>
+                    <h1 className="text-[14px] text-darky/40 font-medium">
+                      No image selected
+                    </h1>
+                  </>
+                )} */}
+
+                {isCameraActive ? (
+                  // الوضع 1: الكاميرا لايف شغالة وبتعرض بث مباشر
+                  <div className="w-full h-full relative">
+                    <Webcam
+                      audio={false}
+                      ref={webcamRef}
+                      screenshotFormat="image/jpeg"
+                      className="w-full h-full object-cover rounded-3xl"
+                      videoConstraints={{ facingMode: "user" }} // بيفتح الكاميرا الأمامية للاب والموبايل
+                    />
+                    <button
+                      type="button"
+                      onClick={capturePhoto}
+                      className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full text-[12px] font-bold shadow-lg transition-all active:scale-95 cursor-pointer"
+                    >
+                      📸 Take Photo
+                    </button>
+                  </div>
+                ) : selectedImage ? (
+                  // الوضع 2: تم اختيار صورة أو لقطها بنجاح (المعاينة)
+                  <img
+                    src={selectedImage.preview}
+                    className="w-full h-full object-cover rounded-3xl"
+                    alt="selected-preview"
+                  />
+                ) : (
+                  // الوضع 3: الحالة الابتدائية (No Image)
                   <>
                     <div className="w-14 h-14 opacity-20">
                       <img
@@ -118,7 +182,7 @@ export default function UploadImage() {
                 <div className="w-full flex justify-center items-center gap-3">
                   <button
                     className="flex-1 border border-gray-200 hover:bg-gray-50 rounded-2xl flex justify-center items-center gap-2 py-3.5 text-darky text-[14px] font-bold cursor-pointer transition-all active:scale-95"
-                    onClick={() => cameraInputRef.current.click()}
+                    onClick={() => setIsCameraActive(true)}
                   >
                     <img
                       src={Camera}
