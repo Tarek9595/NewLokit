@@ -66,13 +66,13 @@ const COMMON_COLORS = ["#292A2D", "#F3ECE2", "#24426A", "#18574A", "#CBA13E"];
 
 const rawProducts = [
   {
-    name: "Nike Women’s Tracksuit",
     brand: "Nike",
+    category: "Women's Fashion",
+    img: womenImgOne,
     price: "95.50",
+    name: "Nike Women’s Tracksuit",
     rate: 5,
     soldOut: false,
-    img: womenImgOne,
-    category: "Women's Fashion",
     size: COMMON_SIZES,
     Color: COMMON_COLORS,
     department: "tops",
@@ -1281,10 +1281,10 @@ export const useShare = create((set) => ({
   setOpenShare: (value) => set({ openShare: value }),
 }));
 
-export const useAiModel = create((set) => ({
-  openAiModel: false,
-  setOpenAiModel: (value) => set({ openAiModel: value }),
-}));
+// export const useAiModel = create((set) => ({
+//   openAiModel: false,
+//   setOpenAiModel: (value) => set({ openAiModel: value }),
+// }));
 
 export const useUpload = create((set) => ({
   openUpload: false,

@@ -4,10 +4,69 @@ import { IoSearchOutline } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import Pagination from "../../components/common/Pagination";
 import { products, useCart, useWishlist } from "../../store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../ProductDetails/ProductCard";
+import axios from "axios";
 
 export default function SearchShoping() {
+  const [product, setProduct] = useState([]);
+  // let product = {
+  //     name: "Nike Women’s Tracksuit", // done
+  //     brand: "Nike",// done
+  //     category: "Women's Fashion", // done
+  //     price: "95.50",
+  //     rate: 5,
+  //     soldOut: false,
+  //     img: womenImgOne,
+  //     size: COMMON_SIZES,
+  //     Color: COMMON_COLORS,
+  //     department: "tops",
+  //   },
+
+  // eslint-disable-next-line no-unused-vars
+  let token =
+    "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaG9uX21hcms5NUBnbWFpbC5jb20iLCJpYXQiOjE3Nzg4NjU4NzQsImV4cCI6MTc3ODk1MjI3NH0.U27EJT8KE8c8Zr0XBQVWgo-g_OkzJVZNf_zxtYAImhMWOQkwroZucJK7TnffiM3g";
+
+  useEffect(() => {
+    let domain = "https://lokit-production.up.railway.app";
+    let endPoint1 = "/product";
+    let url1 = domain + endPoint1;
+
+    axios
+      .get(url1)
+      .then((res) => setProduct(res.data))
+      .catch((err) => console.log(err));
+
+    // let endPoint2 = "/category/4";
+    // let url2 = domain + endPoint2;
+
+    // axios
+    //   .get(url2, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then((res) => console.log(res.data))
+    //   .catch((err) => console.log(err));
+
+    // let endPoint3 = "/category";
+    // let url3 = domain + endPoint3;
+
+    // axios
+    //   .get(url3)
+    //   .then((res) => console.log(res.data))
+    //   .catch((err) => console.log(err));
+  }, []);
+  console.log(product);
+
+  const unisexProducts = product.filter(
+    (item) => item.departmentName === "Unisex",
+  );
+  console.log(unisexProducts);
+
+  // asdasd
+  // asdasdasd
+  // asdasdasd
   const { wishlist, removeWishlistProduct, setWishListProduct } = useWishlist();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;

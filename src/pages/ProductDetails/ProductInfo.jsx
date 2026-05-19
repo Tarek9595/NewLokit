@@ -3,7 +3,6 @@ import {
   useCurrentProduct,
   useShare,
   useWishlist,
-  useAiModel,
   useUpload,
 } from "../../store";
 import { useState } from "react";
@@ -12,13 +11,11 @@ import { IoIosHeartEmpty, IoMdHeart } from "react-icons/io";
 import { MdOutlineStar } from "react-icons/md";
 import CustomButton from "../../components/common/CstBtn";
 import { Link } from "react-router";
-import upload from "../../assets/upload.svg";
 import aiMan from "../../assets/AiMan.svg";
 import toast from "react-hot-toast";
 
 export default function ProductInfo() {
   const { openShare, setOpenShare } = useShare();
-  const { openAiModel, setOpenAiModel } = useAiModel();
   const { openUpload, setOpenUpload } = useUpload();
   const [selectedColor, setSelectedColor] = useState(0);
   const { currentProduct } = useCurrentProduct();
@@ -85,14 +82,8 @@ export default function ProductInfo() {
 
           <div className="flex flex-row lg:flex-col gap-5">
             <div
-              className="h-13 w-13 flex justify-center items-center bg-btnGray rounded-lg cursor-pointer"
-              onClick={() => setOpenUpload(!openUpload)}
-            >
-              <img src={upload} alt="upload" />
-            </div>
-            <div
               className="p-2 h-13 w-13 flex justify-center items-center  rounded-lg bg-btnGray cursor-pointer"
-              onClick={() => setOpenAiModel(!openAiModel)}
+              onClick={() => setOpenUpload(!openUpload)}
             >
               <img
                 src={aiMan}
