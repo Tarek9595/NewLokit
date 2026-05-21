@@ -11,23 +11,20 @@ import NoImage from "../../assets/img/icons/noImage.svg";
 export default function UploadImage() {
   const { openUpload, setOpenUpload } = useUpload();
 
-  // State لحفظ الصورة المحددة (الملف والرابط المعاين)
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [isCameraActive, setIsCameraActive] = useState(false);
 
-  // Refs للتحكم في الـ Inputs المخفية عن طريق الأزرار
   const galleryInputRef = useRef(null);
   const webcamRef = useRef(null);
 
-  // دالة التعامل مع اختيار الصورة
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setIsCameraActive(false);
       setSelectedImage({
-        file: file, // الملف الفعلي لو هتبعتة للـ API بعدين
-        preview: URL.createObjectURL(file), // رابط المعاينة المؤقت
+        file: file,
+        preview: URL.createObjectURL(file),
       });
     }
   };
@@ -35,7 +32,6 @@ export default function UploadImage() {
   const capturePhoto = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     if (imageSrc) {
-      // تحويل الـ Base64 لملف File فعلي عشان تقدر تبعته للـ Backend بعدين
       fetch(imageSrc)
         .then((res) => res.blob())
         .then((blob) => {
@@ -44,9 +40,9 @@ export default function UploadImage() {
           });
           setSelectedImage({
             file: file,
-            preview: imageSrc, // رابط الـ Base64 يصلح للمعاينة مباشرة
+            preview: imageSrc,
           });
-          setIsCameraActive(false); // نقفل وضع الكاميرا اللايف ونعرض الصورة الملقوطة
+          setIsCameraActive(false);
         });
     }
   };
@@ -73,8 +69,6 @@ export default function UploadImage() {
                 AI Try - On Preview
               </h1>
 
-              {/* Inputs المخفية */}
-              {/* input المعرض العادي */}
               <input
                 type="file"
                 accept="image/*"
@@ -82,60 +76,15 @@ export default function UploadImage() {
                 className="hidden"
                 onChange={handleImageChange}
               />
-              {/* input الكاميرا المباشرة للموبايل */}
-              {/* <input
-                type="file"
-                accept="image/*"
-                capture="environment"
-                ref={webcamRef}
-                className="hidden"
-                onChange={handleImageChange}
-              /> */}
-
               <div className="w-full h-60 md:h-72 flex flex-col justify-center items-center bg-gray-50 rounded-3xl border-2 border-dashed border-gray-100 gap-4">
-                {/* <div className="w-14 h-14 opacity-20">
-                  <img
-                    src={NoImage}
-                    className="w-full h-full object-contain"
-                    alt="no-image"
-                  />
-                </div>
-                <h1 className="text-[14px] text-darky/40 font-medium">
-                  No image selected
-                </h1> */}
-                {/* 
-                {selectedImage ? (
-                  // إذا تم اختيار صورة، يتم عرضها هنا بالكامل داخل الكادر
-                  <img
-                    src={selectedImage.preview}
-                    className="w-full h-full object-cover rounded-3xl"
-                    alt="selected-preview"
-                  />
-                ) : (
-                  // إذا لم يتم اختيار صورة، يظهر الشكل الافتراضي القديم
-                  <>
-                    <div className="w-14 h-14 opacity-20">
-                      <img
-                        src={NoImage}
-                        className="w-full h-full object-contain"
-                        alt="no-image"
-                      />
-                    </div>
-                    <h1 className="text-[14px] text-darky/40 font-medium">
-                      No image selected
-                    </h1>
-                  </>
-                )} */}
-
                 {isCameraActive ? (
-                  // الوضع 1: الكاميرا لايف شغالة وبتعرض بث مباشر
                   <div className="w-full h-full relative">
                     <Webcam
                       audio={false}
                       ref={webcamRef}
                       screenshotFormat="image/jpeg"
                       className="w-full h-full object-cover rounded-3xl"
-                      videoConstraints={{ facingMode: "user" }} // بيفتح الكاميرا الأمامية للاب والموبايل
+                      videoConstraints={{ facingMode: "user" }}
                     />
                     <button
                       type="button"
@@ -146,14 +95,12 @@ export default function UploadImage() {
                     </button>
                   </div>
                 ) : selectedImage ? (
-                  // الوضع 2: تم اختيار صورة أو لقطها بنجاح (المعاينة)
                   <img
                     src={selectedImage.preview}
                     className="w-full h-full object-cover rounded-3xl"
                     alt="selected-preview"
                   />
                 ) : (
-                  // الوضع 3: الحالة الابتدائية (No Image)
                   <>
                     <div className="w-14 h-14 opacity-20">
                       <img

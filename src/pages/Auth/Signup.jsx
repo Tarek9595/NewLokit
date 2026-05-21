@@ -6,16 +6,21 @@ import * as Yup from "yup";
 import { IoMdMail } from "react-icons/io";
 import { MdLock } from "react-icons/md";
 import { FaUser, FaPhone } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { domain } from "../../store/index.jsx";
 
 export default function Signup() {
   const navigate = useNavigate();
 
+  const [signInfo, setSignInfo] = useState({});
+
   const initialValues = {
-    email: "",
     firstName: "",
     lastName: "",
-    phone: "",
+    email: "",
     password: "",
+    phone: "",
     confirmPassword: "",
   };
 
@@ -36,11 +41,27 @@ export default function Signup() {
   });
 
   const handleSubmit = (values) => {
-    console.log("signup Success:", values);
+    // eslint-disable-next-line no-unused-vars
+    const { confirmPassword, ...dataToSubmit } = values;
+
+    console.log("البيانات اللي رايحة للباك إند:", dataToSubmit);
+
+    setSignInfo(dataToSubmit);
     setTimeout(() => {
       navigate("/success");
     }, 1000);
   };
+
+  useEffect(() => {
+    let url = domain + "auth/register";
+
+    if (Object.keys(signInfo).length === 0) return;
+    axios
+      .post(url, signInfo)
+      .then((res) => console.log(res.data.token))
+      .catch((err) => console.log(err));
+  }, [signInfo]);
+
   return (
     <MyForm
       initialValues={initialValues}
@@ -61,7 +82,7 @@ export default function Signup() {
         </MyInput>
       </div>
 
-      <MyInput name="phone" type="number" width="w-full">
+      <MyInput name="phone" type="text" width="w-full">
         <FaPhone />
       </MyInput>
 

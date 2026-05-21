@@ -2,35 +2,41 @@ import MyForm from "../../../components/common/MyForm";
 import CstBtn from "../../../components/common/CstBtn";
 import MyInput from "../../../components/common/MyInput";
 import { MdLock } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
+import { useAccountInfo } from "../../../store";
+import { useState } from "react";
 
 export default function PasswordInfo() {
-  const navigate = useNavigate();
+  const { changePassword } = useAccountInfo();
+  const [isPending, setIsPending] = useState(false);
 
   const initialValues = {
+    oldPassword: "",
     newPassword: "",
     confirmNewPassword: "",
   };
 
-  const handleSubmit = (values) => {
-    console.log("Login Success:", values);
-    if (
-      values.newPassword &&
-      values.confirmNewPassword &&
-      values.newPassword === values.confirmNewPassword
-    ) {
-      navigate(0);
-      toast.success("Resest Success");
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    setIsPending(true);
+
+    const result = await changePassword(values);
+
+    setIsPending(false);
+    setSubmitting(false);
+
+    if (result.success) {
+      toast.success("Password Changed Successfully!");
+      resetForm();
     } else {
-      toast.error("Right Same Pass !");
+      toast.error(result.message);
     }
   };
 
   const loginSchema = Yup.object().shape({
+    oldPassword: Yup.string().required("Old Password is required"),
     newPassword: Yup.string()
-      .required("Password is required")
+      .required("New Password is required")
       .min(8, "Password must be at least 8 characters")
       .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
       .matches(/[0-9]/, "Password must contain at least one number")
@@ -38,6 +44,10 @@ export default function PasswordInfo() {
         /[!@#$%^&*(),.?":{}|<>]/,
         "Password must contain at least one special character",
       ),
+
+    confirmNewPassword: Yup.string()
+      .required("Please confirm your new password")
+      .oneOf([Yup.ref("newPassword"), null], "Passwords must match"),
   });
 
   return (
@@ -47,12 +57,11 @@ export default function PasswordInfo() {
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-5 justify-between md:w-[60%] lg:w-[45%]">
-        <MyInput
-          name="newPassword"
-          accName="New Password"
-          type="password"
-          className=""
-        >
+        <MyInput name="oldPassword" accName="Old Password" type="password">
+          <MdLock />
+        </MyInput>
+
+        <MyInput name="newPassword" accName="New Password" type="password">
           <MdLock />
         </MyInput>
 
@@ -60,7 +69,6 @@ export default function PasswordInfo() {
           name="confirmNewPassword"
           accName="Confirm New Password"
           type="password"
-          className=""
         >
           <MdLock />
         </MyInput>
@@ -73,8 +81,9 @@ export default function PasswordInfo() {
             variant="darky"
             size="lg"
             className="p-20 font-medium"
+            disabled={isPending}
           >
-            Change Password
+            {isPending ? "Changing..." : "Change Password"}
           </CstBtn>
         </div>
       </div>

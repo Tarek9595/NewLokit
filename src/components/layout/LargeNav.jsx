@@ -3,14 +3,26 @@ import { FaBell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import CstBtn from "../common/CstBtn";
 import Lang from "../common/Lang";
+import { useEffect } from "react";
+import { useAccountInfo, userLoginInfo } from "../../store";
+import { FaUser } from "react-icons/fa";
 
 export default function LargeNav() {
-  const navigate = useNavigate();
-  const user = localStorage.getItem("user");
+  const { accountInfo, fetchProfile, isLoadingAccount } = useAccountInfo();
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/login");
+  const { isLoggedIn } = userLoginInfo();
+
+  useEffect(() => {
+    if (isLoggedIn && !accountInfo) {
+      fetchProfile();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoggedIn, accountInfo]);
+
+  const navigate = useNavigate();
+
+  const handleADetails = () => {
+    navigate("/account/details");
   };
 
   const links = [
@@ -23,6 +35,39 @@ export default function LargeNav() {
   const activeClass =
     "text-darky border-b-2 border-darky font-semibold scale-105";
   const inactiveClass = "text-gray-500 hover:text-darky hover:scale-105";
+
+  const renderAuthSection = () => {
+    if (isLoggedIn && (isLoadingAccount || !accountInfo?.firstName)) {
+      return (
+        <div className="flex items-center gap-2 animate-pulse">
+          <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
+          <div className="w-16 h-4 bg-gray-300 rounded"></div>
+        </div>
+      );
+    }
+
+    // 2. لو مسجل دخول والبيانات وصلت بالسلامة
+    if (isLoggedIn && accountInfo?.firstName) {
+      return (
+        <div className="flex justify-center items-center gap-1">
+          <FaUser />
+          <button
+            className="text-darky hover:text-red-500 font-semibold hover:underline cursor-pointer capitalize"
+            onClick={handleADetails}
+          >
+            {accountInfo?.firstName}
+          </button>
+        </div>
+      );
+    }
+
+    // 3. لو مش مسجل دخول أصلاً
+    return (
+      <CstBtn variant="darky" size="md" onClick={() => navigate("/login")}>
+        Sign In
+      </CstBtn>
+    );
+  };
 
   return (
     <div className="hidden lg:flex items-center gap-10">
@@ -49,18 +94,7 @@ export default function LargeNav() {
         </div>
       </nav>
 
-      {user ? (
-        <button
-          onClick={handleLogout}
-          className="text-darky hover:text-red-500 font-semibold hover:underline cursor-pointer"
-        >
-          Logout
-        </button>
-      ) : (
-        <CstBtn variant="darky" size="md" onClick={() => navigate("/login")}>
-          Sign In
-        </CstBtn>
-      )}
+      {renderAuthSection()}
     </div>
   );
 }

@@ -6,11 +6,13 @@ import { MdLock } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
-import { useAuthStore } from "../../store";
+import { domain, userLoginInfo } from "../../store";
+import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuthStore();
+
+  const { login } = userLoginInfo();
 
   const initialValues = {
     email: "",
@@ -32,16 +34,38 @@ export default function Login() {
       ),
   });
 
-  const handleLoginSuccess = (data) => {
-    login(data);
-    toast.success(`Welcome back`);
-    navigate("/");
+  const handleLoginSuccess = (values, { setSubmitting }) => {
+    toast.loading("Processing login...", { id: "login-toast" });
+    let url = domain + "auth/login";
+
+    axios
+      .post(url, values)
+      .then((res) => {
+        const fullAccountData = {
+          ...values,
+          token: res.data.token,
+        };
+
+        login(fullAccountData);
+
+        toast.success("Welcome back!", { id: "login-toast" });
+
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Sorry, invalid email or password.", { id: "login-toast" });
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
   };
+
   return (
     <MyForm
       initialValues={initialValues}
       validationSchema={loginSchema}
-      onSubmit={() => handleLoginSuccess(initialValues)}
+      onSubmit={handleLoginSuccess}
     >
       <MyInput name="email" type="email">
         <IoMdMail />

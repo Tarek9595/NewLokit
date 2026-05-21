@@ -40,7 +40,7 @@ export default function MyInput({ children, width, accName, shap, ...props }) {
           {...field}
           {...props}
           type={inputType}
-          className={`input bg-transparent border transition-all duration-300 text-[16px] ${props.hieght ? props.hieght : "h-13.75"} focus:outline-none w-full
+          className={`input bg-transparent border transition-all duration-300 text-[16px] ${props.hieght ? props.hieght : "h-13.75"} focus:outline-none w-full ${props.cap}
             ${hasLeftIcon ? "pl-12" : "pl-4"} 
             ${hasRightIcon ? "pr-12" : "pr-4"}
             ${

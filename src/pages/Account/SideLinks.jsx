@@ -1,5 +1,11 @@
-import { NavLink } from "react-router-dom";
-import { useLinks, useActiveInfo } from "../../store";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  useLinks,
+  useActiveInfo,
+  userLoginInfo,
+  useAccountInfo,
+} from "../../store";
+
 import {
   BsCart4,
   BsHeart,
@@ -10,6 +16,8 @@ import {
 } from "react-icons/bs";
 
 export default function SideLinks() {
+  const navigate = useNavigate();
+
   let icons = [
     <BsCart4 />,
     <BsHeart />,
@@ -23,11 +31,22 @@ export default function SideLinks() {
     "flex gap-2.5 items-center p-3 text-[14px] text-[#5C5F6A] hover:text-darky hover:bg-[#F6F6F6] hover:rounded-lg transition-all duration-300 ease-in-out";
 
   const { Links } = useLinks();
-
   const { setActiveInfo } = useActiveInfo();
 
-  const getActiveInfo = (link) => {
-    link.path !== "/" ? setActiveInfo(link) : localStorage.removeItem("user");
+  const logout = userLoginInfo((state) => state.logout);
+  const clearAccountInfo = useAccountInfo((state) => state.clearAccountInfo);
+
+  const getActiveInfo = (link, e) => {
+    if (link.name === "Logout") {
+      e.preventDefault();
+
+      logout();
+      clearAccountInfo();
+
+      navigate("/", { replace: true });
+    } else {
+      setActiveInfo(link);
+    }
   };
 
   return (
@@ -44,7 +63,7 @@ export default function SideLinks() {
                 : ""
             }`
           }
-          onClick={() => getActiveInfo(link)}
+          onClick={(e) => getActiveInfo(link, e)}
         >
           <span className="text-[18px]">{icons[index]}</span>
           <span className="tracking-wider">{link.name}</span>

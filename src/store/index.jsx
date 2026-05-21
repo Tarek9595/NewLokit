@@ -1175,6 +1175,9 @@ export const useLangStore = create((set) => ({
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import axios from "axios";
+
+export const domain = "https://lokit-production.up.railway.app/";
 
 export const useLinks = create(() => ({
   Links: [
@@ -1304,28 +1307,6 @@ export const useCurrentProduct = create(
   ),
 );
 
-export const useAuthStore = create((set) => ({
-  user: JSON.parse(localStorage.getItem("user")) || null,
-  isLoggedIn: !!localStorage.getItem("user"),
-
-  login: (userData) => {
-    localStorage.setItem("user", JSON.stringify(userData));
-    set({ user: userData, isLoggedIn: true });
-  },
-
-  logout: () => {
-    localStorage.removeItem("user");
-    set({ user: null, isLoggedIn: false });
-  },
-
-  updateUser: (newDetails) =>
-    set((state) => {
-      const updatedUser = { ...state.user, ...newDetails };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      return { user: updatedUser };
-    }),
-}));
-
 export const useCart = create(
   persist(
     (set, get) => ({
@@ -1447,3 +1428,119 @@ export const useStage = create((set) => ({
   stage: 0,
   setStage: (value) => set({ stage: value }),
 }));
+
+// After sync with back end
+
+export const userLoginInfo = create(
+  persist(
+    (set) => ({
+      loginInfo: null,
+      isLoggedIn: false,
+
+      login: (userData) =>
+        set({
+          loginInfo: userData,
+          isLoggedIn: true,
+        }),
+
+      logout: () =>
+        set({
+          loginInfo: null,
+          isLoggedIn: false,
+        }),
+
+      updateUser: (newDetails) =>
+        set((state) => ({
+          loginInfo: state.loginInfo
+            ? { ...state.loginInfo, ...newDetails }
+            : null,
+        })),
+    }),
+    {
+      name: "userLoginInfo",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);
+
+export const useAccountInfo = create(
+  persist(
+    (set) => ({
+      accountInfo: null,
+      isLoadingAccount: false,
+
+      fetchProfile: async () => {
+        const token = userLoginInfo.getState().loginInfo?.token;
+        if (!token) return;
+
+        set({ isLoadingAccount: true });
+        try {
+          let url = domain + "account";
+          const res = await axios.get(url, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          set({ accountInfo: res.data, isLoadingAccount: false }); // , isLoadingAccount: false
+        } catch (err) {
+          console.error("Error fetching account info:", err);
+          set({ isLoadingAccount: false });
+        }
+      },
+
+      updateProfile: async (updatedData) => {
+        const token = userLoginInfo.getState().loginInfo?.token;
+        if (!token) return false;
+
+        try {
+          let url = domain + "account";
+          const res = await axios.put(url, updatedData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          set({ accountInfo: res.data });
+          return true;
+        } catch (err) {
+          console.error("Error updating profile:", err);
+          return false;
+        }
+      },
+
+      clearAccountInfo: () => set({ accountInfo: null }),
+
+      changePassword: async (passwordData) => {
+        const token = userLoginInfo.getState().loginInfo?.token;
+        if (!token)
+          return {
+            success: false,
+            message: "No token found, please login again",
+          };
+
+        try {
+          let url = domain + "account/password";
+
+          const res = await axios.patch(url, passwordData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          return { success: true, data: res.data };
+        } catch (err) {
+          console.error("Error changing password:", err);
+          const errorMsg =
+            err.response?.data?.message ||
+            "Failed to change password. Please try again.";
+          return { success: false, message: errorMsg };
+        }
+      },
+    }),
+    {
+      name: "account-info-storage",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);

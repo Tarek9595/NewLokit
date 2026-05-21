@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuthStore } from "../../store";
+import { userLoginInfo } from "../../store";
 
 export default function ProtectedRoute() {
-  const { isLoggedIn } = useAuthStore();
+  const { isLoggedIn } = userLoginInfo();
+
+  const wasLoggedIn = useRef(isLoggedIn);
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn && !wasLoggedIn.current) {
       toast.error("Please login first", {
         id: "auth-error",
         style: {
@@ -19,5 +21,10 @@ export default function ProtectedRoute() {
     }
   }, [isLoggedIn]);
 
-  return isLoggedIn ? <Outlet /> : <Navigate to="/login" replace />;
+  // eslint-disable-next-line react-hooks/refs
+  if (!isLoggedIn && !wasLoggedIn.current) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
 }
