@@ -1,22 +1,21 @@
-export default function Price({ value, onChange }) {
-  const max = 5000;
-  const percent = (value / max) * 100;
+export default function Price({ min = 0, max = 2500, value, onChange }) {
+  const percent = max > 0 ? (value / max) * 100 : 100;
 
   return (
-    <div className="price-wrapper">
+    <div className="price-wrapper w-full">
       <div className="price-values flex justify-between font-roboto text-[14px] font-medium mb-2">
-        <span>0 EGP</span>
-        <span className="text-darky font-bold">{value} EGP</span>
+        <span>{min} EGP</span>
+        <span className="text-darky font-bold">{value ?? max} EGP</span>
       </div>
 
       <input
         type="range"
-        min="0"
+        min={min}
         max={max}
-        step="50"
-        value={value}
+        step="10"
+        value={value ?? max}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="price-slider w-full cursor-pointer"
+        className="price-slider w-full cursor-pointer accent-darky"
         style={{
           background: `linear-gradient(to right, #000 ${percent}%, #cfcfcf ${percent}%)`,
         }}

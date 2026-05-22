@@ -1,6 +1,11 @@
-import { useState } from "react"; // ضفنا useState عشان حركة قفل الـ Heads
+import { useState, useMemo } from "react";
 import { useFormik } from "formik";
-import { useFilterStore } from "../../store";
+import { useFilterStore, useProductStore } from "../../store";
+import {
+  IoFilterOutline,
+  IoRefreshOutline,
+  IoCloseOutline,
+} from "react-icons/io5";
 import SearchFilter from "./FilteredComponents/SearchFilter";
 import CheckBox from "./FilteredComponents/CheckBox";
 import Sizes from "./FilteredComponents/Sizes";
@@ -8,99 +13,240 @@ import Colors from "./FilteredComponents/Colors";
 import Price from "./FilteredComponents/Price";
 import ActiveFilters from "./FilteredComponents/ActiveFilters";
 
-export default function Filtered() {
-  const { setFilters, appliedFilters } = useFilterStore();
-
+export default function Filtered({ isOpen, onClose }) {
+  const { setFilters, resetFilters, appliedFilters } = useFilterStore();
+  const { allProducts } = useProductStore();
   const [resetTrigger, setResetTrigger] = useState(0);
 
-  const filterData = {
-    brands: ["adidas", "nike", "zara", "gucci"],
-    departments: ["men", "women", "unisex", "kids", "sports wear"],
-    categories: ["tops", "bottoms", "dresses", "active wear", "sets"],
-    sizes: ["large", "medium", "small", "x large", "x small"],
-  };
+  // استخراج كل الداتا ديناميكياً من المنتجات بدون تكرار
+  const dynamicFilterData = useMemo(() => {
+    const brandsSet = new Set();
+    const departmentsSet = new Set();
+    const categoriesSet = new Set();
+    const colorsSet = new Set();
+    const sizesSet = new Set();
+
+    allProducts.forEach((product) => {
+      if (product.brandName) brandsSet.add(product.brandName.toLowerCase());
+      if (product.departmentName)
+        departmentsSet.add(product.departmentName.toLowerCase());
+      if (product.categoryName)
+        categoriesSet.add(product.categoryName.toLowerCase());
+
+      if (product.colors && Array.isArray(product.colors)) {
+        product.colors.forEach((c) => {
+          if (c) colorsSet.add(c.trim());
+        });
+      }
+
+      if (product.sizes && Array.isArray(product.sizes)) {
+        product.sizes.forEach((s) => {
+          if (s) sizesSet.add(s.trim().toUpperCase());
+        });
+      }
+    });
+
+    return {
+      brandName: Array.from(brandsSet),
+      departmentName: Array.from(departmentsSet),
+      categoryName: Array.from(categoriesSet),
+      colors: Array.from(colorsSet),
+      sizes: Array.from(sizesSet),
+    };
+  }, [allProducts]);
+
+  // إيجاد أعلى سعر ديناميكياً
+  const maxProductPrice = useMemo(() => {
+    if (allProducts.length === 0) return 2500;
+    const prices = allProducts.map((p) => p.price || 0);
+    return Math.max(...prices);
+  }, [allProducts]);
 
   const formik = useFormik({
     initialValues: {
-      brands: [],
-      departments: [],
-      categories: [],
-      sizes: [],
-      color: "",
-      priceRange: 2500,
+      brandName: appliedFilters.brandName || [],
+      departmentName: appliedFilters.departmentName || [],
+      categoryName: appliedFilters.categoryName || [],
+      sizes: appliedFilters.sizes || [],
+      colors: appliedFilters.colors || [],
+      price:
+        appliedFilters.price !== undefined
+          ? appliedFilters.price
+          : maxProductPrice,
     },
-    onSubmit: (values, { resetForm }) => {
+    enableReinitialize: true,
+    onSubmit: (values) => {
       setFilters(values);
-      resetForm();
-      setResetTrigger((prev) => prev + 1);
+      if (onClose) onClose();
     },
   });
 
+  const handleResetAll = () => {
+    resetFilters();
+    formik.resetForm({
+      values: {
+        brandName: [],
+        departmentName: [],
+        categoryName: [],
+        sizes: [],
+        colors: [],
+        price: maxProductPrice,
+      },
+    });
+    setResetTrigger((prev) => prev + 1);
+  };
+
   const hasActiveFilters =
-    appliedFilters?.brands?.length > 0 ||
-    appliedFilters?.departments?.length > 0 ||
-    appliedFilters?.categories?.length > 0 ||
-    appliedFilters?.sizes?.length > 0 ||
-    (appliedFilters?.color && appliedFilters?.color !== "") ||
-    (appliedFilters?.priceRange !== undefined &&
-      appliedFilters?.priceRange !== 0);
+    formik.values.brandName?.length > 0 ||
+    formik.values.departmentName?.length > 0 ||
+    formik.values.categoryName?.length > 0 ||
+    formik.values.sizes?.length > 0 ||
+    formik.values.colors?.length > 0 ||
+    (formik.values.price !== undefined &&
+      formik.values.price !== maxProductPrice);
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="w-full flex flex-col gap-10 p-6 rounded-xl h-fit md:w-[35%] md:px-5 lg:w-[30%] lg:max-w-95 lg:p-10 xl:max-w-105"
-    >
-      {hasActiveFilters ? (
-        <ActiveFilters />
-      ) : (
-        <h1 className="font-oswald font-medium text-[28px] lg:text-[32px] w-fit pb-1 text-darky">
-          Filter
-        </h1>
+    <>
+      {/* Backdrop للموبايل */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-50 md:hidden block"
+          onClick={onClose}
+        />
       )}
 
-      <div key={resetTrigger} className="flex flex-col gap-8">
-        {Object.entries(filterData).map(([key, options]) => (
-          <SearchFilter key={key} filterName={key}>
-            {options.map((item) => (
-              <CheckBox
-                key={item}
-                groupName={key}
-                value={item}
-                onChange={formik.handleChange}
-                checked={formik.values[key]?.includes(item)}
-              />
-            ))}
-          </SearchFilter>
-        ))}
-
-        <SearchFilter filterName="size (Inches)">
-          <Sizes
-            selectedSizes={formik.values.sizes}
-            onChange={(val) => formik.setFieldValue("sizes", val)}
-          />
-        </SearchFilter>
-
-        <SearchFilter filterName="Color">
-          <Colors
-            selectedColor={formik.values.color}
-            onChange={(val) => formik.setFieldValue("color", val)}
-          />
-        </SearchFilter>
-
-        <SearchFilter filterName="price range">
-          <Price
-            value={formik.values.priceRange}
-            onChange={(val) => formik.setFieldValue("priceRange", val)}
-          />
-        </SearchFilter>
-      </div>
-
-      <button
-        type="submit"
-        className="btn py-2.5 p-7 w-fit bg-[#F0F2F2] border-2 border-[#C4C4C4] font-oswald font-semibold text-[#615e5e] self-end-safe mr-6 md:mr-15 lg:mr-0 hover:bg-darky hover:text-white transition-colors cursor-pointer"
+      <form
+        onSubmit={formik.handleSubmit}
+        className={`
+          flex flex-col bg-white p-5 font-main h-full md:h-fit
+          /* الموبايل Drawer */
+          fixed inset-y-0 left-0 w-[300px] max-w-[calc(100vw-40px)] z-50 shadow-2xl transition-transform duration-300 ease-in-out
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          /* الشاشات الكبيرة */
+          md:sticky md:top-6 md:translate-x-0 md:w-[280px] lg:w-[320px] md:z-10 md:shadow-sm md:border md:border-gray-100 md:rounded-2xl md:transition-none
+        `}
       >
-        Apply
-      </button>
-    </form>
+        {/* الهيدر */}
+        <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
+          <div className="flex items-center gap-2">
+            <IoFilterOutline className="text-darky text-xl" />
+            <h2 className="font-bold text-base text-darky uppercase tracking-wide">
+              Filters
+            </h2>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={handleResetAll}
+                className="flex items-center gap-1 text-xs text-red-500 font-medium hover:underline cursor-pointer shrink-0"
+              >
+                <IoRefreshOutline className="text-sm" /> Clear All
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="md:hidden text-gray-400 hover:text-darky text-2xl p-0.5 cursor-pointer transition-colors shrink-0"
+            >
+              <IoCloseOutline />
+            </button>
+          </div>
+        </div>
+
+        {/* الفلاتر النشطة (Chips) */}
+        {hasActiveFilters && (
+          <div className="mb-4">
+            <ActiveFilters />
+          </div>
+        )}
+
+        {/* قائمة الفلاتر */}
+        <div
+          key={resetTrigger}
+          className="flex flex-col divide-y divide-gray-100 overflow-y-auto grow pr-1 no-scrollbar md:overflow-visible"
+        >
+          {Object.entries(dynamicFilterData).map(([key, options]) => {
+            if (["colors", "sizes"].includes(key) || options.length === 0)
+              return null;
+            const displayName = key.replace("Name", "S").toUpperCase();
+
+            return (
+              <div key={key} className="py-4 first:pt-0">
+                <SearchFilter filterName={displayName}>
+                  <div className="grid grid-cols-1 gap-2.5 pt-2 capitalize">
+                    {options.map((item) => (
+                      <CheckBox
+                        key={item}
+                        groupName={key}
+                        value={item}
+                        onChange={formik.handleChange}
+                        checked={formik.values[key]?.includes(item)}
+                      />
+                    ))}
+                  </div>
+                </SearchFilter>
+              </div>
+            );
+          })}
+
+          {/* فلترة المقاسات */}
+          {dynamicFilterData.sizes.length > 0 && (
+            <div className="py-4">
+              <SearchFilter filterName="SIZES">
+                <div className="pt-2">
+                  <Sizes
+                    availableSizes={dynamicFilterData.sizes}
+                    selectedSizes={formik.values.sizes}
+                    onChange={(val) => formik.setFieldValue("sizes", val)}
+                  />
+                </div>
+              </SearchFilter>
+            </div>
+          )}
+
+          {/* فلترة الألوان */}
+          {dynamicFilterData.colors.length > 0 && (
+            <div className="py-4">
+              <SearchFilter filterName="COLORS">
+                <div className="pt-2">
+                  <Colors
+                    availableColors={dynamicFilterData.colors}
+                    selectedColor={formik.values.colors}
+                    onChange={(val) => formik.setFieldValue("colors", val)}
+                  />
+                </div>
+              </SearchFilter>
+            </div>
+          )}
+
+          {/* فلترة السعر */}
+          <div className="py-4 last:pb-0">
+            <SearchFilter filterName="PRICE RANGE">
+              <div className="pt-2">
+                <Price
+                  min={0}
+                  max={maxProductPrice}
+                  value={formik.values.price}
+                  onChange={(val) => formik.setFieldValue("price", val)}
+                />
+              </div>
+            </SearchFilter>
+          </div>
+        </div>
+
+        {/* زر التطبيق */}
+        <div className="flex gap-3 border-t border-gray-100 pt-4 mt-4 bg-white sticky bottom-0">
+          <button
+            type="submit"
+            className="grow text-sm bg-darky text-white font-semibold py-3 rounded-xl shadow-md hover:bg-darky/90 active:scale-[0.98] transition-all uppercase tracking-wider cursor-pointer"
+          >
+            Apply Filters
+          </button>
+        </div>
+      </form>
+    </>
   );
 }

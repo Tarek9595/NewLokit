@@ -5,10 +5,10 @@ import HeroSection from "./HeroSection";
 import ShopSection from "./ShopSection/ShopSection";
 import { useAccountInfo } from "../../store";
 import { useEffect } from "react";
+import MyComponent from "./MyComponent";
 
 export default function Home() {
   const { accountInfo, fetchProfile } = useAccountInfo();
-
   useEffect(() => {
     if (!accountInfo) {
       fetchProfile();
@@ -17,6 +17,7 @@ export default function Home() {
 
   return (
     <>
+      <MyComponent />
       <HeroSection />
       <Brands />
       <ShopSection />

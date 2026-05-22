@@ -2,14 +2,14 @@ import { useFilterStore } from "../../../store";
 import { IoCloseOutline } from "react-icons/io5";
 
 export default function ActiveFilters() {
-  const { appliedFilters, setFilters, resetFilters } = useFilterStore();
+  const { appliedFilters, setFilters } = useFilterStore();
 
   const hasFilters =
-    appliedFilters.brands?.length > 0 ||
-    appliedFilters.departments?.length > 0 ||
+    appliedFilters.brandName?.length > 0 ||
+    appliedFilters.departmentName?.length > 0 ||
+    appliedFilters.categoryName?.length > 0 ||
     appliedFilters.sizes?.length > 0 ||
-    appliedFilters.color ||
-    (appliedFilters.priceRange && appliedFilters.priceRange < 5000);
+    appliedFilters.colors?.length > 0;
 
   if (!hasFilters) return null;
 
@@ -22,108 +22,72 @@ export default function ActiveFilters() {
     });
   };
 
-  const removeSingleItem = (filterKey, defaultValue) => {
-    setFilters({
-      ...appliedFilters,
-      [filterKey]: defaultValue,
-    });
-  };
-
   return (
-    <div className="w-full bg-white border border-gray-200 p-6 flex flex-col gap-6 shadow-sm font-main">
-      <div className="flex justify-between items-center pb-2">
-        <h2 className="font-oswald font-medium text-[32px] text-darky tracking-tight">
-          Filter
-        </h2>
+    <div className="w-full flex flex-wrap gap-2 p-1 font-main">
+      {/* Brands */}
+      {appliedFilters.brandName?.map((brand) => (
         <button
-          onClick={resetFilters}
-          className="flex items-center gap-1 text-[11px] font-bold text-gray-500 hover:text-red-500 transition-colors uppercase tracking-widest cursor-pointer"
+          key={brand}
+          type="button"
+          onClick={() => removeArrayItem("brandName", brand)}
+          className="flex items-center gap-1 text-xs bg-gray-100 hover:bg-gray-200 text-darky px-2.5 py-1 rounded-full transition-colors font-medium capitalize cursor-pointer"
         >
-          <IoCloseOutline className="text-lg" /> Reset All
+          {brand} <IoCloseOutline className="text-sm text-gray-500" />
         </button>
-      </div>
+      ))}
 
-      <div className="flex flex-col gap-6">
-        {appliedFilters.brands?.length > 0 && (
-          <div className="flex flex-col gap-3">
-            <h3 className="font-oswald text-xl text-darky">Brand:</h3>
-            <div className="flex flex-wrap gap-x-5 gap-y-2">
-              {appliedFilters.brands.map((brand) => (
-                <button
-                  key={brand}
-                  onClick={() => removeArrayItem("brands", brand)}
-                  className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-red-500 transition-colors uppercase cursor-pointer"
-                >
-                  <IoCloseOutline className="text-lg" /> {brand}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+      {/* Departments */}
+      {appliedFilters.departmentName?.map((dept) => (
+        <button
+          key={dept}
+          type="button"
+          onClick={() => removeArrayItem("departmentName", dept)}
+          className="flex items-center gap-1 text-xs bg-gray-100 hover:bg-gray-200 text-darky px-2.5 py-1 rounded-full transition-colors font-medium capitalize cursor-pointer"
+        >
+          {dept} <IoCloseOutline className="text-sm text-gray-500" />
+        </button>
+      ))}
 
-        {appliedFilters.sizes?.length > 0 && (
-          <div className="flex flex-col gap-3">
-            <h3 className="font-oswald text-xl text-darky">Size (Inches):</h3>
-            <div className="flex flex-wrap gap-x-5 gap-y-2">
-              {appliedFilters.sizes.map((size) => (
-                <button
-                  key={size}
-                  onClick={() => removeArrayItem("sizes", size)}
-                  className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-red-500 transition-colors uppercase cursor-pointer"
-                >
-                  <IoCloseOutline className="text-lg" /> {size}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+      {/* Categories */}
+      {appliedFilters.categoryName?.map((cat) => (
+        <button
+          key={cat}
+          type="button"
+          onClick={() => removeArrayItem("categoryName", cat)}
+          className="flex items-center gap-1 text-xs bg-gray-100 hover:bg-gray-200 text-darky px-2.5 py-1 rounded-full transition-colors font-medium capitalize cursor-pointer"
+        >
+          {cat} <IoCloseOutline className="text-sm text-gray-500" />
+        </button>
+      ))}
 
-        {appliedFilters.departments?.length > 0 && (
-          <div className="flex flex-col gap-3">
-            <h3 className="font-oswald text-xl text-darky">Department:</h3>
-            <div className="flex flex-wrap gap-x-5 gap-y-2">
-              {appliedFilters.departments.map((dept) => (
-                <button
-                  key={dept}
-                  onClick={() => removeArrayItem("departments", dept)}
-                  className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-red-500 transition-colors uppercase cursor-pointer"
-                >
-                  <IoCloseOutline className="text-lg" /> {dept}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+      {/* Sizes */}
+      {appliedFilters.sizes?.map((size) => (
+        <button
+          key={size}
+          type="button"
+          onClick={() => removeArrayItem("sizes", size)}
+          className="flex items-center gap-1 text-xs bg-gray-100 hover:bg-gray-200 text-darky px-2.5 py-1 rounded-full transition-colors font-medium uppercase cursor-pointer"
+        >
+          Size: {size} <IoCloseOutline className="text-sm text-gray-500" />
+        </button>
+      ))}
 
-        {appliedFilters.color && (
-          <div className="flex flex-col gap-3">
-            <h3 className="font-oswald text-xl text-darky">Color:</h3>
-            <button
-              onClick={() => removeSingleItem("color", "")}
-              className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-red-500 transition-colors cursor-pointer w-fit"
-            >
-              <IoCloseOutline className="text-lg" />
-              <div
-                className="w-5 h-5 border border-gray-300"
-                style={{ backgroundColor: appliedFilters.color }}
-              ></div>
-            </button>
-          </div>
-        )}
-
-        {appliedFilters.priceRange && appliedFilters.priceRange < 5000 && (
-          <div className="flex flex-col gap-3">
-            <h3 className="font-oswald text-xl text-darky">Price Range:</h3>
-            <button
-              onClick={() => removeSingleItem("priceRange", 5000)}
-              className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-red-500 transition-colors uppercase cursor-pointer"
-            >
-              <IoCloseOutline className="text-lg" /> 0.00 EGP –{" "}
-              {appliedFilters.priceRange} EGP
-            </button>
-          </div>
-        )}
-      </div>
+      {/* Colors */}
+      {appliedFilters.colors?.map((color) => (
+        <button
+          key={color}
+          type="button"
+          onClick={() => removeArrayItem("colors", color)}
+          className="flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-gray-200 text-darky px-2.5 py-1 rounded-full transition-colors font-medium capitalize cursor-pointer"
+        >
+          <span
+            className="w-3 h-3 rounded-full border border-gray-300 inline-block"
+            style={{ backgroundColor: color }}
+          />
+          {color}
+          <IoCloseOutline className="text-sm text-gray-500" />
+        </button>
+      ))}
     </div>
   );
 }

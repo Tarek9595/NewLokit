@@ -1,12 +1,28 @@
-import { products, useWishlist } from "../../../store";
+import { useEffect } from "react";
+import { useProductStore, useWishlist } from "../../../store";
 import ProductCard from "../../ProductDetails/ProductCard";
 import { BsArrowRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 export default function ShopCaty() {
   const { wishlist, setWishListProduct, removeWishlistProduct } = useWishlist();
+  const { allProducts, fetchAllProducts, isLoading } = useProductStore();
 
-  const featuredProducts = products.slice(0, 9);
+  useEffect(() => {
+    if (allProducts.length === 0) {
+      fetchAllProducts();
+    }
+  }, [allProducts.length, fetchAllProducts]);
+
+  const featuredProducts = allProducts.slice(0, 9);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-40 w-full">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-darky"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-12.5 items-center w-full">
