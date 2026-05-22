@@ -36,26 +36,6 @@ export default function SearchShoping() {
       .get(url1)
       .then((res) => setProduct(res.data))
       .catch((err) => console.log(err));
-
-    // let endPoint2 = "/category/4";
-    // let url2 = domain + endPoint2;
-
-    // axios
-    //   .get(url2, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
-    //   .then((res) => console.log(res.data))
-    //   .catch((err) => console.log(err));
-
-    // let endPoint3 = "/category";
-    // let url3 = domain + endPoint3;
-
-    // axios
-    //   .get(url3)
-    //   .then((res) => console.log(res.data))
-    //   .catch((err) => console.log(err));
   }, []);
   console.log(product);
 

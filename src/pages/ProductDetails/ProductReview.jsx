@@ -9,11 +9,10 @@ export default function ProductReview() {
   const { reviews } = useReviews();
   const initialReviews = reviews.slice(0, 3);
   const hiddenReviews = reviews.slice(3);
-  const { setOpenReview, openReview } = useReviews();
+  const { setOpenReview } = useReviews();
 
   const handleReview = () => {
     setOpenReview(true);
-    console.log(openReview);
   };
 
   return (

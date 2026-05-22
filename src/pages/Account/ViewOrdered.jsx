@@ -24,8 +24,6 @@ export default function ViewOrdered() {
   const safeStage = Math.min(stage, steps.length - 1);
   const progressPercent = Math.round((safeStage / (steps.length - 1)) * 100);
 
-  console.log(progressPercent);
-
   return (
     <div className="w-full sm:h-30 h-100 flex sm:flex-row flex-col sm:justify-center relative ">
       <div className="sm:w-[81%] xl:w-[85%] w-2 sm:h-2 h-[89%] -z-10 relative">

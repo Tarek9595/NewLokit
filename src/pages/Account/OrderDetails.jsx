@@ -14,7 +14,6 @@ export default function OrderDetails() {
 
   const changeStage = () => {
     setStage(stage + 1);
-    console.log(stage);
   };
 
   const confirmRemove = () => {

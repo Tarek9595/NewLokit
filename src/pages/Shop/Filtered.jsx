@@ -30,7 +30,6 @@ export default function Filtered() {
       priceRange: 2500,
     },
     onSubmit: (values, { resetForm }) => {
-      console.log("Filters Applied:", values);
       setFilters(values);
       resetForm();
       setResetTrigger((prev) => prev + 1);

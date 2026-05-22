@@ -32,8 +32,6 @@ export default function ProductInfo() {
       removeWishlistProduct(currentProduct.id);
     } else {
       setWishListProduct(currentProduct);
-      console.log(wishlist);
-      console.log(currentProduct);
     }
   };
 

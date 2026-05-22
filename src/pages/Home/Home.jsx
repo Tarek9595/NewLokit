@@ -15,9 +15,6 @@ export default function Home() {
     }
   }, []);
 
-  console.log(accountInfo);
-  console.log(accountInfo?.firstName);
-
   return (
     <>
       <HeroSection />

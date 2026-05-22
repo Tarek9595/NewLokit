@@ -44,8 +44,6 @@ export default function Signup() {
     // eslint-disable-next-line no-unused-vars
     const { confirmPassword, ...dataToSubmit } = values;
 
-    console.log("البيانات اللي رايحة للباك إند:", dataToSubmit);
-
     setSignInfo(dataToSubmit);
     setTimeout(() => {
       navigate("/success");

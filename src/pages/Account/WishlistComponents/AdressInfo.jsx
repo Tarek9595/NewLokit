@@ -15,7 +15,6 @@ export default function AdressInfo() {
   };
 
   const handleSubmit = (values) => {
-    console.log("Login Success:", values);
     if (values) {
       navigate(0);
       toast.success("Changes Saved");
