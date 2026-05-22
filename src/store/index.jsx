@@ -1284,11 +1284,6 @@ export const useShare = create((set) => ({
   setOpenShare: (value) => set({ openShare: value }),
 }));
 
-// export const useAiModel = create((set) => ({
-//   openAiModel: false,
-//   setOpenAiModel: (value) => set({ openAiModel: value }),
-// }));
-
 export const useUpload = create((set) => ({
   openUpload: false,
   setOpenUpload: (value) => set({ openUpload: value }),
@@ -1397,13 +1392,18 @@ export const useCart = create(
     {
       name: "cart-storage",
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => {
-        const hasUser = !!localStorage.getItem("user");
-        if (hasUser) {
-          return { cart: state.cart, ordersHistory: state.ordersHistory };
-        }
-        return { cart: [] };
-      },
+      // partialize: (state) => {
+      //   const hasUser = !!localStorage.getItem("user");
+      //   if (hasUser) {
+      //     return { cart: state.cart, ordersHistory: state.ordersHistory };
+      //   }
+      //   return { cart: [] };
+      // },
+
+      partialize: (state) => ({
+        cart: state.cart,
+        ordersHistory: state.ordersHistory,
+      }),
     },
   ),
 );
@@ -1433,28 +1433,92 @@ export const useStage = create((set) => ({
 
 export const userLoginInfo = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       loginInfo: null,
       isLoggedIn: false,
+      forgetPasswordEmail: "",
+      forgetPasswordCode: "",
 
-      login: (userData) =>
-        set({
-          loginInfo: userData,
-          isLoggedIn: true,
-        }),
-
+      login: (userData) => set({ loginInfo: userData, isLoggedIn: true }),
       logout: () =>
         set({
           loginInfo: null,
           isLoggedIn: false,
+          forgetPasswordEmail: "",
+          forgetPasswordCode: "",
         }),
-
       updateUser: (newDetails) =>
         set((state) => ({
           loginInfo: state.loginInfo
             ? { ...state.loginInfo, ...newDetails }
             : null,
         })),
+
+      sendResetCode: async (email) => {
+        try {
+          let url = domain + "auth/forgot-password";
+          const res = await axios.post(
+            url,
+            { email },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            },
+          );
+          set({ forgetPasswordEmail: email });
+          return {
+            success: true,
+            message: res.data?.message || "Code sent successfully!",
+          };
+        } catch (err) {
+          console.error("Forgot password error:", err);
+
+          const errorMsg =
+            err.response?.data?.message ||
+            "Server Error (500). Please try again later or contact support.";
+
+          return { success: false, message: errorMsg };
+        }
+      },
+
+      verifyResetCode: async (code) => {
+        try {
+          let url = domain + "auth/verify-password-code";
+          const email = get().forgetPasswordEmail;
+
+          const res = await axios.post(url, { email, code });
+          set({ forgetPasswordCode: code });
+          return {
+            success: true,
+            message: res.data?.message || "Code verified successfully!",
+          };
+        } catch (err) {
+          const errorMsg =
+            err.response?.data?.message || "Invalid or expired code.";
+          return { success: false, message: errorMsg };
+        }
+      },
+
+      resetPassword: async (newPassword) => {
+        try {
+          let url = domain + "auth/reset-password";
+          const email = get().forgetPasswordEmail;
+          const code = get().forgetPasswordCode;
+
+          const res = await axios.post(url, { email, code, newPassword });
+
+          set({ forgetPasswordEmail: "", forgetPasswordCode: "" });
+          return {
+            success: true,
+            message: res.data?.message || "Password reset successfully!",
+          };
+        } catch (err) {
+          const errorMsg =
+            err.response?.data?.message || "Failed to reset password.";
+          return { success: false, message: errorMsg };
+        }
+      },
     }),
     {
       name: "userLoginInfo",
@@ -1525,6 +1589,7 @@ export const useAccountInfo = create(
           const res = await axios.patch(url, passwordData, {
             headers: {
               Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
             },
           });
 
@@ -1533,7 +1598,7 @@ export const useAccountInfo = create(
           console.error("Error changing password:", err);
           const errorMsg =
             err.response?.data?.message ||
-            "Failed to change password. Please try again.";
+            "Server configuration error (CORS). Please contact support.";
           return { success: false, message: errorMsg };
         }
       },

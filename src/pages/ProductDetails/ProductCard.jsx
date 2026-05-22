@@ -10,6 +10,7 @@ export default function ProductCard({
   heartToggle,
   cartAdd,
   cartToggle,
+  showCartIcon = true,
 }) {
   const { setProduct } = useCurrentProduct();
 
@@ -43,16 +44,18 @@ export default function ProductCard({
           )}
         </button>
 
-        <button
-          onClick={cartToggle}
-          className="cursor-pointer absolute top-3 right-14 w-9 h-9 rounded-full bg-white/90 backdrop-blur shadow-sm flex items-center justify-center hover:bg-white transition-colors"
-        >
-          {cartAdd ? (
-            <BsCartCheckFill className="text-darky text-lg" />
-          ) : (
-            <BsCart className="text-darky text-lg" />
-          )}
-        </button>
+        {showCartIcon && (
+          <button
+            onClick={cartToggle}
+            className="cursor-pointer absolute top-3 right-14 w-9 h-9 rounded-full bg-white/90 backdrop-blur shadow-sm flex items-center justify-center hover:bg-white transition-colors"
+          >
+            {cartAdd ? (
+              <BsCartCheckFill className="text-darky text-lg" />
+            ) : (
+              <BsCart className="text-darky text-lg" />
+            )}
+          </button>
+        )}
       </div>
 
       <div className="mt-4 px-1 space-y-2">

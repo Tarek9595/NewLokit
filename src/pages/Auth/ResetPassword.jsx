@@ -5,26 +5,30 @@ import { MdLock } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
+import { userLoginInfo } from "../../store";
+import { useState } from "react";
 
 export default function ResetPassword() {
   const navigate = useNavigate();
+  const { resetPassword } = userLoginInfo();
+  const [isPending, setIsPending] = useState(false);
 
   const initialValues = {
     newPassword: "",
     confirmNewPassword: "",
   };
 
-  const handleSubmit = (values) => {
-    console.log("Login Success:", values);
-    if (
-      values.newPassword &&
-      values.confirmNewPassword &&
-      values.newPassword === values.confirmNewPassword
-    ) {
-      navigate("/success");
-      toast.success("Resest Success");
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setIsPending(true);
+    const result = await resetPassword(values.newPassword);
+    setIsPending(false);
+    setSubmitting(false);
+
+    if (result.success) {
+      toast.success("Password changed successfully!");
+      navigate("/login");
     } else {
-      toast.error("Right Same Pass !");
+      toast.error(result.message);
     }
   };
 
@@ -38,6 +42,10 @@ export default function ResetPassword() {
         /[!@#$%^&*(),.?":{}|<>]/,
         "Password must contain at least one special character",
       ),
+
+    confirmNewPassword: Yup.string()
+      .required("Please confirm your password")
+      .oneOf([Yup.ref("newPassword"), null], "Passwords must match"),
   });
 
   return (
@@ -61,7 +69,7 @@ export default function ResetPassword() {
       <div className="w-full flex flex-col sm:flex-row justify-between gap-4 mt-2">
         <div className="w-full">
           <CstBtn type="submit" variant="darky" size="md" fullWidth={true}>
-            Confirm
+            {isPending ? "Resetting..." : "Confirm"}
           </CstBtn>
         </div>
       </div>
