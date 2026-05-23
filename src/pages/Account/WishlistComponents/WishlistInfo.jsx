@@ -1,5 +1,6 @@
 import { useCart, useWishlist } from "../../../store";
 import CstBtn from "../../../components/common/CstBtn";
+import noImg from "../../../assets/No_Image_Available.jpg";
 
 export default function WishlistInfo() {
   let borderBetween = "pt-6 md:pt-18.75 border-t border-[#E9E9EB]";
@@ -40,7 +41,7 @@ export default function WishlistInfo() {
               <div className="flex gap-4 md:gap-8 w-full md:w-auto">
                 <div className="w-20 h-20 md:w-25 md:h-25 shrink-0">
                   <img
-                    src={el.img}
+                    src={el.img || noImg}
                     className="w-full h-full object-contain"
                     alt={el.name}
                   />

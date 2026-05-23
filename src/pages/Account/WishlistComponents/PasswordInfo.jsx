@@ -19,7 +19,7 @@ export default function PasswordInfo() {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setIsPending(true);
-
+    console.log(values);
     const result = await changePassword(values);
 
     setIsPending(false);

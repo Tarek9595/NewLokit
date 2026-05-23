@@ -1193,38 +1193,33 @@ const formatProductsVariants = (variantsList, rawProductsList) => {
       categoryName: matchingProduct ? matchingProduct.categoryName : "",
       departmentName: matchingProduct ? matchingProduct.departmentName : "",
       images: [],
-      rate: 5, // قيمة افتراضية من عندنا بما إنها مش جاية من الباك إند
-      soldOut: false, // قيمة افتراضية
+      rate: 5,
+      soldOut: false,
     };
   });
 };
 
-// --- Store المنتجات الجديد والديناميكي ---
 export const useProductStore = create((set) => ({
   allProducts: [],
   isLoading: false,
   error: null,
 
-  // الأكشن السحري اللي بيجيب كل حاجة ويدمجها في الـ Store
   fetchAllProducts: async () => {
     set({ isLoading: true, error: null });
     try {
       const urlVariants = domain + "variants";
       const urlProducts = domain + "product";
 
-      // 1. جلب البيانات بالتوازي
       const [variantsRes, productsRes] = await Promise.all([
         axios.get(urlVariants),
         axios.get(urlProducts),
       ]);
 
-      // 2. دمج الـ variants مع الـ products الأساسية
       const cleanProducts = formatProductsVariants(
         variantsRes.data,
         productsRes.data,
       );
 
-      // 3. جلب الصور لكل منتج تم تجميعه
       const imageRequests = cleanProducts.map((product) =>
         axios
           .get(`${domain}product-images/product/${product.id}`)
@@ -1234,7 +1229,6 @@ export const useProductStore = create((set) => ({
 
       const imagesResults = await Promise.all(imageRequests);
 
-      // 4. دمج الصور مع المنتجات المهيكلة
       const finalProductsWithImages = cleanProducts.map((product) => {
         const productImagesData = imagesResults.find(
           (img) => img.productId === product.id,
@@ -1247,7 +1241,6 @@ export const useProductStore = create((set) => ({
         };
       });
 
-      // حفظ الداتا النهائية في الـ State
       set({ allProducts: finalProductsWithImages, isLoading: false });
     } catch (err) {
       console.error("Error in Main Pipeline:", err);
@@ -1338,21 +1331,6 @@ export const useFilterStore = create((set) => ({
     }),
 }));
 
-export const useWishlist = create((set) => ({
-  wishlist: [],
-
-  setWishListProduct: (product) =>
-    set((state) =>
-      state.wishlist.some((item) => item.Id === product.id)
-        ? state
-        : { wishlist: [...state.wishlist, product] },
-    ),
-  removeWishlistProduct: (productID) =>
-    set((state) => ({
-      wishlist: state.wishlist.filter((el) => el.id != productID),
-    })),
-}));
-
 export const useReviews = create((set) => ({
   reviews: [
     {
@@ -1383,11 +1361,6 @@ export const useReviews = create((set) => ({
 export const useShare = create((set) => ({
   openShare: false,
   setOpenShare: (value) => set({ openShare: value }),
-}));
-
-export const useUpload = create((set) => ({
-  openUpload: false,
-  setOpenUpload: (value) => set({ openUpload: value }),
 }));
 
 export const useCurrentProduct = create(
@@ -1493,13 +1466,6 @@ export const useCart = create(
     {
       name: "cart-storage",
       storage: createJSONStorage(() => localStorage),
-      // partialize: (state) => {
-      //   const hasUser = !!localStorage.getItem("user");
-      //   if (hasUser) {
-      //     return { cart: state.cart, ordersHistory: state.ordersHistory };
-      //   }
-      //   return { cart: [] };
-      // },
 
       partialize: (state) => ({
         cart: state.cart,
@@ -1541,13 +1507,20 @@ export const userLoginInfo = create(
       forgetPasswordCode: "",
 
       login: (userData) => set({ loginInfo: userData, isLoggedIn: true }),
-      logout: () =>
+      logout: () => {
         set({
           loginInfo: null,
           isLoggedIn: false,
           forgetPasswordEmail: "",
           forgetPasswordCode: "",
-        }),
+        });
+
+        localStorage.removeItem("userLoginInfo");
+        localStorage.removeItem("account-info-storage");
+
+        window.location.href = "/";
+      },
+
       updateUser: (newDetails) =>
         set((state) => ({
           loginInfo: state.loginInfo
@@ -1710,3 +1683,85 @@ export const useAccountInfo = create(
     },
   ),
 );
+
+export const useWishlist = create((set) => ({
+  wishlist: [],
+
+  setWishListProduct: (product) =>
+    set((state) => {
+      const isExist = state.wishlist.some((item) => item.id === product.id);
+      if (isExist) return state;
+
+      const formattedProduct = {
+        id: product.id,
+        name: product.productName,
+        price: product.price,
+        img:
+          product.images && product.images.length > 0 ? product.images[0] : "",
+      };
+
+      return { wishlist: [...state.wishlist, formattedProduct] };
+    }),
+
+  removeWishlistProduct: (productID) =>
+    set((state) => ({
+      wishlist: state.wishlist.filter((el) => el.id !== productID),
+    })),
+}));
+
+// eslint-disable-next-line no-unused-vars
+export const useUpload = create((set, get) => ({
+  openUpload: false,
+  isLoadingTryOn: false,
+  tryOnResult: null,
+  uploadError: null,
+  setOpenUpload: (value) =>
+    set({ openUpload: value, tryOnResult: null, uploadError: null }),
+
+  tryOnProduct: async (productId, file) => {
+    if (!productId || !file) {
+      set({ uploadError: "Missing product ID or user image" });
+      return;
+    }
+
+    set({ isLoadingTryOn: true, uploadError: null });
+
+    try {
+      const token = userLoginInfo.getState().loginInfo?.token;
+
+      const formData = new FormData();
+      formData.append("userImage", file);
+
+      const headers = {
+        "Content-Type": "multipart/form-data",
+      };
+
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const response = await axios.post(
+        `${domain}ai/try-on?productId=${productId}`,
+        formData,
+        { headers },
+      );
+
+      if (response.data && response.data.resultImageUrl) {
+        set({
+          tryOnResult: response.data.resultImageUrl,
+          isLoadingTryOn: false,
+        });
+      } else {
+        set({
+          uploadError: "Failed to get response image",
+          isLoadingTryOn: false,
+        });
+      }
+    } catch (err) {
+      console.error("AI Try-On Error:", err);
+      const msg =
+        err.response?.data?.message || "Something went wrong with AI Try-On";
+      set({ uploadError: msg, isLoadingTryOn: false });
+    }
+  },
+}));

@@ -1,41 +1,65 @@
-import pic1 from "../../assets/img/search-pics/pic-1.png";
-import pic2 from "../../assets/img/search-pics/pic-2.png";
-import pic3 from "../../assets/img/search-pics/pic-3.png";
-import pic4 from "../../assets/img/search-pics/pic-4.png";
-import pic5 from "../../assets/img/search-pics/pic-5.png";
+import { useProductStore, useCurrentProduct } from "../../store";
+import { Link } from "react-router";
 
 export default function Familiar() {
-  const familiarProducts = [
-    { head: "Classic Monochrome Tees", price: 35.0, img: pic1 },
-    { head: "Monochromatic Wardrobe", price: 27.0, img: pic2 },
-    { head: "Essential Neutrals", price: 22.0, img: pic3 },
-    { head: "UTRAANET Black", price: 34.0, img: pic4 },
-    { head: "Essential Neutrals", price: 22.0, img: pic5 },
-  ];
+  const { allProducts } = useProductStore();
+  const { currentProduct, setProduct } = useCurrentProduct();
+
+  // فلترة المنتجات اللي ليها نفس البراند، وبنستبعد المنتج المعروض حالياً
+  const relatedProducts = allProducts
+    .filter(
+      (product) =>
+        product.brandName === currentProduct?.brandName &&
+        product.id !== currentProduct?.id,
+    )
+    .slice(0, 4); // عرض أول 4 منتجات مشابهة فقط مثلاً
+
+  if (relatedProducts.length === 0) return null;
+
   return (
-    <div className="flex flex-col gap-8 font-inter">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-[24px] font-bold">You might also like</h1>
-        <span className="text-[12px] font-medium uppercase">
-          SIMILAR PRODUCTS
-        </span>
-      </div>
-      <div className="container grid md:grid-cols-2 lg:grid-cols-5 p-4 gap-4">
-        {familiarProducts.map((el, index) => (
-          <div key={index} className="flex flex-col gap-6 ">
-            <div className="overflow-hidden rounded-xl bg-gray-100 aspect-3/4">
-              <img
-                src={el.img}
-                alt={el.head}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
+    <div className="container mt-10 font-inter">
+      <h3 className="text-xl font-bold text-darky mb-6 uppercase tracking-tight">
+        You Might Also Like (From {currentProduct?.brandName})
+      </h3>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        {relatedProducts.map((product) => {
+          const mainImage =
+            product.images && product.images.length > 0
+              ? product.images[0]
+              : "https://via.placeholder.com/300"; // صورة افتراضية لو مفيش صور
+
+          return (
+            <div
+              key={product.id}
+              className="flex flex-col gap-3 group cursor-pointer"
+              onClick={() => {
+                setProduct(product);
+                window.scrollTo({ top: 0, behavior: "smooth" }); // نطلع فوق لما يختار منتج جديد
+              }}
+            >
+              <div className="w-full h-80 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50">
+                <img
+                  src={mainImage}
+                  alt={product.productName}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <span className="text-xs text-gray-400 uppercase font-semibold">
+                  {product.brandName}
+                </span>
+                <h4 className="text-sm font-bold text-darky truncate uppercase">
+                  {product.productName}
+                </h4>
+                <span className="text-sm font-semibold text-gray-700">
+                  ${product.price}
+                </span>
+              </div>
             </div>
-            <div className="flex flex-col gap-3">
-              <h1 className="text-[14px] font-semibold">{el.head}</h1>
-              <span className="text-[#474B57] text-[14px]">${el.price}</span>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

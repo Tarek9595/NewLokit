@@ -87,6 +87,8 @@ export default function MyComponent() {
       .catch((err) => {
         console.log("Error in Main Pipeline:", err);
       });
+
+    axios.get(domain + "variants").then((res) => console.log(res.data));
   }, []);
 
   return <></>;
