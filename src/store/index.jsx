@@ -1660,7 +1660,7 @@ export const useAccountInfo = create(
         try {
           let url = domain + "account/password";
 
-          const res = await axios.patch(url, passwordData, {
+          const res = await axios.put(url, passwordData, {
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",

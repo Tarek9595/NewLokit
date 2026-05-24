@@ -91,5 +91,14 @@ export default function MyComponent() {
     axios.get(domain + "variants").then((res) => console.log(res.data));
   }, []);
 
+  let cart = {
+    variantId: 1319,
+    quantity: 1,
+  };
+
+  axios
+    .post(domain + "cart/items", cart)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
   return <></>;
 }
