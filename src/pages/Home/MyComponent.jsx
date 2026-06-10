@@ -38,6 +38,18 @@ export default function MyComponent() {
     });
   };
 
+  const storageRawData = localStorage.getItem("userLoginInfo");
+
+  let token = "";
+
+  if (storageRawData) {
+    // 3. تحويل النص إلى Object ليصبح قابل للقراءة
+    const parsedData = JSON.parse(storageRawData);
+
+    // 4. الوصول إلى الـ token بناءً على الهيكلة الظاهرة في السكرين شوت
+    token = parsedData?.state?.loginInfo?.token || "";
+  }
+
   const [allProducts, setAllProducts] = useState([]);
 
   console.log(allProducts);
@@ -97,8 +109,16 @@ export default function MyComponent() {
   };
 
   axios
-    .post(domain + "cart/items", cart)
-    .then((res) => console.log(res))
+    .post(domain + "cart/items", cart, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => console.log(res.data))
     .catch((err) => console.log(err));
+
+  axios.get(domain + "variants").then((res) => console.log(res.data));
+  axios.get(domain + "product").then((res) => console.log(res.data));
   return <></>;
 }

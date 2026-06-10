@@ -88,10 +88,10 @@ export default function LargeNav() {
 
         <Lang />
 
-        <div className="relative cursor-pointer hover:scale-110 transition-transform">
+        {/* <div className="relative cursor-pointer hover:scale-110 transition-transform">
           <FaBell className="text-darky text-[22px]" />
           <span className="absolute -top-1 -right-1 bg-red-500 w-2 h-2 rounded-full border border-white"></span>
-        </div>
+        </div> */}
       </nav>
 
       {renderAuthSection()}

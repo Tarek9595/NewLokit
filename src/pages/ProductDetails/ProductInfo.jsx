@@ -11,7 +11,7 @@ import { IoIosHeartEmpty, IoMdHeart } from "react-icons/io";
 import { MdOutlineStar } from "react-icons/md";
 import CustomButton from "../../components/common/CstBtn";
 import { Link } from "react-router";
-import aiMan from "../../assets/AiMan.svg";
+// import aiMan from "../../assets/AiMan.svg";
 import toast from "react-hot-toast";
 
 export default function ProductInfo() {
@@ -137,7 +137,7 @@ export default function ProductInfo() {
           </div>
 
           {/* زر الـ AI Tool المرفق بجانب التنسيق */}
-          <div className="flex flex-row lg:flex-col gap-5">
+          {/* <div className="flex flex-row lg:flex-col gap-5">
             <div
               className="p-2 h-13 w-13 flex justify-center items-center rounded-lg bg-btnGray cursor-pointer hover:opacity-80 transition-opacity"
               onClick={() => setOpenUpload(!openUpload)}
@@ -148,7 +148,7 @@ export default function ProductInfo() {
                 className="w-full h-full object-cover"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* تفاصيل المنتج */}
           <div className="w-full lg:w-1/2 xl:pr-37.5 flex flex-col gap-6.5">
@@ -244,24 +244,6 @@ export default function ProductInfo() {
                     +
                   </button>
                 </div>
-              </div>
-
-              <div className="flex items-center gap-4 mt-2">
-                <CustomButton
-                  variant="darky"
-                  size="lg"
-                  className="flex-1 py-5 rounded-sm shadow-xl"
-                  onClick={() =>
-                    addToCart({
-                      ...currentProduct,
-                      selectedSize,
-                      selectedColor: currentProduct.colors?.[selectedColor],
-                      quantity,
-                    })
-                  }
-                >
-                  Add to cart
-                </CustomButton>
                 <button
                   onClick={toggleLike}
                   className={`cursor-pointer w-12 h-12 border-2 rounded-xl flex items-center justify-center text-2xl transition-all duration-300
@@ -273,6 +255,36 @@ export default function ProductInfo() {
                 >
                   {isLiked ? <IoMdHeart /> : <IoIosHeartEmpty />}
                 </button>
+              </div>
+
+              <div className="flex  gap-4 mt-2">
+                <div className="flex flex-col w-full gap-3">
+                  <CustomButton
+                    variant="darky"
+                    size="md"
+                    className="flex-1 py-5 rounded-lg shadow-xl"
+                    fullWidth={true}
+                    onClick={() =>
+                      addToCart({
+                        ...currentProduct,
+                        selectedSize,
+                        selectedColor: currentProduct.colors?.[selectedColor],
+                        quantity,
+                      })
+                    }
+                  >
+                    Add to cart
+                  </CustomButton>
+                  <CustomButton
+                    variant="outlineDarky"
+                    size="md"
+                    className="flex-1 py-5 rounded-lg shadow-xl"
+                    fullWidth={true}
+                    onClick={() => setOpenUpload(!openUpload)}
+                  >
+                    AI Try-On
+                  </CustomButton>
+                </div>
               </div>
 
               <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter text-center lg:text-left mt-2">

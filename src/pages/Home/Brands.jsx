@@ -1,9 +1,9 @@
 export default function Brands() {
   const brands = [
-    { name: "Zara", font: "font-montaga" },
-    { name: "Nike", font: "font-montserrat" },
-    { name: "Adidas", font: "font-montaga" },
-    { name: "Gucci", font: "font-montserrat" },
+    { name: "Antikka", font: "font-montaga" },
+    { name: "Niffty", font: "font-montserrat" },
+    { name: "Crunk", font: "font-montaga" },
+    { name: "Saada", font: "font-montserrat" },
   ];
 
   return (
@@ -15,7 +15,7 @@ export default function Brands() {
               key={brand.name}
               className={`
                 ${brand.font}
-                text-[40px] md:text-[60px] 
+                text-[40px] md:text-[50px] 
                 font-normal 
                 text-darky 
                 capitalize
