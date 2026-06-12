@@ -45,6 +45,7 @@ export default function CartPage() {
       ? navigate("/checkout")
       : toast.error("Please Fill Cart First");
   };
+
   return (
     <div className="flex flex-col min-h-screen gap-15 items-center">
       <TopSection name="My Cart" crrName="Cart" path="mycart" />
@@ -57,19 +58,20 @@ export default function CartPage() {
             {cart.length > 0 ? (
               cart.map((product) => (
                 <div
+                  onClick={() => console.log(cart)}
                   key={product.id}
                   className={`flex flex-col md:flex-row gap-7 justify-between md:items-center p-1 pt-6 md:pt-7 text-darky font-medium`}
                 >
                   <div className="flex flex-col gap-1.5 items-start  md:w-55">
                     <div className="w-20 h-20 md:w-25 md:h-25 shrink-0 ">
                       <img
-                        src={product.img}
+                        src={product.images[0]}
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div className="flex flex-col gap-1.5 items-start  md:w-55">
-                      <h1 className="text-[14px] md:text-[16px] line-clamp-2">
-                        {product.name}
+                      <h1 className="text-[14px]  line-clamp-2">
+                        {product.productName}
                       </h1>
                       <div className="flex justify-center items-center gap-2 text-[#5C5F6A] font-inter font-medium text-[12px] capitalize">
                         <span>color:</span>

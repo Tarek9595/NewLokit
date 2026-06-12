@@ -1,1161 +1,3 @@
-// import { nanoid } from "nanoid/non-secure";
-
-// // Data
-// // Women
-// import womenImgOne from "../assets/img/shop/women/shop-1.png";
-// import womenImgTwo from "../assets/img/shop/women/shop-2.png";
-// import womenImgThree from "../assets/img/shop/women/shop-3.png";
-// import womenImgFour from "../assets/img/shop/women/shop-4.png";
-// import womenImgFive from "../assets/img/shop/women/shop-5.png";
-// import womenImgSix from "../assets/img/shop/women/shop-6.png";
-// import womenImgSeven from "../assets/img/shop/women/shop-7.png";
-// import womenImgEight from "../assets/img/shop/women/shop-8.png";
-// import womenImgNine from "../assets/img/shop/women/shop-9.png";
-// //   Men
-// import menImgOne from "../assets/img/shop/men/shop-1.png";
-// import menImgTwo from "../assets/img/shop/men/shop-2.png";
-// import menImgThree from "../assets/img/shop/men/shop-3.png";
-// import menImgFour from "../assets/img/shop/men/shop-4.png";
-// import menImgFive from "../assets/img/shop/men/shop-5.png";
-// import menImgSix from "../assets/img/shop/men/shop-6.png";
-// import menImgSeven from "../assets/img/shop/men/shop-7.png";
-// import menImgEight from "../assets/img/shop/men/shop-8.png";
-// import menImgNine from "../assets/img/shop/men/shop-9.png";
-// // Unisex
-// import unisexImgOne from "../assets/img/shop/unisex/shop-1.png";
-// import unisexImgTwo from "../assets/img/shop/unisex/shop-2.png";
-// import unisexImgThree from "../assets/img/shop/unisex/shop-3.png";
-// import unisexImgFour from "../assets/img/shop/unisex/shop-4.png";
-// import unisexImgFive from "../assets/img/shop/unisex/shop-5.png";
-// import unisexImgSix from "../assets/img/shop/unisex/shop-6.png";
-// import unisexImgSeven from "../assets/img/shop/unisex/shop-7.png";
-// import unisexImgEight from "../assets/img/shop/unisex/shop-8.png";
-// import unisexImgNine from "../assets/img/shop/unisex/shop-9.png";
-// // Kids
-// import kidsImgOne from "../assets/img/shop/kids/shop-1.png";
-// import kidsImgTwo from "../assets/img/shop/kids/shop-2.png";
-// import kidsImgThree from "../assets/img/shop/kids/shop-3.png";
-// import kidsImgFour from "../assets/img/shop/kids/shop-4.png";
-// import kidsImgFive from "../assets/img/shop/kids/shop-5.png";
-// import kidsImgSix from "../assets/img/shop/kids/shop-6.png";
-// import kidsImgSeven from "../assets/img/shop/kids/shop-7.png";
-// import kidsImgEight from "../assets/img/shop/kids/shop-8.png";
-// import kidsImgNine from "../assets/img/shop/kids/shop-9.png";
-// // Sports Wear
-// import sportsImgOne from "../assets/img/shop/sports/shop-1.png";
-// import sportsImgTwo from "../assets/img/shop/sports/shop-2.png";
-// import sportsImgThree from "../assets/img/shop/sports/shop-3.png";
-// import sportsImgFour from "../assets/img/shop/sports/shop-4.png";
-// import sportsImgFive from "../assets/img/shop/sports/shop-5.png";
-// import sportsImgSix from "../assets/img/shop/sports/shop-6.png";
-// import sportsImgSeven from "../assets/img/shop/sports/shop-7.png";
-// import sportsImgEight from "../assets/img/shop/sports/shop-8.png";
-// import sportsImgNine from "../assets/img/shop/sports/shop-9.png";
-
-// const COMMON_SIZES = [
-//   "medium",
-//   "W26",
-//   "W32",
-//   "OSFA",
-//   "x small",
-//   "x large",
-//   "small",
-//   "large",
-// ];
-// const COMMON_COLORS = ["#292A2D", "#F3ECE2", "#24426A", "#18574A", "#CBA13E"];
-
-// const rawProducts = [
-//   {
-//     brand: "Nike",
-//     category: "Women's Fashion",
-//     img: womenImgOne,
-//     price: "95.50",
-//     name: "Nike Women’s Tracksuit",
-//     rate: 5,
-//     soldOut: false,
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "tops",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "980.00",
-//     rate: 4,
-//     soldOut: false,
-//     img: womenImgTwo,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: womenImgThree,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Gucci",
-//     price: "30.500",
-//     rate: 5,
-//     soldOut: false,
-//     img: womenImgFour,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "200.00",
-//     rate: 5,
-//     soldOut: false,
-//     img: womenImgFive,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Nike",
-//     price: "100.00",
-//     rate: 4,
-//     soldOut: true,
-//     img: womenImgSix,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Nike Women’s Tracksuit",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//     brand: "Nike",
-//     price: "95.50",
-//     rate: 5,
-//     soldOut: false,
-//     img: womenImgSeven,
-//     category: "Women's Fashion",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "980.00",
-//     rate: 4,
-//     soldOut: false,
-//     img: womenImgEight,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: womenImgNine,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Nike Women’s Tracksuit",
-//     brand: "Nike",
-//     price: "95.50",
-//     rate: 5,
-//     soldOut: false,
-//     img: womenImgOne,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "980.00",
-//     rate: 4,
-//     soldOut: false,
-//     img: womenImgTwo,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: womenImgThree,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Gucci",
-//     price: "30.500",
-//     rate: 5,
-//     soldOut: false,
-//     img: womenImgFour,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "200.00",
-//     rate: 5,
-//     soldOut: false,
-//     img: womenImgFive,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Nike",
-//     price: "100.00",
-//     rate: 4,
-//     soldOut: true,
-//     img: womenImgSix,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Nike Women’s Tracksuit",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-
-//     brand: "Nike",
-//     price: "95.50",
-//     rate: 5,
-//     soldOut: false,
-//     img: womenImgSeven,
-//     category: "Women's Fashion",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "980.00",
-//     rate: 4,
-//     soldOut: false,
-//     img: womenImgEight,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: womenImgNine,
-//     category: "Women's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   //   Men
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgOne,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgTwo,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgThree,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgFour,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgFive,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgSix,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgSeven,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgEight,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgNine,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgOne,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgTwo,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgThree,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgFour,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgFive,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgSix,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgSeven,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgEight,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: menImgNine,
-//     category: "Men's Fashion",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   // Unisex
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgOne,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgTwo,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgThree,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgFour,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgFive,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgSix,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgSeven,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgEight,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgNine,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgOne,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgTwo,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgThree,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgFour,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgFive,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgSix,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgSeven,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgEight,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: unisexImgNine,
-//     category: "Unisex",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   // Kids
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgOne,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgTwo,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgThree,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgFour,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgFive,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgSix,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgSeven,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgEight,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgNine,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgOne,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgTwo,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgThree,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgFour,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgFive,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgSix,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgSeven,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgEight,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: kidsImgNine,
-//     category: "Kids",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   // Sports Wear
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgOne,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgTwo,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgThree,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgFour,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgFive,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgSix,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgSeven,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgEight,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgNine,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgOne,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgTwo,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgThree,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgFour,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgFive,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgSix,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgSeven,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgEight,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-//   {
-//     name: "Roller Rabbit",
-//     brand: "Zara",
-//     price: "300.50",
-//     rate: 4,
-//     soldOut: false,
-//     img: sportsImgNine,
-//     category: "Sports Wear",
-//     size: COMMON_SIZES,
-//     Color: COMMON_COLORS,
-//     department: "null",
-//   },
-// ];
-// export const products = rawProducts.map((product) => ({
-//   ...product,
-//   id: nanoid(),
-// }));
-// Data
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import axios from "axios";
@@ -1376,105 +218,6 @@ export const useCurrentProduct = create(
   ),
 );
 
-export const useCart = create(
-  persist(
-    (set, get) => ({
-      cart: [],
-      ordersHistory: [],
-
-      setCartProduct: (product) =>
-        set((state) => {
-          const isExist = state.cart.find((item) => item.id === product.id);
-
-          if (isExist) {
-            return {
-              cart: state.cart.map((item) =>
-                item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
-              ),
-            };
-          }
-
-          return {
-            cart: [...state.cart, { ...product, qty: 1 }],
-          };
-        }),
-
-      removeCartProduct: (productID) =>
-        set((state) => ({
-          cart: state.cart.filter((el) => el.id !== productID),
-        })),
-
-      increaseQty: (productID) =>
-        set((state) => ({
-          cart: state.cart.map((item) =>
-            item.id === productID ? { ...item, qty: item.qty + 1 } : item,
-          ),
-        })),
-
-      decreaseQty: (productID) =>
-        set((state) => ({
-          cart: state.cart
-            .map((item) =>
-              item.id === productID ? { ...item, qty: item.qty - 1 } : item,
-            )
-            .filter((item) => item.qty > 0),
-        })),
-
-      clearCart: () => set({ cart: [] }),
-
-      getCartTotal: () => {
-        const { cart } = get();
-
-        const subtotal = cart.reduce(
-          (acc, item) => acc + item.price * item.qty,
-          0,
-        );
-
-        const tax = subtotal * 0.14;
-        const total = subtotal + tax;
-
-        return {
-          subtotal: subtotal.toFixed(2),
-          tax: tax.toFixed(2),
-          total: total.toFixed(2),
-        };
-      },
-
-      confirmOrder: (customerValues) => {
-        const { cart, getCartTotal } = get();
-        const { total } = getCartTotal();
-
-        const newOrder = {
-          orderId: `#ORD-${Math.floor(1000 + Math.random() * 9000)}`,
-          date: new Date().toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-          }),
-          items: [...cart],
-          totalPrice: total,
-          customerDetails: customerValues,
-        };
-
-        set((state) => ({
-          ordersHistory: [newOrder, ...state.ordersHistory],
-        }));
-      },
-
-      clearOrderHistory: () => set({ ordersHistory: [] }),
-    }),
-    {
-      name: "cart-storage",
-      storage: createJSONStorage(() => localStorage),
-
-      partialize: (state) => ({
-        cart: state.cart,
-        ordersHistory: state.ordersHistory,
-      }),
-    },
-  ),
-);
-
 export const useOrderProgress = create((set) => ({
   orderProgress: false,
 
@@ -1517,6 +260,8 @@ export const userLoginInfo = create(
 
         localStorage.removeItem("userLoginInfo");
         localStorage.removeItem("account-info-storage");
+
+        localStorage.removeItem("address-storage");
 
         window.location.href = "/";
       },
@@ -1765,3 +510,147 @@ export const useUpload = create((set, get) => ({
     }
   },
 }));
+
+export const useCart = create(
+  persist(
+    (set, get) => ({
+      cart: [],
+      ordersHistory: [],
+
+      setCartProduct: (product) =>
+        set((state) => {
+          const isExist = state.cart.find((item) => item.id === product.id);
+
+          if (isExist) {
+            return {
+              cart: state.cart.map((item) =>
+                item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
+              ),
+            };
+          }
+
+          return {
+            cart: [...state.cart, { ...product, qty: 1 }],
+          };
+        }),
+
+      removeCartProduct: (productID) =>
+        set((state) => ({
+          cart: state.cart.filter((el) => el.id !== productID),
+        })),
+
+      increaseQty: (productID) =>
+        set((state) => ({
+          cart: state.cart.map((item) =>
+            item.id === productID ? { ...item, qty: item.qty + 1 } : item,
+          ),
+        })),
+
+      decreaseQty: (productID) =>
+        set((state) => ({
+          cart: state.cart
+            .map((item) =>
+              item.id === productID ? { ...item, qty: item.qty - 1 } : item,
+            )
+            .filter((item) => item.qty > 0),
+        })),
+
+      clearCart: () => set({ cart: [] }),
+
+      getCartTotal: () => {
+        const { cart } = get();
+
+        const subtotal = cart.reduce(
+          (acc, item) => acc + item.price * item.qty,
+          0,
+        );
+
+        const tax = subtotal * 0.14;
+        const total = subtotal + tax;
+
+        return {
+          subtotal: subtotal.toFixed(2),
+          tax: tax.toFixed(2),
+          total: total.toFixed(2),
+        };
+      },
+
+      confirmOrder: (customerValues) => {
+        const { cart, getCartTotal } = get();
+        const { total } = getCartTotal();
+
+        const newOrder = {
+          orderId: `#ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+          date: new Date().toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          }),
+          items: [...cart],
+          totalPrice: total,
+          customerDetails: customerValues,
+        };
+
+        set((state) => ({
+          ordersHistory: [newOrder, ...state.ordersHistory],
+        }));
+      },
+
+      clearOrderHistory: () => set({ ordersHistory: [] }),
+    }),
+    {
+      name: "cart-storage",
+      storage: createJSONStorage(() => localStorage),
+
+      partialize: (state) => ({
+        cart: state.cart,
+        ordersHistory: state.ordersHistory,
+      }),
+    },
+  ),
+);
+
+export const useAddressInfo = create(
+  persist(
+    (set) => ({
+      address: {},
+      response: {},
+
+      setAddress: (newValue) => set({ address: newValue }),
+
+      // 1. دالة جديدة لجلب العنوان من السيرفر لمنعه من الاختفاء بعد تسجيل الخروج
+      fetchAddress: async (domain, token) => {
+        try {
+          const url = domain + "addresses";
+          const res = await axios.get(url, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const resData = Array.isArray(res.data) ? res.data[0] : res.data;
+          if (resData) set({ address: resData });
+        } catch (err) {
+          console.error("Error fetching address from server:", err);
+        }
+      },
+
+      // 2. تحديث الدالة لتقوم بحفظ العنوان محلياً وفي السيرفر بنفس الوقت
+      addAddress: (domain, token, addressData) => {
+        let url = domain + "addresses";
+        axios
+          .post(url, addressData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            set({ response: res.data, address: addressData }); // الحفظ المحلي فور النجاح
+          })
+          .catch((err) => console.log(err));
+      },
+    }),
+    {
+      name: "address-storage",
+    },
+  ),
+);

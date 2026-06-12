@@ -4,34 +4,50 @@ import MyForm from "../../components/common/MyForm";
 import MyInput from "../../components/common/MyInput";
 import MyRadio from "../../components/common/MyRadio";
 import TopSection from "../../components/common/TopSection";
-import { useCart } from "../../store";
+import { useAccountInfo, useAddressInfo, useCart } from "../../store";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
 import CreditCardFields from "./CreditCardFields";
+import { useEffect } from "react";
 
 export default function Checkout() {
   const { cart, clearCart, confirmOrder, getCartTotal } = useCart();
   const { subtotal, tax, total } = getCartTotal();
   const navigate = useNavigate();
+  const { address, setAddress } = useAddressInfo();
+
+  const { accountInfo, fetchProfile } = useAccountInfo();
+
+  useEffect(() => {
+    if (!accountInfo) {
+      fetchProfile();
+    }
+  }, []);
 
   const initialValues = {
-    streetAddress: "59 Housing Bank Bldg., El-Dawahi",
-    city: "Port Said",
-    governorate: "Port Said",
-    firstName: "user",
-    lastName: "user",
-    email: "user99@gmail.com",
-    phone: "01023655933",
+    street: address?.street,
+    city: address?.city,
+    country: address?.country,
+    zipCode: address?.zipCode,
+    governorate: address?.governorate,
+    firstName: accountInfo?.firstName,
+    lastName: accountInfo?.lastName,
+    email: accountInfo?.email,
+    phone: accountInfo?.phone,
     paymentMethod: "cash",
     cardNumber: "",
     expDate: "",
     CVV: "",
-    orderNotes: "go go go go go go go go go",
+    orderNotes: "",
   };
 
   const checkoutSchema = Yup.object().shape({
-    streetAddress: Yup.string().required("Street address is required"),
+    street: Yup.string().required("Street address is required"),
     city: Yup.string().required("City is required"),
+    country: Yup.string().required("Country is required"),
+    zipCode: Yup.string()
+      .required("ZipCode is required")
+      .matches(/^[0-9]{6}$/, "Must be exactly 6 digits"),
     governorate: Yup.string().required("Governorate is required"),
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
@@ -86,6 +102,15 @@ export default function Checkout() {
 
     toast.success(`Thank you ${values.firstName}! Your order has been placed.`);
 
+    let requiredAddressInfo = {
+      street: values.street,
+      city: values.city,
+      country: values.country,
+      zipCode: values.zipCode,
+      governorate: values.governorate,
+    };
+
+    setAddress(requiredAddressInfo);
     confirmOrder(values);
     clearCart();
     navigate("/ordersuccess");
@@ -106,8 +131,20 @@ export default function Checkout() {
                 Shipping Address
               </h1>
               <MyInput
-                name="streetAddress"
+                name="street"
                 accName="Street Address"
+                type="text"
+                shap={true}
+              />
+              <MyInput
+                name="country"
+                width="w-full md:w-[47%]"
+                type="text"
+                shap={true}
+              />
+              <MyInput
+                name="governorate"
+                width="w-full md:w-[47%]"
                 type="text"
                 shap={true}
               />
@@ -118,7 +155,8 @@ export default function Checkout() {
                 shap={true}
               />
               <MyInput
-                name="governorate"
+                name="zipCode"
+                accName="Zip Code"
                 width="w-full md:w-[47%]"
                 type="text"
                 shap={true}
@@ -201,11 +239,12 @@ export default function Checkout() {
               <div className="flex -space-x-4 overflow-hidden">
                 {cart.slice(0, 3).map((item, index) => (
                   <div
+                    onClick={console.log(cart[index].images[index])}
                     key={item.id || index}
                     className="inline-block h-10 w-10 rounded-full ring-2 ring-white overflow-hidden border border-gray-100 bg-white"
                   >
                     <img
-                      src={item.img}
+                      src={item.images[index]}
                       alt={item.name}
                       className="h-full w-full object-cover rounded-full"
                     />

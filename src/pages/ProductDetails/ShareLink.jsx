@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import { motion, AnimatePresence } from "framer-motion";
 import { useShare } from "../../store";
 import { FaXmark } from "react-icons/fa6";
@@ -20,35 +20,35 @@ export default function ShareLink() {
       name: "Facebook",
       icon: <FaFacebookF size={20} />,
       url: "https://www.facebook.com/",
-      color: "hover:text-[#1877F2]", // لون فيسبوك الرسمي
+      color: "hover:text-[#1877F2]",
     },
     {
       id: 2,
       name: "X",
       icon: <FaXTwitter size={20} />,
       url: "https://x.com/",
-      color: "hover:text-black", // لون X الرسمي
+      color: "hover:text-black",
     },
     {
       id: 3,
       name: "Pinterest",
       icon: <FaPinterestP size={20} />,
       url: "https://www.pinterest.com/",
-      color: "hover:text-[#BD081C]", // لون بينترست
+      color: "hover:text-[#BD081C]",
     },
     {
       id: 4,
       name: "Telegram",
       icon: <FaTelegram size={20} />,
       url: "https://web.telegram.org/",
-      color: "hover:text-[#229ED9]", // لون تليجرام
+      color: "hover:text-[#229ED9]",
     },
     {
       id: 5,
       name: "WhatsApp",
       icon: <FaWhatsapp size={20} />,
       url: "https://web.whatsapp.com/",
-      color: "hover:text-[#25D366]", // لون واتساب
+      color: "hover:text-[#25D366]",
     },
   ];
 

@@ -31,13 +31,11 @@ export default function ProductInfo() {
 
   const isLiked = wishlist.some((item) => item.id === currentProduct?.id);
 
-  // مصفوفة الصور الآتية من الباك إند
   const productImages =
     currentProduct?.images && currentProduct.images.length > 0
       ? currentProduct.images
-      : [currentProduct?.img]; // Fallback لو مفيش صور
+      : [currentProduct?.img];
 
-  // تشغيل الـ Carousel التلقائي لو الصور أكتر من واحدة
   useEffect(() => {
     if (productImages.length <= 1) return;
 
@@ -50,7 +48,6 @@ export default function ProductInfo() {
     return () => clearInterval(timer);
   }, [productImages.length]);
 
-  // تعيين أول مقاس متاح كقيمة افتراضية عند تحميل المنتج
   useEffect(() => {
     if (currentProduct?.sizes && currentProduct.sizes.length > 0) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -90,7 +87,6 @@ export default function ProductInfo() {
   return (
     <section className="bg-white pt-10 font-inter">
       <div className="container">
-        {/* Breadcrumbs */}
         <nav className="flex text-sm text-gray-500 mb-8">
           <Link to="/">
             <span className="hover:text-darky hover:font-semibold">Home</span>
@@ -102,7 +98,6 @@ export default function ProductInfo() {
         </nav>
 
         <div className="flex flex-col lg:flex-row gap-12">
-          {/* قسم صور المنتج (Carousel) */}
           <div className="w-full lg:w-120 flex flex-col gap-4">
             <div className="w-full h-120 relative overflow-hidden rounded-2xl group border border-gray-100">
               <div
@@ -119,7 +114,6 @@ export default function ProductInfo() {
                 ))}
               </div>
 
-              {/* الـ Bullets بتظهر فقط لو الصور أكتر من 1 */}
               {productImages.length > 1 && (
                 <div className="flex w-full justify-center gap-2 py-2 absolute bottom-4 z-10">
                   {productImages.map((_, index) => (
@@ -136,21 +130,6 @@ export default function ProductInfo() {
             </div>
           </div>
 
-          {/* زر الـ AI Tool المرفق بجانب التنسيق */}
-          {/* <div className="flex flex-row lg:flex-col gap-5">
-            <div
-              className="p-2 h-13 w-13 flex justify-center items-center rounded-lg bg-btnGray cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => setOpenUpload(!openUpload)}
-            >
-              <img
-                src={aiMan}
-                alt="aiMan"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div> */}
-
-          {/* تفاصيل المنتج */}
           <div className="w-full lg:w-1/2 xl:pr-37.5 flex flex-col gap-6.5">
             <div className="flex flex-col gap-3">
               <div className="flex justify-between items-start">
@@ -165,7 +144,6 @@ export default function ProductInfo() {
                 </button>
               </div>
 
-              {/* التقييم فقط */}
               <div className="flex flex-wrap items-center gap-4">
                 <div className="flex items-center justify-center gap-1 bg-btnGray px-3 py-1 rounded-full text-[12px] font-semibold">
                   <MdOutlineStar className="text-darky text-xl" />
@@ -178,7 +156,6 @@ export default function ProductInfo() {
               </h2>
             </div>
 
-            {/* الألوان الديناميكية من الباك إند */}
             {currentProduct.colors && currentProduct.colors.length > 0 && (
               <div className="flex flex-col gap-2.5">
                 <h4 className="text-xs font-medium uppercase tracking-widest text-gray-400">
@@ -202,7 +179,6 @@ export default function ProductInfo() {
               </div>
             )}
 
-            {/* المقاسات الديناميكية من الباك إند */}
             {currentProduct.sizes && currentProduct.sizes.length > 0 && (
               <div className="flex flex-col gap-2.5">
                 <h4 className="text-xs font-medium uppercase tracking-widest text-gray-400">
@@ -223,7 +199,6 @@ export default function ProductInfo() {
               </div>
             )}
 
-            {/* الكمية وأزرار الشراء */}
             <div className="flex flex-col gap-2.5">
               <h4 className="text-xs font-medium uppercase tracking-widest text-gray-400">
                 Quantity

@@ -52,10 +52,7 @@ export default function MyComponent() {
 
   const [allProducts, setAllProducts] = useState([]);
 
-  console.log(allProducts);
-
   useEffect(() => {
-    // السحر كله هنا: دمج المنتجات ثم جلب صورهم بالتبعية
     let urlVariants = domain + "variants";
     let urlProducts = domain + "product";
 
@@ -64,61 +61,51 @@ export default function MyComponent() {
         const rawVariants = variantsRes.data;
         const rawProducts = productsRes.data;
 
-        // 1. دمج المنتجات والـ variants
         const cleanProducts = formatProductsVariants(rawVariants, rawProducts);
 
-        // 2. عمل لستة من طلبات الـ API للصور بناءً على الـ id الحقيقي لكل منتج نتج معانا
-        const imageRequests = cleanProducts.map(
-          (product) =>
-            axios
-              .get(`${domain}product-images/product/${product.id}`)
-              .then((res) => ({ productId: product.id, images: res.data }))
-              .catch(() => ({ productId: product.id, images: [] })), // لو منتج معندوش صور ميكرشش الكود
+        const imageRequests = cleanProducts.map((product) =>
+          axios
+            .get(`${domain}product-images/product/${product.id}`)
+            .then((res) => ({ productId: product.id, images: res.data }))
+            .catch(() => ({ productId: product.id, images: [] })),
         );
 
-        // 3. تشغيل جميع طلبات الصور بالتوازي
         return Promise.all(imageRequests).then((imagesResults) => {
-          // دمج الصور جوة المنتجات المتطابقة
           const finalProductsWithImages = cleanProducts.map((product) => {
             const productImagesData = imagesResults.find(
               (img) => img.productId === product.id,
             );
             return {
               ...product,
-              // استخراج الـ imageUrl فقط وضخها في مصفوفة عادية زي الـ sizes
               images: productImagesData
                 ? productImagesData.images.map((img) => img.imageUrl)
                 : [],
             };
           });
 
-          // 4. حفظ النتيجة النهائية الكاملة بالصور
           setAllProducts(finalProductsWithImages);
         });
       })
       .catch((err) => {
         console.log("Error in Main Pipeline:", err);
       });
-
-    axios.get(domain + "variants").then((res) => console.log(res.data));
   }, []);
 
-  let cart = {
-    variantId: 1319,
-    quantity: 1,
-  };
+  // colorName: "black",
+  // id: 4,
+  // price: 849.3,
+  // productName: "Twenty Seven Straight From Cai tee",
+  // sizeName: "large",
+  // sku: "LOC-128237",
+  // stock: 20
 
-  axios
-    .post(domain + "cart/items", cart, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => console.log(res.data))
-    .catch((err) => console.log(err));
+  // axios
+  //   .get(domain + "variants/product/2")
+  //   .then((res) => console.log(res.data[0]));
 
-  axios.get(domain + "variants").then((res) => console.log(res.data));
-  axios.get(domain + "product").then((res) => console.log(res.data));
+  // axios.get(domain + "variants/16").then((res) => console.log(res.data));
+  // axios.get(domain + "variants").then((res) => console.log(res.data));
+  // axios.get(domain + "product").then((res) => console.log(res.data));
+
   return <></>;
 }
