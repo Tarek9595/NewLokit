@@ -1,8 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { FaBell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import CstBtn from "../common/CstBtn";
-import Lang from "../common/Lang";
 import { useEffect } from "react";
 import { useAccountInfo, userLoginInfo } from "../../store";
 import { FaUser } from "react-icons/fa";
@@ -85,13 +83,6 @@ export default function LargeNav() {
             {link.name}
           </NavLink>
         ))}
-
-        <Lang />
-
-        {/* <div className="relative cursor-pointer hover:scale-110 transition-transform">
-          <FaBell className="text-darky text-[22px]" />
-          <span className="absolute -top-1 -right-1 bg-red-500 w-2 h-2 rounded-full border border-white"></span>
-        </div> */}
       </nav>
 
       {renderAuthSection()}

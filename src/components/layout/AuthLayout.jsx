@@ -1,5 +1,4 @@
 import { Outlet, useLocation } from "react-router";
-import Lang from "../common/Lang";
 import Logo from "../common/Logo";
 import MyCarousel from "../common/MyCarousel";
 import SocialLogins from "../common/SocialLogins";
@@ -34,9 +33,6 @@ export default function AuthLayout() {
   };
   return (
     <div className="w-full flex flex-col justify-center items-center px-4 bg-white ">
-      <div className="w-full lg:w-[90%] py-6 flex">
-        <Lang width="w-25" />
-      </div>
       <div className="w-full lg:w-[90%] rounded-xl flex flex-col lg:flex-row border border-[#9797973D] overflow-hidden items-stretch">
         <div className="hidden lg:block lg:w-1/2 self-stretch">
           <MyCarousel />

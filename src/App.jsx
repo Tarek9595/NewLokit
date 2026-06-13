@@ -38,34 +38,34 @@ export default function App() {
 
             <Route path="search" element={<Search />} />
 
-            <Route path="product/:id" element={<ProductDetails />}>
-              <Route index element={<Navigate to="detail" replace />} />
-
-              <Route path="detail" element={<ProductDetail />} />
-
-              <Route path="review" element={<ProductReview />} />
-            </Route>
-
-            <Route path="mycart" element={<CartPage />} />
-
             <Route element={<ProtectedRoute />}>
+              <Route path="product/:id" element={<ProductDetails />}>
+                <Route index element={<Navigate to="detail" replace />} />
+
+                <Route path="detail" element={<ProductDetail />} />
+
+                <Route path="review" element={<ProductReview />} />
+              </Route>
+
+              <Route path="mycart" element={<CartPage />} />
+
               <Route path="checkout" element={<Checkout />} />
 
               <Route path="ordersuccess" element={<OrderSuccess />} />
 
               <Route path="failedorder" element={<OrderFailed />} />
-            </Route>
 
-            <Route path="/account" element={<Wishlist />}>
-              <Route index element={<WishlistInfo />} />
+              <Route path="/account" element={<Wishlist />}>
+                <Route index element={<WishlistInfo />} />
 
-              <Route path="orders" element={<OrdersInfo />} />
+                <Route path="orders" element={<OrdersInfo />} />
 
-              <Route path="address" element={<AdressInfo />} />
+                <Route path="address" element={<AdressInfo />} />
 
-              <Route path="password" element={<PasswordInfo />} />
+                <Route path="password" element={<PasswordInfo />} />
 
-              <Route path="details" element={<AccountInfo />} />
+                <Route path="details" element={<AccountInfo />} />
+              </Route>
             </Route>
           </Route>
 

@@ -93,7 +93,7 @@ export default function ProductCard({
 
         <div className="flex justify-between items-center pt-2 border-t border-gray-50">
           <span className="font-main font-bold text-xl text-darky">
-            ${product.price}
+            {product.price} EGP
           </span>
           {product.soldOut && (
             <span className="text-[10px] font-bold text-red-500 uppercase bg-red-50 px-2 py-0.5 rounded">

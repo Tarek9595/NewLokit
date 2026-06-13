@@ -152,7 +152,7 @@ export default function ProductInfo() {
               </div>
 
               <h2 className="text-[18px] font-semibold text-darky">
-                ${currentProduct.price}
+                {currentProduct.price} EGP
               </h2>
             </div>
 

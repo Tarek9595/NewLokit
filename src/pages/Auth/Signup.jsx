@@ -32,9 +32,7 @@ export default function Signup() {
     password: Yup.string()
       .required("Password is required")
       .min(8, "Must be at least 8 characters")
-      .matches(/[A-Z]/, "Must contain one uppercase")
-      .matches(/[0-9]/, "Must contain one number")
-      .matches(/[!@#$%^&*]/, "Must contain one special character"),
+      .matches(/[0-9]/, "Must contain one number"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm password is required"),
