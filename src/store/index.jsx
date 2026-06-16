@@ -350,7 +350,7 @@ export const useAccountInfo = create(
             },
           });
 
-          set({ accountInfo: res.data, isLoadingAccount: false }); // , isLoadingAccount: false
+          set({ accountInfo: res.data, isLoadingAccount: false });
         } catch (err) {
           console.error("Error fetching account info:", err);
           set({ isLoadingAccount: false });
@@ -504,38 +504,62 @@ export const useCart = create(
 
       setCartProduct: (product) =>
         set((state) => {
-          const isExist = state.cart.find((item) => item.id === product.id);
+          const isExist = state.cart.find(
+            (item) =>
+              item.id === product.id &&
+              item.selectedSize === product.selectedSize &&
+              item.selectedColor === product.selectedColor,
+          );
 
           if (isExist) {
             return {
               cart: state.cart.map((item) =>
-                item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
+                item.id === product.id &&
+                item.selectedSize === product.selectedSize &&
+                item.selectedColor === product.selectedColor
+                  ? { ...item, qty: item.qty + (product.quantity || 1) }
+                  : item,
               ),
             };
           }
 
           return {
-            cart: [...state.cart, { ...product, qty: 1 }],
+            cart: [...state.cart, { ...product, qty: product.quantity || 1 }],
           };
         }),
 
-      removeCartProduct: (productID) =>
+      removeCartProduct: (productID, size, color) =>
         set((state) => ({
-          cart: state.cart.filter((el) => el.id !== productID),
-        })),
-
-      increaseQty: (productID) =>
-        set((state) => ({
-          cart: state.cart.map((item) =>
-            item.id === productID ? { ...item, qty: item.qty + 1 } : item,
+          cart: state.cart.filter(
+            (el) =>
+              !(
+                el.id === productID &&
+                el.selectedSize === size &&
+                el.selectedColor === color
+              ),
           ),
         })),
 
-      decreaseQty: (productID) =>
+      increaseQty: (productID, size, color) =>
+        set((state) => ({
+          cart: state.cart.map((item) =>
+            item.id === productID &&
+            item.selectedSize === size &&
+            item.selectedColor === color
+              ? { ...item, qty: item.qty + 1 }
+              : item,
+          ),
+        })),
+
+      decreaseQty: (productID, size, color) =>
         set((state) => ({
           cart: state.cart
             .map((item) =>
-              item.id === productID ? { ...item, qty: item.qty - 1 } : item,
+              item.id === productID &&
+              item.selectedSize === size &&
+              item.selectedColor === color
+                ? { ...item, qty: item.qty - 1 }
+                : item,
             )
             .filter((item) => item.qty > 0),
         })),
@@ -586,7 +610,6 @@ export const useCart = create(
     {
       name: "cart-storage",
       storage: createJSONStorage(() => localStorage),
-
       partialize: (state) => ({
         cart: state.cart,
         ordersHistory: state.ordersHistory,
@@ -603,7 +626,6 @@ export const useAddressInfo = create(
 
       setAddress: (newValue) => set({ address: newValue }),
 
-      // 1. دالة جديدة لجلب العنوان من السيرفر لمنعه من الاختفاء بعد تسجيل الخروج
       fetchAddress: async (domain, token) => {
         try {
           const url = domain + "addresses";
@@ -617,7 +639,6 @@ export const useAddressInfo = create(
         }
       },
 
-      // 2. تحديث الدالة لتقوم بحفظ العنوان محلياً وفي السيرفر بنفس الوقت
       addAddress: (domain, token, addressData) => {
         let url = domain + "addresses";
         axios
@@ -629,7 +650,7 @@ export const useAddressInfo = create(
           })
           .then((res) => {
             console.log(res.data);
-            set({ response: res.data, address: addressData }); // الحفظ المحلي فور النجاح
+            set({ response: res.data, address: addressData });
           })
           .catch((err) => console.log(err));
       },
@@ -639,3 +660,64 @@ export const useAddressInfo = create(
     },
   ),
 );
+
+export const formatSize = (sizeName) => {
+  if (!sizeName) return "M";
+  const cleanSize = sizeName.trim().toLowerCase();
+
+  switch (cleanSize) {
+    case "xsmall":
+    case "xs":
+      return "XS";
+    case "small":
+    case "s":
+      return "S";
+    case "medium":
+    case "m":
+      return "M";
+    case "large":
+    case "l":
+      return "L";
+    case "xlarge":
+    case "xl":
+      return "XL";
+    case "xxlarge":
+    case "xxl":
+      return "XXL";
+    default:
+      return sizeName.toUpperCase();
+  }
+};
+
+export const useProductSelectionStore = create((set) => ({
+  currentSelection: {
+    color: null,
+    size: "M",
+  },
+
+  setSelectedColor: (color) =>
+    set((state) => ({
+      currentSelection: { ...state.currentSelection, color },
+    })),
+
+  setSelectedSize: (size) =>
+    set((state) => ({
+      currentSelection: { ...state.currentSelection, size: formatSize(size) },
+    })),
+
+  initializeSelection: (productColors, productSizes) => {
+    const defaultColor =
+      productColors && productColors.length > 0 ? productColors[0] : null;
+    const defaultSize =
+      productSizes && productSizes.length > 0
+        ? formatSize(productSizes[0])
+        : "M";
+
+    set({
+      currentSelection: {
+        color: defaultColor,
+        size: defaultSize,
+      },
+    });
+  },
+}));

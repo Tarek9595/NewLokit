@@ -1,8 +1,6 @@
 import * as MarqueeModule from "react-fast-marquee";
 import { useProductStore } from "../../store";
 
-// حل ديناميكي لخلل الـ Export في الحزمة:
-// نتحقق إذا كان الـ Component هو الموديل نفسه، أو موجود داخل .default، أو كـ Named export
 const Marquee =
   MarqueeModule?.default?.default ||
   MarqueeModule?.default ||
@@ -35,7 +33,6 @@ export default function Brands() {
         }))
       : staticBrands;
 
-  // حزام أمان: إذا فشلت الحزمة تماماً في توفير الـ Component، اعرض التصميم بشكل عادي بدون أن ينكسر الموقع
   if (typeof Marquee !== "function" && typeof Marquee !== "object") {
     return (
       <section className="w-full bg-zinc py-8 md:py-14 border-y border-darky/5">

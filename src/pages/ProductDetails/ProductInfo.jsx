@@ -4,6 +4,8 @@ import {
   useShare,
   useWishlist,
   useUpload,
+  useProductSelectionStore,
+  formatSize,
 } from "../../store";
 import { useState, useEffect } from "react";
 import { HiOutlineShare } from "react-icons/hi2";
@@ -18,11 +20,14 @@ export default function ProductInfo() {
   const { openUpload, setOpenUpload } = useUpload();
   const { currentProduct } = useCurrentProduct();
 
-  const [selectedColor, setSelectedColor] = useState(0);
+  const {
+    currentSelection,
+    setSelectedColor,
+    setSelectedSize,
+    initializeSelection,
+  } = useProductSelectionStore();
+
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState(() => {
-    return currentProduct?.sizes?.[0] || null;
-  });
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
   const { wishlist, setWishListProduct, removeWishlistProduct } = useWishlist();
@@ -48,11 +53,10 @@ export default function ProductInfo() {
   }, [productImages.length]);
 
   useEffect(() => {
-    if (currentProduct?.sizes && currentProduct.sizes.length > 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setSelectedSize(currentProduct.sizes[0]);
+    if (currentProduct) {
+      initializeSelection(currentProduct.colors, currentProduct.sizes);
     }
-  }, [currentProduct]);
+  }, [currentProduct, initializeSelection]);
 
   const toggleLike = () => {
     if (isLiked) {
@@ -164,9 +168,9 @@ export default function ProductInfo() {
                   {currentProduct.colors.map((color, idx) => (
                     <div
                       key={idx}
-                      onClick={() => setSelectedColor(idx)}
+                      onClick={() => setSelectedColor(color)}
                       className={`flex justify-center items-center w-8 h-8 rounded-full border-2 cursor-pointer p-0.5 transition-all duration-300
-                        ${selectedColor === idx ? "border-darky scale-110" : "border-transparent hover:border-gray-300"}`}
+                        ${currentSelection.color === color ? "border-darky scale-110" : "border-transparent hover:border-gray-300"}`}
                     >
                       <div
                         className="w-full h-full rounded-full shadow-sm border border-gray-200"
@@ -184,16 +188,19 @@ export default function ProductInfo() {
                   Select Size
                 </h4>
                 <div className="flex flex-wrap gap-2.5">
-                  {currentProduct.sizes.map((size) => (
-                    <button
-                      key={size}
-                      onClick={() => setSelectedSize(size)}
-                      className={`cursor-pointer p-2 rounded-lg border-2 font-inter font-bold text-sm transition-all
-                        ${selectedSize === size ? "border-darky bg-darky text-white" : "border-gray-200 text-gray-400 hover:border-darky"}`}
-                    >
-                      {size}
-                    </button>
-                  ))}
+                  {currentProduct.sizes.map((size) => {
+                    const formatted = formatSize(size);
+                    return (
+                      <button
+                        key={size}
+                        onClick={() => setSelectedSize(size)}
+                        className={`cursor-pointer p-2 rounded-lg border-2 font-inter font-bold text-sm transition-all min-w-10 uppercase
+                          ${currentSelection.size === formatted ? "border-darky bg-darky text-white" : "border-gray-200 text-gray-400 hover:border-darky"}`}
+                      >
+                        {formatted}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -221,17 +228,13 @@ export default function ProductInfo() {
                 <button
                   onClick={toggleLike}
                   className={`cursor-pointer w-12 h-12 border-2 rounded-xl flex items-center justify-center text-2xl transition-all duration-300
-                    ${
-                      isLiked
-                        ? "bg-darky text-white border-darky shadow-lg"
-                        : "bg-transparent text-darky border-gray-100 hover:bg-red-50 hover:text-red-500 hover:border-red-100"
-                    }`}
+                    ${isLiked ? "bg-darky text-white border-darky shadow-lg" : "bg-transparent text-darky border-gray-100 hover:bg-red-50 hover:text-red-500 hover:border-red-100"}`}
                 >
                   {isLiked ? <IoMdHeart /> : <IoIosHeartEmpty />}
                 </button>
               </div>
 
-              <div className="flex  gap-4 mt-2">
+              <div className="flex gap-4 mt-2">
                 <div className="flex flex-col w-full gap-3">
                   <CustomButton
                     variant="darky"
@@ -241,8 +244,8 @@ export default function ProductInfo() {
                     onClick={() =>
                       addToCart({
                         ...currentProduct,
-                        selectedSize,
-                        selectedColor: currentProduct.colors?.[selectedColor],
+                        selectedSize: currentSelection.size,
+                        selectedColor: currentSelection.color,
                         quantity,
                       })
                     }
