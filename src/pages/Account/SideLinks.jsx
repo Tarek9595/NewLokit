@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   useLinks,
   useActiveInfo,
@@ -50,7 +50,7 @@ export default function SideLinks() {
     if (!isLoggedIn && link.path !== "/account" && link.path !== "") {
       e.preventDefault();
 
-      toast.error("Please login First✌️!", {
+      toast.error("Please login First", {
         id: "auth-tab-error",
         style: {
           borderRadius: "10px",

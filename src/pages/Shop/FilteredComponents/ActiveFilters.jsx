@@ -24,7 +24,6 @@ export default function ActiveFilters() {
 
   return (
     <div className="w-full flex flex-wrap gap-2 p-1 font-main">
-      {/* Brands */}
       {appliedFilters.brandName?.map((brand) => (
         <button
           key={brand}
@@ -36,7 +35,6 @@ export default function ActiveFilters() {
         </button>
       ))}
 
-      {/* Departments */}
       {appliedFilters.departmentName?.map((dept) => (
         <button
           key={dept}
@@ -48,7 +46,6 @@ export default function ActiveFilters() {
         </button>
       ))}
 
-      {/* Categories */}
       {appliedFilters.categoryName?.map((cat) => (
         <button
           key={cat}
@@ -60,7 +57,6 @@ export default function ActiveFilters() {
         </button>
       ))}
 
-      {/* Sizes */}
       {appliedFilters.sizes?.map((size) => (
         <button
           key={size}
@@ -72,7 +68,6 @@ export default function ActiveFilters() {
         </button>
       ))}
 
-      {/* Colors */}
       {appliedFilters.colors?.map((color) => (
         <button
           key={color}

@@ -44,7 +44,6 @@ export default function LargeNav() {
       );
     }
 
-    // 2. لو مسجل دخول والبيانات وصلت بالسلامة
     if (isLoggedIn && accountInfo?.firstName) {
       return (
         <div className="flex justify-center items-center gap-1">
@@ -59,7 +58,6 @@ export default function LargeNav() {
       );
     }
 
-    // 3. لو مش مسجل دخول أصلاً
     return (
       <CstBtn variant="darky" size="md" onClick={() => navigate("/login")}>
         Sign In

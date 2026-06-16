@@ -11,7 +11,6 @@ import { IoIosHeartEmpty, IoMdHeart } from "react-icons/io";
 import { MdOutlineStar } from "react-icons/md";
 import CustomButton from "../../components/common/CstBtn";
 import { Link } from "react-router";
-// import aiMan from "../../assets/AiMan.svg";
 import toast from "react-hot-toast";
 
 export default function ProductInfo() {

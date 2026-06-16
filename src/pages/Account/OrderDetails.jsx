@@ -8,13 +8,13 @@ export default function OrderDetails() {
 
   const { clearOrderHistory } = useCart();
 
-  const { stage, setStage } = useStage();
+  const { stage } = useStage();
 
   const navigate = useNavigate();
 
-  const changeStage = () => {
-    setStage(stage + 1);
-  };
+  // const changeStage = () => {
+  //   setStage(stage + 1);
+  // };
 
   const confirmRemove = () => {
     Swal.fire({
@@ -77,12 +77,12 @@ export default function OrderDetails() {
             <span className="font-bold">23 Jan, 2021</span>
           </p>
 
-          <button
+          {/* <button
             className="px-5 bg-darky text-white text-sm font-bold rounded-xl uppercase cursor-pointer"
             onClick={changeStage}
           >
             go go
-          </button>
+          </button> */}
         </div>
         <ViewOrdered />
       </div>
@@ -102,33 +102,36 @@ export default function OrderDetails() {
               </tr>
             </thead>
             <tbody>
-              {selectedOrder.items.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-b border-gray-100 text-[12px] md:text-sm"
-                >
-                  <td className="py-4 flex flex-col md:flex-row gap-2">
-                    <img
-                      src={item.img}
-                      className="w-14 h-14 object-cover rounded"
-                      alt={item.name}
-                    />
-                    <div className="flex flex-col gap-3">
-                      <span className=" text-darky">{item.brand}</span>
-                      <span className=" text-darky">{item.name}</span>
-                    </div>
-                  </td>
-                  <td className="py-4 text-center font-medium">
-                    ${item.price}
-                  </td>
-                  <td className="py-4 text-center text-gray-500">
-                    x{item.qty || 1}
-                  </td>
-                  <td className="py-4 text-center font-bold text-darky">
-                    ${(item.price * (item.qty || 1)).toFixed(2)}
-                  </td>
-                </tr>
-              ))}
+              {selectedOrder.items.map((item) => {
+                console.log(item);
+                return (
+                  <tr
+                    key={item.id}
+                    className="border-b border-gray-100 text-[12px] md:text-sm"
+                  >
+                    <td className="py-4 flex flex-col md:flex-row gap-2">
+                      <img
+                        src={item.images}
+                        className="w-14 h-14 object-cover rounded"
+                        alt={item.name}
+                      />
+                      <div className="flex flex-col gap-3">
+                        <span className=" text-darky">{item.brand}</span>
+                        <span className=" text-darky">{item.name}</span>
+                      </div>
+                    </td>
+                    <td className="py-4 text-center font-medium">
+                      ${item.price}
+                    </td>
+                    <td className="py-4 text-center text-gray-500">
+                      x{item.qty || 1}
+                    </td>
+                    <td className="py-4 text-center font-bold text-darky">
+                      ${(item.price * (item.qty || 1)).toFixed(2)}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

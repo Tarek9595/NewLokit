@@ -7,7 +7,6 @@ import Filtered from "./Filtered";
 import TopSection from "../../components/common/TopSection";
 
 export default function Search() {
-  // تتبع حالة فتح وقفل قائمة الفلاتر في الموبايل
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   return (
@@ -20,7 +19,6 @@ export default function Search() {
       <main className="grow flex flex-col w-full px-4 sm:px-6 md:px-8 lg:px-10 pb-16">
         <TopSection name="Search" />
 
-        {/* زر الفلتر للموبايل: يظهر فقط في الشاشات الأصغر من md */}
         <div className="md:hidden w-full my-4">
           <button
             onClick={() => setIsFilterOpen(true)}
@@ -31,9 +29,7 @@ export default function Search() {
           </button>
         </div>
 
-        {/* الـ Container الأساسي */}
         <div className="flex flex-col md:flex-row gap-6 lg:gap-8 pt-2 md:pt-6 w-full">
-          {/* قسم الفلتر الجانبي */}
           <aside className="w-full md:w-fit shrink-0">
             <Filtered
               isOpen={isFilterOpen}
@@ -41,7 +37,6 @@ export default function Search() {
             />
           </aside>
 
-          {/* شبكة المنتجات */}
           <section className="grow w-full overflow-hidden">
             <SearchShoping />
           </section>

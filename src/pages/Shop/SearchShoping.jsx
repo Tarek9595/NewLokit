@@ -27,9 +27,7 @@ export default function SearchShoping() {
     }
   }, [allProducts.length, fetchAllProducts]);
 
-  // اللوجك الجديد المتوافق تماماً مع محاور الداتا الستة
   const filteredProducts = allProducts.filter((product) => {
-    // 0. فلترة البحث النصي
     const term = searchTerm.toLowerCase().trim();
     const matchesSearch =
       product.productName?.toLowerCase().includes(term) ||
@@ -37,13 +35,11 @@ export default function SearchShoping() {
 
     if (!matchesSearch) return false;
 
-    // 1. فلترة بناء علي الـ brandName
     if (appliedFilters?.brandName?.length > 0) {
       if (!appliedFilters.brandName.includes(product.brandName?.toLowerCase()))
         return false;
     }
 
-    // 2. فلترة بناء علي الـ categoryName
     if (appliedFilters?.categoryName?.length > 0) {
       if (
         !appliedFilters.categoryName.includes(
@@ -53,7 +49,6 @@ export default function SearchShoping() {
         return false;
     }
 
-    // 3. فلترة بناء علي الـ colors (التدوير وفحص تطابق الألوان داخل المنتج)
     if (appliedFilters?.colors?.length > 0) {
       const hasColor = product.colors?.some((c) =>
         appliedFilters.colors.includes(c.toLowerCase()),
@@ -61,7 +56,6 @@ export default function SearchShoping() {
       if (!hasColor) return false;
     }
 
-    // 4. فلترة بناء علي الـ departmentName
     if (appliedFilters?.departmentName?.length > 0) {
       if (
         !appliedFilters.departmentName.includes(
@@ -71,12 +65,10 @@ export default function SearchShoping() {
         return false;
     }
 
-    // 5. فلترة بناء علي الـ price
     if (appliedFilters?.price && appliedFilters.price > 0) {
       if (product.price > appliedFilters.price) return false;
     }
 
-    // 6. فلترة بناء علي الـ sizes (التدوير وفحص المقاسات المتاحة)
     if (appliedFilters?.sizes?.length > 0) {
       const hasSize = product.sizes?.some((s) =>
         appliedFilters.sizes.includes(s.toLowerCase()),

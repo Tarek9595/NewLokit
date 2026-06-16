@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import axios from "axios";
-import i18n from "../i18n";
 export const domain = "https://lokit-production.up.railway.app/";
 
 const formatProductsVariants = (variantsList, rawProductsList) => {
@@ -89,20 +88,6 @@ export const useProductStore = create((set) => ({
       set({ error: err.message, isLoading: false });
     }
   },
-}));
-
-export const useLangStore = create((set) => ({
-  lang: i18n.language || "en",
-  toggleLang: () =>
-    set((state) => {
-      const newLang = state.lang.includes("en") ? "ar" : "en";
-      i18n.changeLanguage(newLang);
-
-      document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
-      document.documentElement.lang = newLang;
-
-      return { lang: newLang };
-    }),
 }));
 
 export const useLinks = create(() => ({

@@ -33,24 +33,22 @@ export default function MyComponent() {
         brandName: matchingProduct ? matchingProduct.brandName : "",
         categoryName: matchingProduct ? matchingProduct.categoryName : "",
         departmentName: matchingProduct ? matchingProduct.departmentName : "",
-        images: [], // بنجهز مكان مصفوفة الصور هنا
+        images: [],
       };
     });
   };
 
-  const storageRawData = localStorage.getItem("userLoginInfo");
+  // const storageRawData = localStorage.getItem("userLoginInfo");
 
-  let token = "";
+  // let token = "";
 
-  if (storageRawData) {
-    // 3. تحويل النص إلى Object ليصبح قابل للقراءة
-    const parsedData = JSON.parse(storageRawData);
+  // if (storageRawData) {
+  //   const parsedData = JSON.parse(storageRawData);
 
-    // 4. الوصول إلى الـ token بناءً على الهيكلة الظاهرة في السكرين شوت
-    token = parsedData?.state?.loginInfo?.token || "";
-  }
+  //   token = parsedData?.state?.loginInfo?.token || "";
+  // }
 
-  const [allProducts, setAllProducts] = useState([]);
+  const [setAllProducts] = useState([]);
 
   useEffect(() => {
     let urlVariants = domain + "variants";
@@ -90,22 +88,6 @@ export default function MyComponent() {
         console.log("Error in Main Pipeline:", err);
       });
   }, []);
-
-  // colorName: "black",
-  // id: 4,
-  // price: 849.3,
-  // productName: "Twenty Seven Straight From Cai tee",
-  // sizeName: "large",
-  // sku: "LOC-128237",
-  // stock: 20
-
-  // axios
-  //   .get(domain + "variants/product/2")
-  //   .then((res) => console.log(res.data[0]));
-
-  // axios.get(domain + "variants/16").then((res) => console.log(res.data));
-  // axios.get(domain + "variants").then((res) => console.log(res.data));
-  // axios.get(domain + "product").then((res) => console.log(res.data));
 
   return <></>;
 }

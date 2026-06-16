@@ -1,18 +1,16 @@
 import { useProductStore, useCurrentProduct } from "../../store";
-import { Link } from "react-router";
 
 export default function Familiar() {
   const { allProducts } = useProductStore();
   const { currentProduct, setProduct } = useCurrentProduct();
 
-  // فلترة المنتجات اللي ليها نفس البراند، وبنستبعد المنتج المعروض حالياً
   const relatedProducts = allProducts
     .filter(
       (product) =>
         product.brandName === currentProduct?.brandName &&
         product.id !== currentProduct?.id,
     )
-    .slice(0, 4); // عرض أول 4 منتجات مشابهة فقط مثلاً
+    .slice(0, 4);
 
   if (relatedProducts.length === 0) return null;
 
@@ -27,7 +25,7 @@ export default function Familiar() {
           const mainImage =
             product.images && product.images.length > 0
               ? product.images[0]
-              : "https://via.placeholder.com/300"; // صورة افتراضية لو مفيش صور
+              : "https://via.placeholder.com/300";
 
           return (
             <div
@@ -35,7 +33,7 @@ export default function Familiar() {
               className="flex flex-col gap-3 group cursor-pointer"
               onClick={() => {
                 setProduct(product);
-                window.scrollTo({ top: 0, behavior: "smooth" }); // نطلع فوق لما يختار منتج جديد
+                window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
               <div className="w-full h-80 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50">

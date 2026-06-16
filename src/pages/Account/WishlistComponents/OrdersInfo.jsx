@@ -28,7 +28,7 @@ export default function OrdersInfo() {
             <div className="flex gap-4 items-center">
               <div className="w-20 h-20 md:w-25 md:h-25 shrink-0">
                 <img
-                  src={order.items[0]?.img}
+                  src={order.items[0].images}
                   className="w-full h-full object-cover"
                 />
               </div>

@@ -18,7 +18,6 @@ export default function Filtered({ isOpen, onClose }) {
   const { allProducts } = useProductStore();
   const [resetTrigger, setResetTrigger] = useState(0);
 
-  // استخراج كل الداتا ديناميكياً من المنتجات بدون تكرار
   const dynamicFilterData = useMemo(() => {
     const brandsSet = new Set();
     const departmentsSet = new Set();
@@ -55,7 +54,6 @@ export default function Filtered({ isOpen, onClose }) {
     };
   }, [allProducts]);
 
-  // إيجاد أعلى سعر ديناميكياً
   const maxProductPrice = useMemo(() => {
     if (allProducts.length === 0) return 2500;
     const prices = allProducts.map((p) => p.price || 0);
@@ -107,7 +105,6 @@ export default function Filtered({ isOpen, onClose }) {
 
   return (
     <>
-      {/* Backdrop للموبايل */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-50 md:hidden block"
@@ -120,13 +117,12 @@ export default function Filtered({ isOpen, onClose }) {
         className={`
           flex flex-col bg-white p-5 font-main h-full md:h-fit
           /* الموبايل Drawer */
-          fixed inset-y-0 left-0 w-[300px] max-w-[calc(100vw-40px)] z-50 shadow-2xl transition-transform duration-300 ease-in-out
+          fixed inset-y-0 left-0 w-75 max-w-[calc(100vw-40px)] z-50 shadow-2xl transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           /* الشاشات الكبيرة */
-          md:sticky md:top-6 md:translate-x-0 md:w-[280px] lg:w-[320px] md:z-10 md:shadow-sm md:border md:border-gray-100 md:rounded-2xl md:transition-none
+          md:sticky md:top-6 md:translate-x-0 md:w-70 lg:w-[320px] md:z-10 md:shadow-sm md:border md:border-gray-100 md:rounded-2xl md:transition-none
         `}
       >
-        {/* الهيدر */}
         <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
           <div className="flex items-center gap-2">
             <IoFilterOutline className="text-darky text-xl" />
@@ -156,14 +152,12 @@ export default function Filtered({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* الفلاتر النشطة (Chips) */}
         {hasActiveFilters && (
           <div className="mb-4">
             <ActiveFilters />
           </div>
         )}
 
-        {/* قائمة الفلاتر */}
         <div
           key={resetTrigger}
           className="flex flex-col divide-y divide-gray-100 overflow-y-auto grow pr-1 no-scrollbar md:overflow-visible"
@@ -192,7 +186,6 @@ export default function Filtered({ isOpen, onClose }) {
             );
           })}
 
-          {/* فلترة المقاسات */}
           {dynamicFilterData.sizes.length > 0 && (
             <div className="py-4">
               <SearchFilter filterName="SIZES">
@@ -207,7 +200,6 @@ export default function Filtered({ isOpen, onClose }) {
             </div>
           )}
 
-          {/* فلترة الألوان */}
           {dynamicFilterData.colors.length > 0 && (
             <div className="py-4">
               <SearchFilter filterName="COLORS">
@@ -222,7 +214,6 @@ export default function Filtered({ isOpen, onClose }) {
             </div>
           )}
 
-          {/* فلترة السعر */}
           <div className="py-4 last:pb-0">
             <SearchFilter filterName="PRICE RANGE">
               <div className="pt-2">
@@ -237,7 +228,6 @@ export default function Filtered({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* زر التطبيق */}
         <div className="flex gap-3 border-t border-gray-100 pt-4 mt-4 bg-white sticky bottom-0">
           <button
             type="submit"
