@@ -11,7 +11,6 @@ import {
 } from "../../store";
 import { useEffect, useState } from "react";
 import ProductCard from "../ProductDetails/ProductCard";
-import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
 export default function SearchShoping() {
@@ -20,7 +19,6 @@ export default function SearchShoping() {
   const { cart, setCartProduct, removeCartProduct } = useCart();
   const { appliedFilters } = useFilterStore();
   const { isLoggedIn } = userLoginInfo();
-  const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -169,7 +167,6 @@ export default function SearchShoping() {
                           color: "#fff",
                         },
                       });
-                      navigate("/login", { replace: true });
                       return;
                     }
                     const isExist = cart.some(
@@ -189,7 +186,6 @@ export default function SearchShoping() {
                           color: "#fff",
                         },
                       });
-                      navigate("/login", { replace: true });
                       return;
                     }
 

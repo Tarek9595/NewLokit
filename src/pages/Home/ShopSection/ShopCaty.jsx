@@ -2,14 +2,13 @@ import { useEffect } from "react";
 import { useProductStore, userLoginInfo, useWishlist } from "../../../store";
 import ProductCard from "../../ProductDetails/ProductCard";
 import { BsArrowRight } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export default function ShopCaty() {
   const { wishlist, setWishListProduct, removeWishlistProduct } = useWishlist();
   const { allProducts, fetchAllProducts, isLoading } = useProductStore();
   const { isLoggedIn } = userLoginInfo();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (allProducts.length === 0) {
@@ -45,7 +44,6 @@ export default function ShopCaty() {
                     color: "#fff",
                   },
                 });
-                navigate("/login", { replace: true });
                 return;
               }
 

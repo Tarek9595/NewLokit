@@ -38,16 +38,6 @@ export default function MyComponent() {
     });
   };
 
-  // const storageRawData = localStorage.getItem("userLoginInfo");
-
-  // let token = "";
-
-  // if (storageRawData) {
-  //   const parsedData = JSON.parse(storageRawData);
-
-  //   token = parsedData?.state?.loginInfo?.token || "";
-  // }
-
   const [setAllProducts] = useState([]);
 
   useEffect(() => {
