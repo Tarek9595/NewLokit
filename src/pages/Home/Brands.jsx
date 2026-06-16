@@ -9,7 +9,7 @@ const Marquee =
 
 export default function Brands() {
   const { allProducts } = useProductStore();
-
+  // dasdasdas
   const staticBrands = [
     { name: "Antikka", font: "font-montaga" },
     { name: "Niffty", font: "font-montserrat" },
