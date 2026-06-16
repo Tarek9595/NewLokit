@@ -7,15 +7,20 @@ import {
   useCart,
   useWishlist,
   useFilterStore,
+  userLoginInfo,
 } from "../../store";
 import { useEffect, useState } from "react";
 import ProductCard from "../ProductDetails/ProductCard";
+import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 export default function SearchShoping() {
   const { allProducts, fetchAllProducts, isLoading } = useProductStore();
   const { wishlist, removeWishlistProduct, setWishListProduct } = useWishlist();
   const { cart, setCartProduct, removeCartProduct } = useCart();
   const { appliedFilters } = useFilterStore();
+  const { isLoggedIn } = userLoginInfo();
+  const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -153,22 +158,47 @@ export default function SearchShoping() {
                 <ProductCard
                   product={productItem}
                   isLiked={wishlist.some((item) => item.id === productItem.id)}
-                  heartToggle={() => {
-                    const isExist = wishlist.some(
-                      (item) => item.id === productItem.id,
-                    );
-                    isExist
-                      ? removeWishlistProduct(productItem.id)
-                      : setWishListProduct(productItem);
-                  }}
                   cartAdd={cart.some((item) => item.id === productItem.id)}
                   cartToggle={() => {
+                    if (!isLoggedIn) {
+                      toast.error("Please login first", {
+                        id: "auth-error",
+                        style: {
+                          borderRadius: "10px",
+                          background: " #212a2f",
+                          color: "#fff",
+                        },
+                      });
+                      navigate("/login", { replace: true });
+                      return;
+                    }
                     const isExist = cart.some(
                       (item) => item.id === productItem.id,
                     );
                     isExist
                       ? removeCartProduct(productItem.id)
                       : setCartProduct(productItem);
+                  }}
+                  heartToggle={() => {
+                    if (!isLoggedIn) {
+                      toast.error("Please login first", {
+                        id: "auth-error",
+                        style: {
+                          borderRadius: "10px",
+                          background: " #212a2f",
+                          color: "#fff",
+                        },
+                      });
+                      navigate("/login", { replace: true });
+                      return;
+                    }
+
+                    const isExist = wishlist.some(
+                      (item) => item.id === productItem.id,
+                    );
+                    isExist
+                      ? removeWishlistProduct(productItem.id)
+                      : setWishListProduct(productItem);
                   }}
                 />
               </motion.div>
