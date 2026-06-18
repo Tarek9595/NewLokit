@@ -7,9 +7,8 @@ import toast from "react-hot-toast";
 
 export default function ShopCaty() {
   const { wishlist, setWishListProduct, removeWishlistProduct } = useWishlist();
-  const { allProducts, fetchAllProducts, isLoading } = useProductStore();
   const { isLoggedIn } = userLoginInfo();
-
+  const { allProducts, fetchAllProducts, isLoading } = useProductStore();
   useEffect(() => {
     if (allProducts.length === 0) {
       fetchAllProducts();

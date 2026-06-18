@@ -119,6 +119,11 @@ export const useLinks = create(() => ({
     },
     {
       id: 6,
+      name: "Support Chat",
+      path: "chat",
+    },
+    {
+      id: 7,
       name: "Logout",
       path: "/",
     },
@@ -719,5 +724,142 @@ export const useProductSelectionStore = create((set) => ({
         size: defaultSize,
       },
     });
+  },
+}));
+
+const GEMINI_API_KEY =
+  import.meta.env.VITE_GEMINI_API_KEY ||
+  "AQ.Ab8RN6LTpvTJwxNiUqvC68Cz35q7iv5d3tUiYdPs2NXm95dKIw";
+
+export const useChatStore = create((set, get) => ({
+  messages: [
+    {
+      id: "1",
+      text: "Welcome to Lokit support 👋\nI can help with orders, shipping, sizes, returns, or recommend products for you.",
+      sender: "bot",
+    },
+  ],
+  isLoading: false,
+
+  sendMessage: async (text, productsFromBackend = []) => {
+    if (!text.trim()) return;
+
+    const userMessage = { id: Date.now().toString(), text, sender: "user" };
+    set((state) => ({
+      messages: [...state.messages, userMessage],
+      isLoading: true,
+    }));
+
+    const lowerText = text.trim().toLowerCase();
+
+    if (lowerText === "recommend products") {
+      const chatRecommendations =
+        productsFromBackend.length > 0 ? productsFromBackend.slice(0, 4) : [];
+
+      set((state) => ({
+        messages: [
+          ...state.messages,
+          {
+            id: (Date.now() + 1).toString(),
+            text: "Sure, here are some product suggestions from the available catalog:",
+            sender: "bot",
+            isRecommended: chatRecommendations.length > 0,
+            recommendedProducts: chatRecommendations,
+          },
+        ],
+        isLoading: false,
+      }));
+      return;
+    }
+
+    if (lowerText === "where is my order?") {
+      set((state) => ({
+        messages: [
+          ...state.messages,
+          {
+            id: (Date.now() + 1).toString(),
+            text: "You can track your order from Wishlist > Orders. you will find processing and completed orders can waiting for you.",
+            sender: "bot",
+          },
+        ],
+        isLoading: false,
+      }));
+      return;
+    }
+
+    if (lowerText === "help me choose size") {
+      set((state) => ({
+        messages: [
+          ...state.messages,
+          {
+            id: (Date.now() + 1).toString(),
+            text: 'The best way to help with sizing, use our Brilliant tool Ai-Try-Out, You will find it with each product inside its "Show Details" button.',
+            sender: "bot",
+          },
+        ],
+        isLoading: false,
+      }));
+      return;
+    }
+
+    if (lowerText === "shipping info") {
+      set((state) => ({
+        messages: [
+          ...state.messages,
+          {
+            id: (Date.now() + 1).toString(),
+            text: "For shipping, make sure your address is saved correctly from Wishlist > Address. Delivery time depends on your area and order status.",
+            sender: "bot",
+          },
+        ],
+        isLoading: false,
+      }));
+      return;
+    }
+
+    try {
+      const systemInstruction =
+        "You are the official AI customer support assistant for 'Lokit', an innovative E-commerce fashion platform. You must answer ALWAYS and ONLY in English, even if the user speaks in Arabic or any other language. Keep your answers brief, friendly, professional, and helpful.";
+
+      const contents = get().messages.map((msg) => ({
+        role: msg.sender === "user" ? "user" : "model",
+        parts: [{ text: msg.text }],
+      }));
+
+      const response = await axios.post(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          contents: contents,
+          systemInstruction: { parts: [{ text: systemInstruction }] },
+        },
+      );
+
+      const botResponseText = response.data.candidates[0].content.parts[0].text;
+
+      set((state) => ({
+        messages: [
+          ...state.messages,
+          {
+            id: (Date.now() + 1).toString(),
+            text: botResponseText,
+            sender: "bot",
+          },
+        ],
+        isLoading: false,
+      }));
+    } catch (error) {
+      console.error("Gemini Error:", error);
+      set((state) => ({
+        messages: [
+          ...state.messages,
+          {
+            id: (Date.now() + 1).toString(),
+            text: "Sorry, I am facing a temporary connection issue. Please try again or contact us via WhatsApp.",
+            sender: "bot",
+          },
+        ],
+        isLoading: false,
+      }));
+    }
   },
 }));

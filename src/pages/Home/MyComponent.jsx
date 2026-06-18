@@ -38,8 +38,7 @@ export default function MyComponent() {
     });
   };
 
-  const [setAllProducts] = useState([]);
-
+  const [allProducts, setAllProducts] = useState([]);
   useEffect(() => {
     let urlVariants = domain + "variants";
     let urlProducts = domain + "product";

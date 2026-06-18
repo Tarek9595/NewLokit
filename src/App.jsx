@@ -25,6 +25,7 @@ import OrderFailed from "./pages/Cart/OrderFailed";
 import ScrollToTop from "./components/common/ScrollToTop";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Checkout from "./pages/Cart/Checkout";
+import SupportChat from "./components/common/SupportChat";
 
 export default function App() {
   return (
@@ -41,42 +42,35 @@ export default function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="product/:id" element={<ProductDetails />}>
                 <Route index element={<Navigate to="detail" replace />} />
-
                 <Route path="detail" element={<ProductDetail />} />
-
                 <Route path="review" element={<ProductReview />} />
               </Route>
 
               <Route path="mycart" element={<CartPage />} />
-
               <Route path="checkout" element={<Checkout />} />
-
               <Route path="ordersuccess" element={<OrderSuccess />} />
-
               <Route path="failedorder" element={<OrderFailed />} />
 
-              <Route path="/account" element={<Wishlist />}>
+              <Route path="account" element={<Wishlist />}>
                 <Route index element={<WishlistInfo />} />
-
                 <Route path="orders" element={<OrdersInfo />} />
-
                 <Route path="address" element={<AdressInfo />} />
-
                 <Route path="password" element={<PasswordInfo />} />
-
                 <Route path="details" element={<AccountInfo />} />
+                <Route path="chat" element={<SupportChat />} />
               </Route>
             </Route>
           </Route>
 
           <Route element={<AuthLayout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/forget" element={<ForgetPassword />} />
-            <Route path="/validate" element={<PhoneValidation />} />
-            <Route path="/reset" element={<ResetPassword />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="forget" element={<ForgetPassword />} />
+            <Route path="validate" element={<PhoneValidation />} />
+            <Route path="reset" element={<ResetPassword />} />
           </Route>
-          <Route path="/success" element={<Successfully />} />
+
+          <Route path="success" element={<Successfully />} />
 
           <Route
             path="*"

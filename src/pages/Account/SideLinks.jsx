@@ -14,6 +14,8 @@ import {
   BsPerson,
   BsBoxArrowRight,
 } from "react-icons/bs";
+import { RiChatVoiceAiLine } from "react-icons/ri";
+
 import toast from "react-hot-toast";
 
 export default function SideLinks() {
@@ -25,6 +27,7 @@ export default function SideLinks() {
     <BsTruck />,
     <BsKey />,
     <BsPerson />,
+    <RiChatVoiceAiLine />,
     <BsBoxArrowRight />,
   ];
 
