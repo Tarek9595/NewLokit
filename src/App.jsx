@@ -39,13 +39,13 @@ export default function App() {
 
             <Route path="search" element={<Search />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path="product/:id" element={<ProductDetails />}>
-                <Route index element={<Navigate to="detail" replace />} />
-                <Route path="detail" element={<ProductDetail />} />
-                <Route path="review" element={<ProductReview />} />
-              </Route>
+            <Route path="product/:id" element={<ProductDetails />}>
+              <Route index element={<Navigate to="detail" replace />} />
+              <Route path="detail" element={<ProductDetail />} />
+              <Route path="review" element={<ProductReview />} />
+            </Route>
 
+            <Route element={<ProtectedRoute />}>
               <Route path="mycart" element={<CartPage />} />
               <Route path="checkout" element={<Checkout />} />
               <Route path="ordersuccess" element={<OrderSuccess />} />

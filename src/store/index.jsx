@@ -727,10 +727,7 @@ export const useProductSelectionStore = create((set) => ({
   },
 }));
 
-const GEMINI_API_KEY =
-  import.meta.env.VITE_GEMINI_API_KEY ||
-  "AQ.Ab8RN6LTpvTJwxNiUqvC68Cz35q7iv5d3tUiYdPs2NXm95dKIw";
-
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 export const useChatStore = create((set, get) => ({
   messages: [
     {

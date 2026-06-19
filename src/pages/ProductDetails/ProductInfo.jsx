@@ -6,6 +6,7 @@ import {
   useUpload,
   useProductSelectionStore,
   formatSize,
+  userLoginInfo,
 } from "../../store";
 import { useState, useEffect } from "react";
 import { HiOutlineShare } from "react-icons/hi2";
@@ -16,6 +17,7 @@ import { Link } from "react-router";
 import toast from "react-hot-toast";
 
 export default function ProductInfo() {
+  const { isLoggedIn } = userLoginInfo();
   const { openShare, setOpenShare } = useShare();
   const { openUpload, setOpenUpload } = useUpload();
   const { currentProduct } = useCurrentProduct();
@@ -58,7 +60,32 @@ export default function ProductInfo() {
     }
   }, [currentProduct, initializeSelection]);
 
+  const checkAuth = () => {
+    if (!isLoggedIn) {
+      toast.error("Please login first", {
+        id: "auth-error",
+        style: {
+          borderRadius: "10px",
+          background: "#212a2f",
+          color: "#fff",
+        },
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const handleQuantityChange = (type) => {
+    if (!checkAuth()) return;
+    if (type === "decrease") {
+      setQuantity((q) => Math.max(1, q - 1));
+    } else {
+      setQuantity((q) => q + 1);
+    }
+  };
+
   const toggleLike = () => {
+    if (!checkAuth()) return;
     if (isLiked) {
       removeWishlistProduct(currentProduct.id);
     } else {
@@ -67,6 +94,7 @@ export default function ProductInfo() {
   };
 
   const addToCart = (product) => {
+    if (!checkAuth()) return;
     const isAlreadyInCart = cart.find((item) => item.id === product.id);
     setCartProduct(product);
 
@@ -82,6 +110,11 @@ export default function ProductInfo() {
     } else {
       toast.success("Product Added Successfully To Cart");
     }
+  };
+
+  const handleAiTryOn = () => {
+    if (!checkAuth()) return;
+    setOpenUpload(!openUpload);
   };
 
   if (!currentProduct || !currentProduct.productName)
@@ -212,14 +245,14 @@ export default function ProductInfo() {
               <div className="flex items-center gap-4">
                 <div className="flex items-center border-2 border-gray-100 rounded-xl p-1">
                   <button
-                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    onClick={() => handleQuantityChange("decrease")}
                     className="w-10 h-10 flex items-center justify-center text-xl font-bold cursor-pointer"
                   >
                     -
                   </button>
                   <span className="w-12 text-center font-bold">{quantity}</span>
                   <button
-                    onClick={() => setQuantity((q) => q + 1)}
+                    onClick={() => handleQuantityChange("increase")}
                     className="w-10 h-10 flex items-center justify-center text-xl font-bold cursor-pointer"
                   >
                     +
@@ -257,7 +290,7 @@ export default function ProductInfo() {
                     size="md"
                     className="flex-1 py-5 rounded-lg shadow-xl"
                     fullWidth={true}
-                    onClick={() => setOpenUpload(!openUpload)}
+                    onClick={handleAiTryOn}
                   >
                     AI Try-On
                   </CustomButton>
